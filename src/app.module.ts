@@ -6,15 +6,19 @@ import { AppService } from './app.service';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 
-
+// mongo db support
 import { MongooseModule } from '@nestjs/mongoose';
+
+
+import { InfobyteModule } from './infobyte/infobyte.module';
 
 @Module({
   imports: [
     MongooseModule.forRoot('mongodb://localhost/nest'),
+    InfobyteModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'site/public'),
-      exclude: ['/api*'],
+      exclude: ['/infobyte*'],
     }),
   ],
   controllers: [AppController],
