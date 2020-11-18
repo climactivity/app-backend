@@ -1,29 +1,40 @@
 <script lang="ts">
-	import Aside from './Aside.svelte'
-	import { onMount } from 'svelte';
-	import EditorJS from '@editorjs/editorjs'; 
-	import Header from '@editorjs/header'; 
-	import List from '@editorjs/list'; 
+  import Aside from './Aside.svelte';
+  import { onMount } from 'svelte';
+  import EditorJS from '@editorjs/editorjs';
+  import Header from '@editorjs/header';
+  import List from '@editorjs/list';
 
-	onMount(async () => {
+  onMount(async () => {
 
-		let editor = new EditorJS({
-			holder: 'editorjs', 
-  
-			/** 
-			 * Available Tools list. 
-			 * Pass Tool's class or Settings object for each Tool you want to use 
-			 */ 
-			tools: { 
-				header: Header, 
-				list: List
-			}, 
+    let editor = new EditorJS({
+      holder: 'editorjs',
 
-			placeholder: 'Let`s write an awesome story3!'
+      /**
+       * Available Tools list.
+       * Pass Tool's class or Settings object for each Tool you want to use
+       */
+      tools: {
+        header: Header,
+        list: List,
+      },
 
-		});
-	});
-	export let name: string;
+      placeholder: 'Let`s write an awesome story!',
+    });
+  });
+  export let name: string;
+
+  export const selectInfoByteHandler = (infobyte) => {
+    selectedInfobyte = infobyte;
+  };
+  export let selectedInfobyte = undefined;
+  $: {
+    testIsChanged(selectedInfobyte);
+  }
+
+  function testIsChanged(newValue) {
+    console.log(newValue);
+  }
 </script>
 
 <style>
@@ -41,8 +52,8 @@
     font-weight: 100;
   }
   section {
-	  float:right;
-	  width: 60vw;
+    float: right;
+    width: 60vw;
   }
 
   @media (min-width: 640px) {
@@ -53,11 +64,15 @@
 </style>
 
 <main>
-	<h1>Cool InfoByte Editor</h1>
-	<Aside></Aside>
+  <h1>Cool InfoByte Editor</h1>
+  <Aside bind:selectedInfobyte />
 
-	<section id="editor-container">
+  <section id="editor-container">
+    <div id="editorjs" />
 
-		<div id="editorjs" />
-	</section>
+    <div>
+      <h3>selected infobyte</h3>
+      {#if selectedInfobyte}{JSON.stringify(selectedInfobyte)}{/if}
+    </div>
+  </section>
 </main>

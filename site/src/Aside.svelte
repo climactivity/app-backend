@@ -1,10 +1,12 @@
 <script lang="ts">
+
 	const infobytes: Promise<[{name: string, _id: string}]> = (async () => {
 		const response = await fetch('/infobyte')
     return await response.json()
     })();
+    export let selectedInfobyte; 
     function onInfobyteSelected(infobyte: {name: string, _id: string}) {
-        console.log("selected ", infobyte);
+        selectedInfobyte = infobyte
     }
 </script>
 
