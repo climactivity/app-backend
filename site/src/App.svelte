@@ -1,27 +1,7 @@
 <script lang="ts">
   import Aside from './Aside.svelte';
-  import { onMount } from 'svelte';
-  import EditorJS from '@editorjs/editorjs';
-  import Header from '@editorjs/header';
-  import List from '@editorjs/list';
+  import InfobyteEditor from "./InfobyteEditor.svelte";
 
-  onMount(async () => {
-
-    let editor = new EditorJS({
-      holder: 'editorjs',
-
-      /**
-       * Available Tools list.
-       * Pass Tool's class or Settings object for each Tool you want to use
-       */
-      tools: {
-        header: Header,
-        list: List,
-      },
-
-      placeholder: 'Let`s write an awesome story!',
-    });
-  });
   export let name: string;
 
   export const selectInfoByteHandler = (infobyte) => {
@@ -35,6 +15,12 @@
   function testIsChanged(newValue) {
     console.log(newValue);
   }
+	function handleMessage(event) {
+		if(event.type == 'created') {
+      console.log("new infobyte");
+    }
+	}
+
 </script>
 
 <style>
@@ -68,7 +54,9 @@
   <Aside bind:selectedInfobyte />
 
   <section id="editor-container">
-    <div id="editorjs" />
+
+    <div>editor</div>
+    <InfobyteEditor on:message={handleMessage}/>
 
     <div>
       <h3>selected infobyte</h3>

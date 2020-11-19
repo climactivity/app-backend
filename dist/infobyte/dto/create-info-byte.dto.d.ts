@@ -1,7 +1,7 @@
 export declare class CreateInfoByteDto {
     readonly name: string;
     readonly frontmatter: string;
-    readonly questions: [
+    readonly questions?: [
         {
             question: string;
             answers: [
@@ -14,8 +14,8 @@ export declare class CreateInfoByteDto {
             ];
         }
     ];
-    readonly infobits: [{
+    readonly infobits?: [{
         value: string;
     }];
-    readonly xp: number;
+    readonly xp?: number;
 }

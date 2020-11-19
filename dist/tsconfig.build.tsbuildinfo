@@ -1757,8 +1757,8 @@
         "affectsGlobalScope": false
       },
       "../src/infobyte/dto/create-info-byte.dto.ts": {
-        "version": "e7ce26fb244b67f94cad721cdc80e185b1ff4f9fe6d90c27854f210f42edae16",
-        "signature": "66fb0bee59d72ca87313a3f851f90b3d0f0ffd213292ca9b4823c9a6264e8987",
+        "version": "8cdb6427e7b1408406ea81b89bcf58010c9a1e10a14b7f38a14de83afa13302e",
+        "signature": "5ff0a1b88b08274c10e0870aaadd4476012db931b3c8c32e99b6620272763e5f",
         "affectsGlobalScope": false
       },
       "../src/infobyte/dto/update-info-byte.dto.ts": {

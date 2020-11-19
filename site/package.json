@@ -27,6 +27,9 @@
     "@editorjs/header": "^2.6.1",
     "@editorjs/list": "^1.6.1",
     "@editorjs/table": "^1.3.0",
-    "sirv-cli": "^1.0.0"
+    "prosemirror-svelte": "^0.2.3",
+    "sirv-cli": "^1.0.0",
+    "svelte-forms-lib": "^1.2.2",
+    "yup": "^0.29.3"
   }
 }
