@@ -1,42 +1,67 @@
 <script lang="ts">
+  import { currentInfobyte, Infobyte } from './stores';
 
-	const infobytes: Promise<[{name: string, _id: string}]> = (async () => {
-		const response = await fetch('/infobyte')
-    return await response.json()
-    })();
-    export let selectedInfobyte; 
-    function onInfobyteSelected(infobyte: {name: string, _id: string}) {
-        selectedInfobyte = infobyte
-    }
+  let selectedInfobyte;
+
+  const refetch = async () => {
+    const response = await fetch('/infobyte');
+    return await response.json();
+  };
+
+  let infobytes: Promise<[{ name: string; _id: string }]> = refetch();
+
+  const unsubscribe = currentInfobyte.subscribe((value) => {
+    if (!selectedInfobyte) selectedInfobyte = value;
+    if (!value || value._id !== selectedInfobyte._id) infobytes = refetch();
+    selectedInfobyte = value;
+  });
+
+  function onInfobyteSelected(infobyte: { name: string; _id: string }) {
+    console.log(infobyte);
+    currentInfobyte.set(infobyte);
+  }
+
+  const newInfobyte = () => {
+    currentInfobyte.set(new Infobyte());
+  }
 </script>
 
 <style>
-    aside {
-        float: left;
-    }
+  aside {
+    float: left;
+    background-color: var(--grey);
+    padding: 8px;
+    border-radius: 8px;
+  }
 
-    @media (min-width: 640px) {
+  ul {
+    list-style-type: none;
+  }
+
+  @media (min-width: 640px) {
     aside {
-        width: 20vw;
+      width: 20vw;
+      height: 100vh;
     }
   }
 </style>
 
 <aside>
-    {#await infobytes}
-        <p>...waiting</p>
-    {:then data}
+  {#await infobytes}
+    <p>...waiting</p>
+  {:then data}
     <ul>
-        {#each data as infobyte}
-            <li on:click={() => onInfobyteSelected(infobyte)} >{infobyte.name}</li>
-        {/each}
-    </ul> 
-    {:catch error}
-        <p>An error occurred!</p>
-    {/await}
+      {#each data as infobyte}
+        <li
+          class:selected={currentInfobyte._id === infobyte._id}
+          on:click={() => onInfobyteSelected(infobyte)}>
+          {infobyte.name}
+        </li>
+      {/each}
+    </ul>
+  {:catch error}
+    <p>An error occurred!</p>
+  {/await}
 
-
-    <button>
-        Add new
-    </button>
+  <button on:click={newInfobyte}> Add new </button>
 </aside>
