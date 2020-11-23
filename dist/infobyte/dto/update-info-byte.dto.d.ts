@@ -1,4 +1,5 @@
 export declare class UpdateInfoByteDto {
+    readonly id: string;
     readonly name: string;
     readonly frontmatter: string;
     readonly questions: [

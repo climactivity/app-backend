@@ -1762,8 +1762,8 @@
         "affectsGlobalScope": false
       },
       "../src/infobyte/dto/update-info-byte.dto.ts": {
-        "version": "48c9e2b25d4815e17308435323e928a9ec192e2165d32799c1715e8bb7e6604e",
-        "signature": "15d8389c05cf462d3c3fad6d6ec5ac814f01ae1b530a886d4de76695f379df50",
+        "version": "7d18227d4d555230358255c3f186139791cd1afae8f4c780f3855a4ee592dbc3",
+        "signature": "8b3e91f12d9448de6640e3bd0a960d063c1472b98abb64ac4a4fc50a1d6c95a0",
         "affectsGlobalScope": false
       },
       "../src/infobyte/schemas/infobyte.schema.ts": {

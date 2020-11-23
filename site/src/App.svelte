@@ -6,7 +6,6 @@ import { currentInfobyte } from './stores';
   let selectedInfobyte = undefined
 
   const unsubscribe = currentInfobyte.subscribe((value) => {
-
     selectedInfobyte = value;
   });
 </script>
@@ -92,7 +91,7 @@ import { currentInfobyte } from './stores';
   <section id="editor-container">
 
     <div  class="padded">
-    <InfobyteEditor />
+    <InfobyteEditor bind:selectedInfobyte={selectedInfobyte} />
     </div>
 
   </section>

@@ -16,10 +16,18 @@
     selectedInfobyte = value;
   });
 
-  function onInfobyteSelected(infobyte: { name: string; _id: string }) {
-    console.log(infobyte);
+  const onInfobyteSelected = async (infobyte: { name: string; _id: string }) => {
+    infobyte = await fetchInfoBtye(infobyte._id)
     currentInfobyte.set(infobyte);
+    console.log(infobyte);
   }
+
+  const fetchInfoBtye = async (id) => {
+    if (!id) return;
+    const response = await fetch(`/infobyte/${id}`);
+    return await response.json();
+  };
+
 
   const newInfobyte = () => {
     currentInfobyte.set(new Infobyte());

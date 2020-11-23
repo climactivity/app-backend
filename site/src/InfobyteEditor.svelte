@@ -2,20 +2,9 @@
   import { createForm } from 'svelte-forms-lib';
   import { createEventDispatcher } from 'svelte';
   import { Answer, Question, currentInfobyte, Infobyte } from './stores';
-import { init } from 'svelte/internal';
-  let selectedInfobyte;
+import InfoBitEditor from './InfoBitEditor.svelte';
 
-  const unsubscribe = currentInfobyte.subscribe((value) => {
-    selectedInfobyte = value;
-  });
-
-  let infobyte;
-  const fetchInfoBtye = async (id) => {
-    console.log(selectedInfobyte);
-    if (!id) return;
-    const response = await fetch(`/infobyte/${id}`);
-    return await response.json();
-  };
+  export let selectedInfobyte;
 
   const initialQuestions = [new Question()];
 
@@ -27,16 +16,11 @@ import { init } from 'svelte/internal';
     handleSubmit,
     handleReset,
   } = createForm({
-    initialValues: {
-      name: '',
-      frontmatter: '',
-      questions: initialQuestions,
-    },
+    initialValues: selectedInfobyte,
     onSubmit: async (values) => {
-      infobyte = infobyte ? infobyte : {};
-      infobyte.name = values.name;
-      infobyte.frontmatter = values.frontmatter;
-
+      let infobyte = values;
+      if (infobyte._id === '') delete infobyte._id;
+      console.log(values);
       let result = await fetch(
         `/infobyte${infobyte._id ? '/' + infobyte._id : ''}`,
         {
@@ -45,12 +29,26 @@ import { init } from 'svelte/internal';
             'Content-Type': 'application/json',
             // 'Content-Type': 'application/x-www-form-urlencoded',
           },
-          body: JSON.stringify({_id: infobyte._id, ...values}),
+          body: JSON.stringify(infobyte),
         },
       );
-      currentInfobyte.set(result);
+      currentInfobyte.set(new Infobyte());
     },
   });
+
+  let editorTest = "<h3>Welcome to Prosemirror Svelte</h3><p>Feel free to <b>edit me</b>!</p>"
+  $: if (editorTest) {
+    console.log(editorTest)
+  }
+
+  $: if (selectedInfobyte) {
+    console.log(selectedInfobyte);
+    $form.name = selectedInfobyte.name;
+    $form.frontmatter = selectedInfobyte.frontmatter;
+    $form.questions = selectedInfobyte.questions;
+    $errors.questions = selectedInfobyte.questions;
+    $form._id = selectedInfobyte._id;
+  }
 
   const addQuestion = () => {
     $form.questions = $form.questions.concat(new Question());
@@ -63,32 +61,24 @@ import { init } from 'svelte/internal';
   };
 
   const addAnswer = (j) => () => {
-    console.log( $form.questions[j])
-    $form.questions[j].answers = $form.questions[j].answers.concat(new Answer());
-    console.log( $form.questions[j])
-    $errors.questions[j].answers = $errors.questions[j].answers.concat(new Answer());
+    console.log($form.questions[j]);
+    $form.questions[j].answers = $form.questions[j].answers.concat(
+      new Answer(),
+    );
+    console.log($form.questions[j]);
+    $errors.questions[j].answers = $errors.questions[j].answers.concat(
+      new Answer(),
+    );
   };
 
   const removeAnswer = (j, k) => () => {
-    $form.questions[j].answers = $form.questions[j].answers.filter((u, i) => k !== i);
-    $errors.questions[j].answers = $form.questions[j].answers.filter((u, i) => k !== i);
+    $form.questions[j].answers = $form.questions[j].answers.filter(
+      (u, i) => k !== i,
+    );
+    $errors.questions[j].answers = $form.questions[j].answers.filter(
+      (u, i) => k !== i,
+    );
   };
-
-  $: if (selectedInfobyte) {
-    if (!selectedInfobyte._id) {
-      handleReset();
-      infobyte = {};
-    } else {
-      fetchInfoBtye(selectedInfobyte._id).then((data) => {
-        console.log('recieved data: ', data);
-        infobyte = data;
-        $form.name = data.name || '';
-        $form.frontmatter = data.frontmatter || '';
-        console.log(data.questions)
-        $form.questions = data.questions || initialQuestions
-      });
-    }
-  }
 
   const deleteInfoByte = async () => {
     if (!selectedInfobyte._id) return;
@@ -199,6 +189,8 @@ import { init } from 'svelte/internal';
       on:change={handleChange}
       bind:value={$form.frontmatter} />
 
+    <InfoBitEditor bind:value={editorTest}/>
+
     {#each $form.questions as question, j}
       <div class="form-group">
         <label for={`questions[${j}]`}>Frage {j + 1}</label>
@@ -214,7 +206,6 @@ import { init } from 'svelte/internal';
           {#if $errors.questions[j].answer}
             <small class="error">{errors.questions[j].answer}</small>
           {/if}
-
         </div>
 
         {#each $form.questions[j].answers as answer, k}
@@ -226,17 +217,16 @@ import { init } from 'svelte/internal';
             <div>
               <label for={`questions[${j}].answers[${k}].value`}>Antwort</label>
               <div class="form-control-row">
-
-              <input
-                name={`questions[${j}].answers[${k}].value`}
-                placeholder="Antwort"
-                on:change={handleChange}
-                on:blur={handleChange}
-                bind:value={$form.questions[j].answers[k].value} />
-              {#if $errors.questions[j].answers[k].answer}
-                <small
-                  class="error">{errors.questions[j].answers[k].answer}</small>
-              {/if}
+                <input
+                  name={`questions[${j}].answers[${k}].value`}
+                  placeholder="Antwort"
+                  on:change={handleChange}
+                  on:blur={handleChange}
+                  bind:value={$form.questions[j].answers[k].value} />
+                {#if $errors.questions[j].answers[k].answer}
+                  <small
+                    class="error">{errors.questions[j].answers[k].answer}</small>
+                {/if}
                 {#if k === $form.questions[j].answers.length - 1}
                   <button
                     type="button"
@@ -253,6 +243,7 @@ import { init } from 'svelte/internal';
             </div>
           </div>
         {/each}
+
         <div class="form-control-row">
           {#if j === $form.questions.length - 1}
             <button
@@ -267,7 +258,6 @@ import { init } from 'svelte/internal';
               on:click={removeQuestion(j)}>-</button>
           {/if}
         </div>
-
       </div>
     {/each}
 
@@ -277,7 +267,8 @@ import { init } from 'svelte/internal';
 
   <div>
     <span>Debug</span>
-
     <pre>{JSON.stringify($form, null, 2)}</pre>
+
+    <pre>{JSON.stringify(selectedInfobyte, null, 2)}</pre>
   </div>
 </section>
