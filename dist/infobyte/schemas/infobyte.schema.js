@@ -31,7 +31,7 @@ __decorate([
     __metadata("design:type", String)
 ], InfoByte.prototype, "frontmatter", void 0);
 __decorate([
-    mongoose_1.Prop([InfoBit]),
+    mongoose_1.Prop([mongoose_1.raw]),
     __metadata("design:type", Array)
 ], InfoByte.prototype, "infobits", void 0);
 __decorate([

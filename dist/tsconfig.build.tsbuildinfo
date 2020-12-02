@@ -1767,8 +1767,8 @@
         "affectsGlobalScope": false
       },
       "../src/infobyte/schemas/infobyte.schema.ts": {
-        "version": "7d45750025221471502925e10426158d4ce76e50961cafbe12af4888df550fde",
-        "signature": "8006a29beb4a81209189f50f7466acfdc43f13967db08ea438164de202590db8",
+        "version": "b2228e8de0c8b9cb97c9588af7ea1731b4c279d6cc2a4838394e2a42f90a0cfe",
+        "signature": "8f367bf76e36dc7446e3f877af6d8e12316d2c2ce8350c90e83bb1fca421168c",
         "affectsGlobalScope": false
       },
       "../src/infobyte/infobyte.service.ts": {

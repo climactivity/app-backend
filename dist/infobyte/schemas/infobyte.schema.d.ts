@@ -9,12 +9,12 @@ export declare class Question {
     answers: Answer[];
 }
 export declare class InfoBit {
-    value: string;
+    value: any;
 }
 export declare class InfoByte {
     name: string;
     frontmatter: string;
-    infobits: InfoBit[];
+    infobits: Object[];
     questions: Question[];
     xp: number;
 }

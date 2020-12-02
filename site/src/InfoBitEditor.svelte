@@ -21,10 +21,8 @@
   const plugins = [];
 
   // create the initial editor state
-  console.log(value)
-  let editorState = fromJSON(value, richTextSchema)
+  let editorState = value ? fromJSON(value, richTextSchema) : createRichTextEditor()
   let focusEditor;
-  //let editorState = createRichTextEditor()
 
   function handleTransaction(event) {
     // get the new editor state from event.detail

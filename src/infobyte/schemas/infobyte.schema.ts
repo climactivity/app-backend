@@ -1,4 +1,4 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose'; 
 
 export type InfoByteDocument = InfoByte & Document
@@ -14,7 +14,7 @@ export class Question {
 }
 
 export class InfoBit {
-    value: string;
+    value: any;
 }
 
 @Schema()
@@ -25,8 +25,8 @@ export class InfoByte {
     @Prop()
     frontmatter: string;
 
-    @Prop([InfoBit])
-    infobits: InfoBit[]
+    @Prop([raw] )
+    infobits: Object[]
 
     @Prop([Question])
     questions: Question[]
