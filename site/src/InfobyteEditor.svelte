@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createForm } from 'svelte-forms-lib';
   import { createEventDispatcher } from 'svelte';
-  import { Answer, Question, currentInfobyte, Infobyte } from './stores';
+  import { Answer, Question, currentInfobyte, Infobyte, Infobit } from './stores';
 import InfoBitEditor from './InfoBitEditor.svelte';
 
   export let selectedInfobyte;
@@ -43,12 +43,23 @@ import InfoBitEditor from './InfoBitEditor.svelte';
 
   $: if (selectedInfobyte) {
     console.log(selectedInfobyte);
-    $form.name = selectedInfobyte.name;
-    $form.frontmatter = selectedInfobyte.frontmatter;
-    $form.questions = selectedInfobyte.questions;
-    $errors.questions = selectedInfobyte.questions;
-    $form._id = selectedInfobyte._id;
+    $form.name = selectedInfobyte.name || "";
+    $form.frontmatter = selectedInfobyte.frontmatter || "";
+    $form.questions = selectedInfobyte.questions || [new Question()];
+    $errors.questions = selectedInfobyte.questions || [new Question()];
+    $form._id = selectedInfobyte._id || "";
+    //$form.infobits = selectedInfobyte.infobits || new Infobit();
   }
+
+  const addInfobit = () => {
+    $form.infobits = $form.infobits.concat(new Infobit());
+    $errors.infobits = $errors.infobits.concat(new Infobit());
+  };
+
+  const removeInfobit = (i) => () => {
+    $form.infobits = $form.infobits.filter((u, j) => j !== i);
+    $errors.infobits = $errors.infobits.filter((u, j) => j !== i);
+  };
 
   const addQuestion = () => {
     $form.questions = $form.questions.concat(new Question());
@@ -189,7 +200,25 @@ import InfoBitEditor from './InfoBitEditor.svelte';
       on:change={handleChange}
       bind:value={$form.frontmatter} />
 
-    <InfoBitEditor bind:value={editorTest}/>
+    <!--<InfoBitEditor bind:value={editorTest}/>-->
+
+    {#each $form.infobits as infobit, i}
+      <InfoBitEditor bind:value={infobit}/>
+      <div class="form-control-row">
+        {#if i === $form.infobits.length - 1}
+          <button
+            type="button"
+            class="form-control-button"
+            on:click={addInfobit}>+</button>
+        {/if}
+        {#if $form.infobits.length !== 1}
+          <button
+            type="button"
+            class="form-control-button"
+            on:click={removeInfobit(i)}>-</button>
+        {/if}
+      </div>
+    {/each}
 
     {#each $form.questions as question, j}
       <div class="form-group">

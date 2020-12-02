@@ -9,21 +9,27 @@
     clear,
     toggleMark,
     setBlockType,
+    toHTML,
+    richTextSchema
   } from 'prosemirror-svelte/state';
   import {
     getCurrentMarks,
     getNodeTypeAtSelectionHead,
   } from 'prosemirror-svelte/helpers';
+
   export let value;
-  // create the initial editor state
-  let editorState = createRichTextEditor(value);
-  let focusEditor;
   const plugins = [];
+
+  // create the initial editor state
+  console.log(value)
+  let editorState = fromJSON(value, richTextSchema)
+  let focusEditor;
+  //let editorState = createRichTextEditor()
 
   function handleTransaction(event) {
     // get the new editor state from event.detail
     editorState = event.detail.editorState;
-    value = toPlainText(editorState);
+    value = toJSON(editorState);
   }
 
   function clearEditor(event) {
@@ -43,6 +49,8 @@
   function handleSetBlockType(type, attrs = null) {
     return function (event) {
       editorState = setBlockType(editorState, type, attrs);
+      value = toJSON(editorState);
+
     };
   }
 
@@ -74,7 +82,7 @@
 
   onMount(() => focusEditor());
   // log the text content of the editor state, just for fun
-  $: console.log(toJSON(editorState));
+  //$: value = toJSON(editorState);
 </script>
 
 <style>
@@ -104,7 +112,7 @@
 <div class="infobit-editor">
   <div class="controls">
     <button on:click={clearEditor}>Clear</button>
-    <button on:click={resetEditor}>Reset</button>
+    <!--<button on:click={resetEditor}>Reset</button> really broken :/-->
 
     <button
       style="margin-left: .5em"
