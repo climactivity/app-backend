@@ -20,8 +20,17 @@
   export let value;
   const plugins = [];
 
+  const rehydrateEditorState = (jsonData) => {
+    try {
+      return fromJSON(jsonData, richTextSchema)
+    } catch(e) {
+      console.log("Could not restore Prosemirror state from json", e); 
+      return createRichTextEditor()
+    }
+  }
+
   // create the initial editor state
-  let editorState = value ? fromJSON(value, richTextSchema) : createRichTextEditor()
+  let editorState = value ? rehydrateEditorState(value) : createRichTextEditor()
   let focusEditor;
 
   function handleTransaction(event) {

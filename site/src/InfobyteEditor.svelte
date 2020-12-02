@@ -48,7 +48,8 @@ import InfoBitEditor from './InfoBitEditor.svelte';
     $form.questions = selectedInfobyte.questions || [new Question()];
     $errors.questions = selectedInfobyte.questions || [new Question()];
     $form._id = selectedInfobyte._id || "";
-    //$form.infobits = selectedInfobyte.infobits || new Infobit();
+    $form.infobits = selectedInfobyte.infobits || [new Infobit()];
+    $errors.infobits = selectedInfobyte.infobits || [new Infobit()];
   }
 
   const addInfobit = () => {
@@ -202,6 +203,12 @@ import InfoBitEditor from './InfoBitEditor.svelte';
 
     <!--<InfoBitEditor bind:value={editorTest}/>-->
 
+    {#if $form.infobits.length === 0}
+      <button
+      type="button"
+      class="form-control-button"
+      on:click={addInfobit}>+</button>
+    {/if}
     {#each $form.infobits as infobit, i}
       <InfoBitEditor bind:value={infobit}/>
       <div class="form-control-row">
