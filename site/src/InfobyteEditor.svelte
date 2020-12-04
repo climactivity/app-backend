@@ -43,6 +43,18 @@ import InfoBitEditor from './InfoBitEditor.svelte';
 
   $: if (selectedInfobyte) {
     console.log(selectedInfobyte);
+    $form.name = selectedInfobyte.name;
+    $form.frontmatter = selectedInfobyte.frontmatter;
+    $form.questions = selectedInfobyte.questions;
+    $errors.questions = selectedInfobyte.questions;
+    $form._id = selectedInfobyte._id;
+    $form.infobits = selectedInfobyte.infobits;
+    $errors.infobits = selectedInfobyte.infobits;
+  }
+
+  /*
+  $: if (selectedInfobyte) {
+    console.log(selectedInfobyte);
     $form.name = selectedInfobyte.name || "";
     $form.frontmatter = selectedInfobyte.frontmatter || "";
     $form.questions = selectedInfobyte.questions || [new Question()];
@@ -51,6 +63,7 @@ import InfoBitEditor from './InfoBitEditor.svelte';
     $form.infobits = selectedInfobyte.infobits || [new Infobit()];
     $errors.infobits = selectedInfobyte.infobits || [new Infobit()];
   }
+  */
 
   const addInfobit = () => {
     $form.infobits = $form.infobits.concat(new Infobit());
@@ -73,11 +86,9 @@ import InfoBitEditor from './InfoBitEditor.svelte';
   };
 
   const addAnswer = (j) => () => {
-    console.log($form.questions[j]);
     $form.questions[j].answers = $form.questions[j].answers.concat(
       new Answer(),
     );
-    console.log($form.questions[j]);
     $errors.questions[j].answers = $errors.questions[j].answers.concat(
       new Answer(),
     );
@@ -147,6 +158,19 @@ import InfoBitEditor from './InfoBitEditor.svelte';
     letter-spacing: 1.9px;
     line-height: 2;
   }
+
+  .checkbox {
+    display: block;
+    color: var(--grey-dark);
+    font-weight: bold;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 1.9px;
+    line-height: 2;
+    background-color: #eee;
+
+  } 
 
   .danger {
     background-color: var(--red);
@@ -259,6 +283,10 @@ import InfoBitEditor from './InfoBitEditor.svelte';
                   on:change={handleChange}
                   on:blur={handleChange}
                   bind:value={$form.questions[j].answers[k].value} />
+
+                <label for={`questions[${j}].answers[${k}].correct`}>Richtig?</label>
+                <input class="checkbox" type="checkbox" name={`questions[${j}].answers[${k}].correct`} bind:checked={$form.questions[j].answers[k].correct}>
+
                 {#if $errors.questions[j].answers[k].answer}
                   <small
                     class="error">{errors.questions[j].answers[k].answer}</small>
