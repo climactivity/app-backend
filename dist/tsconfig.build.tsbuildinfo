@@ -1757,18 +1757,18 @@
         "affectsGlobalScope": false
       },
       "../src/infobyte/dto/create-info-byte.dto.ts": {
-        "version": "8cdb6427e7b1408406ea81b89bcf58010c9a1e10a14b7f38a14de83afa13302e",
-        "signature": "5ff0a1b88b08274c10e0870aaadd4476012db931b3c8c32e99b6620272763e5f",
+        "version": "3fcf5fdbecd8d7b07a1b476ff5d3c1e903bc9c11b3441f33f752bfcfcd3db556",
+        "signature": "e58e2bcdaed9a5f918df8066aa94007326cae7fc2a1ecf335fe08bc61687df56",
         "affectsGlobalScope": false
       },
       "../src/infobyte/dto/update-info-byte.dto.ts": {
-        "version": "7d18227d4d555230358255c3f186139791cd1afae8f4c780f3855a4ee592dbc3",
-        "signature": "8b3e91f12d9448de6640e3bd0a960d063c1472b98abb64ac4a4fc50a1d6c95a0",
+        "version": "7292704aab69ef284d592bc7c220fc043bb3d9434fdfc0d0408f89f9e8614dbd",
+        "signature": "f305e75cb61e1d1aafe3285242978c4412638c4c2240083e45a85e41143d08f4",
         "affectsGlobalScope": false
       },
       "../src/infobyte/schemas/infobyte.schema.ts": {
-        "version": "b2228e8de0c8b9cb97c9588af7ea1731b4c279d6cc2a4838394e2a42f90a0cfe",
-        "signature": "8f367bf76e36dc7446e3f877af6d8e12316d2c2ce8350c90e83bb1fca421168c",
+        "version": "53765d20fed2a0313d0ff2e06ef51644b637bd01be3ea2b4cb2c6fa567a22802",
+        "signature": "5deb1f8fba1bef9aab9604ed56e7f2808ce8c151339b8d93f862ec9ad7a2b01c",
         "affectsGlobalScope": false
       },
       "../src/infobyte/infobyte.service.ts": {

@@ -25,6 +25,14 @@ let InfoByte = class InfoByte {
 __decorate([
     mongoose_1.Prop(),
     __metadata("design:type", String)
+], InfoByte.prototype, "region", void 0);
+__decorate([
+    mongoose_1.Prop(),
+    __metadata("design:type", String)
+], InfoByte.prototype, "language", void 0);
+__decorate([
+    mongoose_1.Prop(),
+    __metadata("design:type", String)
 ], InfoByte.prototype, "name", void 0);
 __decorate([
     mongoose_1.Prop(),
@@ -42,6 +50,10 @@ __decorate([
     mongoose_1.Prop(),
     __metadata("design:type", Number)
 ], InfoByte.prototype, "xp", void 0);
+__decorate([
+    mongoose_1.Prop(),
+    __metadata("design:type", Boolean)
+], InfoByte.prototype, "published", void 0);
 InfoByte = __decorate([
     mongoose_1.Schema()
 ], InfoByte);

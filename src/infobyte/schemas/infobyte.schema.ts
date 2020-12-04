@@ -20,6 +20,12 @@ export class InfoBit {
 @Schema()
 export class InfoByte {
     @Prop()
+    region: string;
+
+    @Prop()
+    language: string;
+
+    @Prop()
     name: string;
 
     @Prop()
@@ -33,6 +39,9 @@ export class InfoByte {
 
     @Prop()
     xp: number
+
+    @Prop()
+    published: boolean;
 }
 
 export const InfoByteSchema = SchemaFactory.createForClass(InfoByte)

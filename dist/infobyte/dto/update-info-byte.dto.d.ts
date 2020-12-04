@@ -1,8 +1,10 @@
 export declare class UpdateInfoByteDto {
     readonly id: string;
     readonly name: string;
+    readonly region: string;
+    readonly language: string;
     readonly frontmatter: string;
-    readonly questions: [
+    readonly questions?: [
         {
             question: string;
             answers: [
@@ -15,8 +17,7 @@ export declare class UpdateInfoByteDto {
             ];
         }
     ];
-    readonly infobits: [{
-        value: string;
-    }];
-    readonly xp: number;
+    readonly infobits?: [any];
+    readonly xp?: number;
+    readonly published: boolean;
 }

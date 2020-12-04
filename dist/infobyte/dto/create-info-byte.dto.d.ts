@@ -1,5 +1,7 @@
 export declare class CreateInfoByteDto {
     readonly name: string;
+    readonly region: string;
+    readonly language: string;
     readonly frontmatter: string;
     readonly questions?: [
         {
@@ -18,4 +20,5 @@ export declare class CreateInfoByteDto {
         value: string;
     }];
     readonly xp?: number;
+    readonly published: boolean;
 }
