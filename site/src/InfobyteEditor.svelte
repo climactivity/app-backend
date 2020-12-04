@@ -43,27 +43,14 @@ import InfoBitEditor from './InfoBitEditor.svelte';
 
   $: if (selectedInfobyte) {
     console.log(selectedInfobyte);
-    $form.name = selectedInfobyte.name;
-    $form.frontmatter = selectedInfobyte.frontmatter;
-    $form.questions = selectedInfobyte.questions;
-    $errors.questions = selectedInfobyte.questions;
-    $form._id = selectedInfobyte._id;
-    $form.infobits = selectedInfobyte.infobits;
-    $errors.infobits = selectedInfobyte.infobits;
-  }
-
-  /*
-  $: if (selectedInfobyte) {
-    console.log(selectedInfobyte);
     $form.name = selectedInfobyte.name || "";
     $form.frontmatter = selectedInfobyte.frontmatter || "";
     $form.questions = selectedInfobyte.questions || [new Question()];
     $errors.questions = selectedInfobyte.questions || [new Question()];
     $form._id = selectedInfobyte._id || "";
-    $form.infobits = selectedInfobyte.infobits || [new Infobit()];
-    $errors.infobits = selectedInfobyte.infobits || [new Infobit()];
+    $form.infobits = selectedInfobyte.infobits || [];
+    $errors.infobits = selectedInfobyte.infobits || [];
   }
-  */
 
   const addInfobit = () => {
     $form.infobits = $form.infobits.concat(new Infobit());
@@ -86,11 +73,10 @@ import InfoBitEditor from './InfoBitEditor.svelte';
   };
 
   const addAnswer = (j) => () => {
-    $form.questions[j].answers = $form.questions[j].answers.concat(
-      new Answer(),
-    );
+    //console.log(j, $form.questions[j].answers, $form.questions[j].answers.concat(new Answer()))
+    if(j) $form.questions[j].answers = $form.questions[j].answers.concat(new Answer()); //what?
     $errors.questions[j].answers = $errors.questions[j].answers.concat(
-      new Answer(),
+      new Answer()
     );
   };
 
@@ -159,19 +145,6 @@ import InfoBitEditor from './InfoBitEditor.svelte';
     line-height: 2;
   }
 
-  .checkbox {
-    display: block;
-    color: var(--grey-dark);
-    font-weight: bold;
-    margin-bottom: 4px;
-    text-transform: uppercase;
-    font-size: 12px;
-    letter-spacing: 1.9px;
-    line-height: 2;
-    background-color: #eee;
-
-  } 
-
   .danger {
     background-color: var(--red);
   }
@@ -210,6 +183,30 @@ import InfoBitEditor from './InfoBitEditor.svelte';
 <section>
   <form on:submit={handleSubmit}>
     <h1>Infobyte hinzufügen</h1>
+
+    <label for="region">Region</label>
+    <select
+      id="region"
+      name="region"
+      on:change={handleChange}
+      on:blur={handleChange}
+      bind:value={$form.region}>
+        <option>DE</option>
+
+    </select>
+
+    
+    <label for="language">Sprache</label>
+    <select
+      id="language"
+      name="language"
+      on:change={handleChange}
+      on:blur={handleChange}
+      bind:value={$form.language}>
+        <option>DE</option>
+        <option>EN</option>
+    </select>
+
 
     <label for="name">name</label>
     <input
@@ -284,9 +281,10 @@ import InfoBitEditor from './InfoBitEditor.svelte';
                   on:blur={handleChange}
                   bind:value={$form.questions[j].answers[k].value} />
 
-                <label for={`questions[${j}].answers[${k}].correct`}>Richtig?</label>
-                <input class="checkbox" type="checkbox" name={`questions[${j}].answers[${k}].correct`} bind:checked={$form.questions[j].answers[k].correct}>
-
+                <label for={`questions[${j}].answers[${k}].correct`} style="padding: 5px;">
+                  <span class="label-text">Richtig</span>
+                  <input class="checkbox" type="checkbox" name={`questions[${j}].answers[${k}].correct`} bind:checked={$form.questions[j].answers[k].correct}>
+                </label>
                 {#if $errors.questions[j].answers[k].answer}
                   <small
                     class="error">{errors.questions[j].answers[k].answer}</small>
@@ -324,6 +322,11 @@ import InfoBitEditor from './InfoBitEditor.svelte';
         </div>
       </div>
     {/each}
+
+    <label for={"published"} style="padding: 5px;">
+      <span class="label-text">Veröffentlichen</span>
+      <input class="checkbox" type="checkbox" name={"published"} bind:checked={$form.published}>
+    </label>
 
     <button type="submit">Speichern</button>
   </form>

@@ -30,23 +30,12 @@ export class Infobit {
 export class Infobyte {
     _id: string = "";
     name: string = "";
+    published: boolean = false;
+    region: string = "DE";
+    language: string = "DE";
     frontmatter?: string = "";
     questions?: Question[] = [new Question()]
-    infobits: any[] = [{
-        doc: {
-          type: "doc",
-          content: [
-            {
-              type: "paragraph"
-            }
-          ]
-        },
-        selection: {
-          type: "text",
-          anchor: 1,
-          head: 1
-        }
-      }]
+    infobits: any[];
 }
 
 export const currentInfobyte = writable( new Infobyte())
