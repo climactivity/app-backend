@@ -16,9 +16,7 @@ export declare class CreateInfoByteDto {
             ];
         }
     ];
-    readonly infobits?: [{
-        value: string;
-    }];
+    readonly infobits?: [any];
     readonly xp?: number;
     readonly published: boolean;
 }

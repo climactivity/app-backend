@@ -1,40 +1,64 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
 
-[travis-image]: https://api.travis-ci.org/nestjs/nest.svg?branch=master
-[travis-url]: https://travis-ci.org/nestjs/nest
-[linux-image]: https://img.shields.io/travis/nestjs/nest/master.svg?label=linux
-[linux-url]: https://travis-ci.org/nestjs/nest
-  
-  <p align="center">A progressive <a href="http://nodejs.org" target="blank">Node.js</a> framework for building efficient and scalable server-side applications, heavily inspired by <a href="https://angular.io" target="blank">Angular</a>.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/dm/@nestjs/core.svg" alt="NPM Downloads" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://api.travis-ci.org/nestjs/nest.svg?branch=master" alt="Travis" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://img.shields.io/travis/nestjs/nest/master.svg?label=linux" alt="Linux" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#5" alt="Coverage" /></a>
-<a href="https://gitter.im/nestjs/nestjs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge"><img src="https://badges.gitter.im/nestjs/nestjs.svg" alt="Gitter" /></a>
-<a href="https://opencollective.com/nest#backer"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec"><img src="https://img.shields.io/badge/Donate-PayPal-dc3d53.svg"/></a>
-  <a href="https://twitter.com/nestframework"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Übersicht
 
-## Description
+### Frontend
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Das Frontend liegt in site und kann mit eigenen ```npm``` Befehlen gebaut werden. Zurzeit gibt es nur einen Editor für Infobytes/Fragen. 
+
+Der Editor basiert auf [svelte-forms-lib](https://github.com/tjinauyeung/svelte-forms-lib). Damit können die Form-Felder mit Observables verbunden werden. 
+
+Der Infobit-Editor benutzt [Svelte-Prosemirror](https://github.com/christianheine/prosemirror-svelte) um aus einem WYSIWIG-Editor strukturierte Daten zu generieren. Bisher kann es nur Absätze und Text-Dekoration (Die in der App noch ignoriert werden).
+
+### Backend
+
+Das Frontend wird mit dem ```ServeStaticModule``` angezeigt. Dies ist nur eine temporäre Lösung, eigentlich sollte sich ein Webserver darum kümmern, für den development-Betrieb geht das aber (und macht die installation eines zusätzlichen Webservers wie VS-Code LiveServer unnötig). Das in Production nicht zu verwenden wollte ich in die Docker-Compose geschichte einbauen. 
+
+Als Persistenz Schicht wird MongoDb mit Mongoose Modul betrieben (die Standard-Lösung von NestJS, TypeORM, ist zwar schick aber auch recht langsam. Ausserdem ist der Schema-Builder von Mongoose besser auf NoSQL ausgerichtet als TypeORM.
+
+Alles was aus dem Infobyte-Editor kommt wird im ```infobyte```-Modul behandelt. Infobytes werden persistiert und unterstützen CRUD-Operationen. Dabei folge ich dem Tutorial [hier](https://docs.nestjs.com/techniques/mongodb).
+
+## Fortschritt
+
+### Content-Editor für Info-Pakete und Quizfragen
+#### Meta-Daten
+- [~] Sprache zuweisen (UI existiert)
+- [~] Region zuweisen (UI existiert)
+- [~] Veröffentlichen (UI existiert)
+- [ ] Revisionen verwalten?
+
+#### Inhalt
+- [x] Titel anlegen
+- [x] Frontmatter (aka das, was in der Sprechblase am Anfang des Info-Moduls sthet) anlegen
+- [ ] Icon hochladen
+
+Infobits
+- [x] Infobits anlegen
+- [ ] Rich-Text Formatierung in Infobits
+- [ ] Bullet-Lists in Infobits
+- [ ] Tabellen in Infobits 
+- [ ] Grafiken in Infobits 
+- [ ] Eingaben validierung
+
+Quiz-Fragen
+- [x] Fragen anlegen
+- [x] Antworten anlegen
+- [ ] Eingaben validierung
+
+#### Editor UI 
+- es gibt kein Feedback ob speichern erfolgreich war
+- man kann sich mit den ```-```-Buttons leicht in den Fuß schießen
+- validierung ist zwar eingeschaltat, ich habe aber noch kein Schema für [yup](https://svelte-forms-lib-sapper-docs.now.sh/yup) angelegt
 
 ## Installation
 
+### Lokal:
+
 ```bash
-$ npm install
+$ npm install && cd site && npm install 
 ```
 
-## Running the app
+
+## Running the backend
 
 ```bash
 # development
@@ -60,16 +84,33 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Support
+## Running the frontend
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+$ cd site
 
-## Stay in touch
+# development in watch mode
+$ npm run dev
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+# build production mode
+$ npm run build
 
-## License
+# run tests
+$ npm run validate
+```
 
-  Nest is [MIT licensed](LICENSE).
+## Docker:
+#### kommt bald(tm)
+(sobald ich den Configservice aus meinem Test-Projekt hier integriert habe)
+
+1. Konfiguration anlegen:
+```bash
+$ cp .env-template .env 
+```
+
+2. ein Password für die Datenbank in .env setzen
+
+3. Die Container bauen und staren: 
+```bash
+$ docker-compose up
+```

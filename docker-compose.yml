@@ -1,0 +1,42 @@
+## TODO .env Config wird noch nicht in der Nest anwendung geladen, ich habe so was schon mal gebaut, das muss noch rüber kopiert werden 
+
+version: "3.8"
+
+services:
+
+  server:
+    build: .
+    restart: always
+    volumes:
+      - logvolume01:/var/log
+    links:
+      - db
+    networks:
+      - main
+    depends_on:
+      - db
+    env_file:
+      - .env
+
+  db: 
+    image: mongo:latest
+    restart: always
+#    environment:
+#      - MONGO_INITDB_ROOT_USERNAME=password
+#      - MONGO_INITDB_ROOT_PASSWORD=user
+#    ports:
+#      - 27017:27017
+    volumes:
+      - ./mongodb_data_container:/data/db
+    networks:
+      - main
+    env_file:
+      - .env
+
+volumes:
+  logvolume01: {}
+
+
+networks:
+  main:
+    driver: bridge
