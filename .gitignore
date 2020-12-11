@@ -1,2 +1,5 @@
 /mongodb_data_container/
 report*
+/log_*
+.env
+/mongo*

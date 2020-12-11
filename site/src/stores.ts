@@ -39,3 +39,4 @@ export class Infobyte {
 }
 
 export const currentInfobyte = writable( new Infobyte())
+export var baseUrl = ''

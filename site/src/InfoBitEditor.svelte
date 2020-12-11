@@ -1,4 +1,4 @@
-<script lang="js">
+<script lang="ts">
   import { onMount } from 'svelte';
   import ProsemirrorEditor from 'prosemirror-svelte';
   import {

@@ -1,4 +1,5 @@
 export default () => ({
+    use_static_assets: process.env.SERVE_STATIC || true,
     db_user: process.env.MONGO_INITDB_ROOT_USERNAME,
     db_pass:process.env.MONGO_INITDB_ROOT_PASSWORD,
     db_uri: process.env.DB_HOST || "localhost",    
