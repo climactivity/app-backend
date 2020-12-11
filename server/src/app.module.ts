@@ -1,27 +1,34 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-
-// serve the frontend -- should probably done by nginx, but this is fine for testing
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import configuration from './config/configuration';
 
 // mongo db support
 import { MongooseModule } from '@nestjs/mongoose';
-
 
 import { InfobyteModule } from './infobyte/infobyte.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost/nest'),
-    InfobyteModule,
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'site/public'),
-      exclude: ['/infobyte*'],
+    ConfigModule.forRoot({
+      ignoreEnvFile: true,
+      isGlobal: true,
+      load: [configuration]
+    }), MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => {
+        let config = { uri: "" }; 
+        if (configService.get("db_user")) {
+          config.uri =  `mongodb://${configService.get("db_user")}:${configService.get("db_pass")}@${configService.get("db_uri")}:${configService.get("db_port")}/${configService.get("db_name")}`
+        } else {
+          config.uri =  `mongodb://${configService.get("db_uri")}:${configService.get("db_port")}/${configService.get("db_name")}`
+        }
+        return config;
+      },inject: [ConfigService]
     }),
-  ],
-  controllers: [AppController],
-  providers: [AppService],
+    //MongooseModule.forRoot('mongodb://localhost/nest'),
+    InfobyteModule
+    ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

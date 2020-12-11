@@ -4,8 +4,8 @@ version: "3.8"
 
 services:
 
-  server:
-    build: .
+  backend:
+    build: ./server
     restart: always
     volumes:
       - logvolume01:/var/log
