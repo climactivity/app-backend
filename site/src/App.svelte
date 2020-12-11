@@ -1,19 +1,13 @@
 <script lang="ts">
   import Aside from './Aside.svelte';
   import InfobyteEditor from "./InfobyteEditor.svelte";
-  import { currentInfobyte,baseUrl } from './stores';
+  import { currentInfobyte, baseUrl } from './stores';
 
   let selectedInfobyte = undefined
 
   const unsubscribe = currentInfobyte.subscribe((value) => {
     selectedInfobyte = value;
   });
-  const isProd = __frontend_env.env.isProd
-  const apiUrl = __frontend_env.env.SVELTE_APP_API_HOST_BASE || ''
-
-  if(isProd) {
-    base_url = apiUrl 
-  }
 
 </script>
 
@@ -92,7 +86,7 @@
 </style>
 
 <main>
-  <h4>{isProd} - {apiUrl}</h4>
+  <h4>{baseUrl}</h4>
   <Aside/>
   <section>
 

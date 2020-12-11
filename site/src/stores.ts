@@ -39,4 +39,6 @@ export class Infobyte {
 }
 
 export const currentInfobyte = writable( new Infobyte())
-export var baseUrl = ''
+const isProd = __frontend_env.env.isProd
+const apiUrl = __frontend_env.env.SVELTE_APP_API_HOST_BASE || ''
+export var baseUrl = isProd ? apiUrl : baseUrl
