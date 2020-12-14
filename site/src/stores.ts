@@ -38,7 +38,7 @@ export class Infobyte {
     infobits: any[];
 }
 
-export const currentInfobyte = writable( new Infobyte())
+export const currentInfobyte: Observable<DeepPartial<Infobyte>> = writable( new Infobyte())
 const isProd = __frontend_env.env.isProd
 const apiUrl = __frontend_env.env.SVELTE_APP_API_HOST_BASE || ''
-export var baseUrl = isProd ? apiUrl : baseUrl
+export var baseUrl =  __frontend_env && isProd ? apiUrl : ''
