@@ -6,7 +6,19 @@
     NavLink,
     Container
   } from 'sveltestrap';
- 
+  import { Router, Link, Route } from "svelte-routing";
+import { baseUrl } from "./stores";
+import MyNavLink from "./MyNavLink.svelte";
+
+let activeTab = "infobytes"
+
+function setActiveTab(path) {
+  return function (event) {
+    console.log(path)
+    activeTab = path
+  };
+}
+
 </script>
 
 <svelte:head>
@@ -75,33 +87,39 @@
 <main>
   <Nav tabs justified>
     <NavItem>
-      <NavLink disabled href="#">Health</NavLink>
+      <MyNavLink  target={"health"} currentTab={activeTab} callback={setActiveTab}>Health</MyNavLink>
     </NavItem>
     <NavItem>
-      <NavLink disabled href="#">Analytics</NavLink>
+      <MyNavLink  target={"analytics"} currentTab={activeTab} callback={setActiveTab}>Analytics</MyNavLink>
     </NavItem>
     <NavItem>
-      <NavLink disabled href="#">Logs</NavLink>
+      <MyNavLink  target={"logs"} currentTab={activeTab} callback={setActiveTab}>Logs</MyNavLink>
     </NavItem>
     <NavItem>
-      <NavLink href="#">Bäume</NavLink>
+      <MyNavLink  target={"baeume"} currentTab={activeTab} callback={setActiveTab}>Bäume</MyNavLink>
     </NavItem>
     <NavItem>
-      <NavLink disabled href="#">Aspekte</NavLink>
+      <MyNavLink  target={"aspects"} currentTab={activeTab} callback={setActiveTab}>Aspekte</MyNavLink>
     </NavItem>
     <NavItem>
-      <NavLink href="#" active>Infobytes</NavLink>
+      <MyNavLink  target={"infobytes"} currentTab={activeTab} callback={setActiveTab}>Infobytes</MyNavLink>
     </NavItem>
     <NavItem>
-      <NavLink disabled href="#">Aufgaben</NavLink>
+      <MyNavLink  target={"tasks"} currentTab={activeTab} callback={setActiveTab}>Aufgaben</MyNavLink>
     </NavItem>
     <NavItem>
-      <NavLink disabled href="#">Danger Zone</NavLink>
+      <MyNavLink  target={"danger-zone"} currentTab={activeTab} callback={setActiveTab}>Danger Zone</MyNavLink>
     </NavItem>
   </Nav>
 
 
   <Container>
-    <Infobytes/>
+    {#if activeTab === ''}
+      <h1> start page </h1>
+    {:else if activeTab === "baeume" }
+      <h1> Baum Template Editor </h1>
+    {:else if activeTab === "infobytes" }
+      <Infobytes/>
+    {/if}
   </Container>
 </main>
