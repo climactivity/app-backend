@@ -1,5 +1,7 @@
 <script lang="ts">
-  import { currentInfobyte, Infobyte, baseUrl } from './stores';
+  import {  
+    ListGroup, ListGroupItem , Card, CardBody, Col, Container, Row } from 'sveltestrap';
+  import { currentInfobyte, Infobyte, baseUrl } from '../stores';
 
   let selectedInfobyte;
 
@@ -34,42 +36,27 @@
   }
 </script>
 
-<style>
-  aside {
-    float: left;
-    background-color: var(--grey);
-    padding: 8px;
-    border-radius: 8px;
-  }
-
-  ul {
-    list-style-type: none;
-  }
-
-  @media (min-width: 640px) {
-    aside {
-      width: 20vw;
-      height: 100vh;
-    }
-  }
-</style>
-
-<aside>
+<Col xs="3">
+  <Card>
+    <CardBody>
   {#await infobytes}
     <p>...waiting</p>
   {:then data}
-    <ul>
+    <ListGroup vertical>
       {#each data as infobyte}
-        <li
-          class:selected={currentInfobyte._id === infobyte._id}
-          on:click={() => onInfobyteSelected(infobyte)}>
+      <ListGroupItem 
+        tag="button" action  
+        on:click={() => onInfobyteSelected(infobyte)}
+        active={selectedInfobyte._id === infobyte._id}
+         >
           {infobyte.name}
-        </li>
+      </ListGroupItem>
       {/each}
-    </ul>
+    </ListGroup>
   {:catch error}
     <p>An error occurred!</p>
   {/await}
-
+</CardBody>
+</Card>
   <button on:click={newInfobyte}> Add new </button>
-</aside>
+  </Col>

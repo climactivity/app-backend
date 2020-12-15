@@ -47,7 +47,7 @@ export default {
 					...config().parsed
 				}
 			})
-		}),
+		}),            
 		svelte({
 			// enable run-time checks when not in production
 			dev: !production,

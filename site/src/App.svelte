@@ -1,18 +1,21 @@
 <script lang="ts">
-  import Aside from './Aside.svelte';
-  import InfobyteEditor from "./InfobyteEditor.svelte";
-  import { currentInfobyte, baseUrl } from './stores';
-
-  let selectedInfobyte = undefined
-
-  const unsubscribe = currentInfobyte.subscribe((value) => {
-    selectedInfobyte = value;
-  });
-
+  import Infobytes from "./Infobytes/Infobytes.svelte";
+  import {
+    Nav,
+    NavItem,
+    NavLink,
+    Container
+  } from 'sveltestrap';
+ 
 </script>
 
+<svelte:head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</svelte:head>
+
 <style>
-  :global(:root) {
+
+:global(:root) {
     --primary-light: #a6f9d6;
     --primary: #5be2a9;
     --primary-dark: #53ce9a;
@@ -24,26 +27,10 @@
     --red-dark: #9e3c3c;
   }
 
-  * {
-    margin: 0;
-    padding: 0;
-  }
-
   main {
     margin: 0;
   }
 
-  h1 {
-    color: var(--red);
-    text-transform: uppercase;
-    font-size: 4em;
-    font-weight: 100;
-    text-align: center;
-  }
-
-  .padded {
-    margin: 1em 1em 0 30vw;
-  }
   :global(button) {
     color: #fff;
     background-color: var(--primary);
@@ -86,16 +73,35 @@
 </style>
 
 <main>
-  <h4>{baseUrl}</h4>
-  <Aside/>
-  <section>
+  <Nav tabs justified>
+    <NavItem>
+      <NavLink disabled href="#">Health</NavLink>
+    </NavItem>
+    <NavItem>
+      <NavLink disabled href="#">Analytics</NavLink>
+    </NavItem>
+    <NavItem>
+      <NavLink disabled href="#">Logs</NavLink>
+    </NavItem>
+    <NavItem>
+      <NavLink href="#">Bäume</NavLink>
+    </NavItem>
+    <NavItem>
+      <NavLink disabled href="#">Aspekte</NavLink>
+    </NavItem>
+    <NavItem>
+      <NavLink href="#" active>Infobytes</NavLink>
+    </NavItem>
+    <NavItem>
+      <NavLink disabled href="#">Aufgaben</NavLink>
+    </NavItem>
+    <NavItem>
+      <NavLink disabled href="#">Danger Zone</NavLink>
+    </NavItem>
+  </Nav>
 
-  <section id="editor-container">
 
-    <div  class="padded">
-    <InfobyteEditor bind:selectedInfobyte={selectedInfobyte} />
-    </div>
-
-  </section>
-</section>
+  <Container>
+    <Infobytes/>
+  </Container>
 </main>

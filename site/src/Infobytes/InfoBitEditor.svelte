@@ -34,27 +34,37 @@
   let focusEditor;
 
   function handleTransaction(event) {
+    preventDefault(event)
+
     // get the new editor state from event.detail
     editorState = event.detail.editorState;
     value = toJSON(editorState);
   }
 
   function clearEditor(event) {
+    preventDefault(event)
+
     editorState = clear(editorState);
     focusEditor();
   }
 
   function resetEditor(event) {
+    preventDefault(event)
+
     editorState = createRichTextEditor(value);
     focusEditor();
   }
 
   function handleToggleBold(event) {
+    preventDefault(event)
     editorState = toggleMark(editorState, 'strong');
   }
 
-  function handleSetBlockType(type, attrs = null) {
+  function handleSetBlockType( type, attrs = null) {
+
     return function (event) {
+      preventDefault(event)
+
       editorState = setBlockType(editorState, type, attrs);
       value = toJSON(editorState);
 
@@ -95,23 +105,14 @@
 <style>
   .controls {
     display: flex;
-    padding: 0;
-  }
-  .controls > button {
-    min-width: auto;
-    margin-right: 1em;
-    padding: 1em;
   }
   .infobit-editor {
-    padding: 8px;
-    border-radius: 8px;
-    margin-top: 1em;
-    margin-bottom: 1em;
-    background-color: var(--grey);
+    background-color:  var(--grey);
+    border: 1px solid var(--grey);
+    border-radius: 4px;
   }
   .editor {
     background-color: white;
-    padding: 2px;
 
   }
 </style>
@@ -141,7 +142,8 @@
 
     <button
       disabled={activeBlockType === 'heading-2'}
-      on:click={handleSetBlockType('heading', { level: 2 })}
+      on:click={
+        handleSetBlockType('heading', { level: 2 })}
       on:mousedown={preventDefault}>h2</button>
 
     <button
