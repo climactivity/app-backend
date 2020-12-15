@@ -6,6 +6,8 @@ import configuration from './config/configuration';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import { InfobyteModule } from './infobyte/infobyte.module';
+import { ImageUploadModule } from './image-upload/image-upload.module';
+import { TreeTemplateModule } from './tree-template/tree-template.module';
 
 @Module({
   imports: [
@@ -26,7 +28,9 @@ import { InfobyteModule } from './infobyte/infobyte.module';
       },inject: [ConfigService]
     }),
     //MongooseModule.forRoot('mongodb://localhost/nest'),
-    InfobyteModule
+    InfobyteModule,
+    ImageUploadModule,
+    TreeTemplateModule
     ],
   controllers: [],
   providers: [],
