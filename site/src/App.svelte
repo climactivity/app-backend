@@ -9,8 +9,10 @@
   import { Router, Link, Route } from "svelte-routing";
 import { baseUrl } from "./stores";
 import MyNavLink from "./MyNavLink.svelte";
+import TreeTemplateEditor from "./TreeTemplates/TreeTemplateEditor.svelte";
+import TreeTemplateView from "./TreeTemplates/TreeTemplateView.svelte";
 
-let activeTab = "infobytes"
+let activeTab = "baeume"
 
 function setActiveTab(path) {
   return function (event) {
@@ -117,7 +119,7 @@ function setActiveTab(path) {
     {#if activeTab === ''}
       <h1> start page </h1>
     {:else if activeTab === "baeume" }
-      <h1> Baum Template Editor </h1>
+      <TreeTemplateView/>
     {:else if activeTab === "infobytes" }
       <Infobytes/>
     {/if}
