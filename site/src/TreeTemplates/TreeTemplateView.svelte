@@ -9,12 +9,6 @@ import TreeTemplateList from './TreeTemplateList.svelte'
 
 <section>
     <Row>
-        <Col xs="3">
-            <TreeTemplateList></TreeTemplateList>
-        </Col>
-        <Col xs="6">
-            <TreeTemplateEditor></TreeTemplateEditor>
-        </Col>
-
+        <TreeTemplateList></TreeTemplateList>
     </Row>
 </section>

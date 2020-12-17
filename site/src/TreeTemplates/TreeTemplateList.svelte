@@ -5,7 +5,7 @@ import { ListGroup, ListGroupItem , Card, CardBody, Col, Container, Row } from '
 import TreeTemplateEditor from './TreeTemplateEditor.svelte';
 
 const refetch = async () => {
-    const response = await fetch(`${baseUrl}/treeTemplates`);
+    const response = await fetch(`${baseUrl}/tree-template`);
     return await response.json();
 };
 
@@ -33,12 +33,11 @@ let selectedTreeTemplate = new TreeTemplate();
 const ontreeTemplateSelected = async (treeTemplate: { name: string; _id: string }) => {
     let treeTemplateData = await fetchTreeTemplate(treeTemplate._id)
     selectedTreeTemplate = treeTemplateData;
-    console.log(treeTemplateData);
   }
 
   const fetchTreeTemplate = async (id) => {
     if (!id) return;
-    const response = await fetch(`${baseUrl}/treeTemplate/${id}`);
+    const response = await fetch(`${baseUrl}/tree-template/${id}`);
     return await response.json();
   };
 
@@ -49,26 +48,34 @@ const ontreeTemplateSelected = async (treeTemplate: { name: string; _id: string 
 
 </script>
 
-<Card>
-    <CardBody>
-{#await treeTemplates}
-    <p>...waiting</p>
-{:then data}
-    <ListGroup vertical>
-    {#each data as treeTemplate}
-    <ListGroupItem 
-        tag="button" action  
-        on:click={() => ontreeTemplateSelected(treeTemplate)}
-        active={selectedTreeTemplate._id === treeTemplate._id}
-        >
-        {treeTemplate.ui_name}
-    </ListGroupItem>
-    {/each}
-    </ListGroup>
-{:catch error}
-    <p>An error occurred!</p>
-{/await}
-</CardBody>
-</Card>
-<button on:click={newtreeTemplate}> Add new </button>
+<Col xs="3">
+    <Card>
+        <CardBody>
+    {#await treeTemplates}
+        <p>...waiting</p>
+    {:then data}
+        <ListGroup vertical>
+        {#each data as treeTemplate}
+        <ListGroupItem 
+            tag="button" action  
+            on:click={() => ontreeTemplateSelected(treeTemplate)}
+            active={selectedTreeTemplate._id === treeTemplate._id}
+            >
+            {treeTemplate.ui_name}
+        </ListGroupItem>
+        {/each}
+        </ListGroup>
+    {:catch error}
+        <p>An error occurred!</p>
+    {/await}
+    </CardBody>
+    </Card>
+    <button on:click={newtreeTemplate}> Add new </button>
+
+</Col>
+<Col xs="6">
+    <TreeTemplateEditor bind:currentTemplate={selectedTreeTemplate}></TreeTemplateEditor>
+</Col>
+
+
   
