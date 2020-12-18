@@ -1,18 +1,30 @@
 <script lang="ts">
-  import Aside from './Aside.svelte';
-  import InfobyteEditor from "./InfobyteEditor.svelte";
-  import { currentInfobyte, baseUrl } from './stores';
+  import Infobytes from "./Infobytes/Infobytes.svelte";
+  import {
+    Nav,
+    NavItem,
+    NavLink,
+    Container
+  } from 'sveltestrap';
+  import { Router, Link, Route } from "svelte-routing";
+import { baseUrl } from "./stores";
+import MyNavLink from "./MyNavLink.svelte";
+import TreeTemplateEditor from "./TreeTemplates/TreeTemplateEditor.svelte";
+import TreeTemplateView from "./TreeTemplates/TreeTemplateView.svelte";
 
-  let selectedInfobyte = undefined
+let activeTab = "baeume"
 
-  const unsubscribe = currentInfobyte.subscribe((value) => {
-    selectedInfobyte = value;
-  });
+function setActiveTab(path) {
+  return function (event) {
+    console.log(path)
+    activeTab = path
+  };
+}
 
 </script>
-
 <style>
-  :global(:root) {
+
+:global(:root) {
     --primary-light: #a6f9d6;
     --primary: #5be2a9;
     --primary-dark: #53ce9a;
@@ -24,26 +36,10 @@
     --red-dark: #9e3c3c;
   }
 
-  * {
-    margin: 0;
-    padding: 0;
-  }
-
   main {
     margin: 0;
   }
 
-  h1 {
-    color: var(--red);
-    text-transform: uppercase;
-    font-size: 4em;
-    font-weight: 100;
-    text-align: center;
-  }
-
-  .padded {
-    margin: 1em 1em 0 30vw;
-  }
   :global(button) {
     color: #fff;
     background-color: var(--primary);
@@ -86,16 +82,41 @@
 </style>
 
 <main>
-  <h4>{baseUrl}</h4>
-  <Aside/>
-  <section>
+  <Nav tabs justified>
+    <NavItem>
+      <MyNavLink  target={"health"} currentTab={activeTab} callback={setActiveTab}>Health</MyNavLink>
+    </NavItem>
+    <NavItem>
+      <MyNavLink  target={"analytics"} currentTab={activeTab} callback={setActiveTab}>Analytics</MyNavLink>
+    </NavItem>
+    <NavItem>
+      <MyNavLink  target={"logs"} currentTab={activeTab} callback={setActiveTab}>Logs</MyNavLink>
+    </NavItem>
+    <NavItem>
+      <MyNavLink  target={"baeume"} currentTab={activeTab} callback={setActiveTab}>Bäume</MyNavLink>
+    </NavItem>
+    <NavItem>
+      <MyNavLink  target={"aspects"} currentTab={activeTab} callback={setActiveTab}>Aspekte</MyNavLink>
+    </NavItem>
+    <NavItem>
+      <MyNavLink  target={"infobytes"} currentTab={activeTab} callback={setActiveTab}>Infobytes</MyNavLink>
+    </NavItem>
+    <NavItem>
+      <MyNavLink  target={"tasks"} currentTab={activeTab} callback={setActiveTab}>Aufgaben</MyNavLink>
+    </NavItem>
+    <NavItem>
+      <MyNavLink  target={"danger-zone"} currentTab={activeTab} callback={setActiveTab}>Danger Zone</MyNavLink>
+    </NavItem>
+  </Nav>
 
-  <section id="editor-container">
 
-    <div  class="padded">
-    <InfobyteEditor bind:selectedInfobyte={selectedInfobyte} />
-    </div>
-
-  </section>
-</section>
+  <Container>
+    {#if activeTab === ''}
+      <h1> start page </h1>
+    {:else if activeTab === "baeume" }
+      <TreeTemplateView/>
+    {:else if activeTab === "infobytes" }
+      <Infobytes/>
+    {/if}
+  </Container>
 </main>

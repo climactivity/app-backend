@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createForm } from 'svelte-forms-lib';
   import { createEventDispatcher } from 'svelte';
-  import { Answer, Question, currentInfobyte, Infobyte, Infobit, baseUrl } from './stores';
+  import { Answer, Question, currentInfobyte, Infobyte, Infobit, baseUrl } from '../stores';
 import InfoBitEditor from './InfoBitEditor.svelte';
 
   export let selectedInfobyte;
@@ -41,17 +41,20 @@ import InfoBitEditor from './InfoBitEditor.svelte';
     console.log(editorTest)
   }
 
+  
   $: if (selectedInfobyte) {
-    console.log(selectedInfobyte);
-    $form.name = selectedInfobyte.name || "";
-    $form.frontmatter = selectedInfobyte.frontmatter || "";
-    $form.questions = selectedInfobyte.questions || [new Question()];
-    $errors.questions = selectedInfobyte.questions || [new Question()];
-    $form._id = selectedInfobyte._id || "";
-    $form.infobits = selectedInfobyte.infobits || [];
-    $errors.infobits = selectedInfobyte.infobits || [];
+    console.log(form._id, selectedInfobyte._id);
+    if (form._id !== selectedInfobyte._id) {
+      $form.name = selectedInfobyte.name || "";
+      $form.frontmatter = selectedInfobyte.frontmatter || "";
+      $form.questions = selectedInfobyte.questions || [new Question()];
+      $errors.questions = selectedInfobyte.questions || [new Question()];
+      $form._id = selectedInfobyte._id || "";
+      $form.infobits = selectedInfobyte.infobits || [];
+      $errors.infobits = selectedInfobyte.infobits || [];
+    }
   }
-
+ 
   const addInfobit = () => {
     $form.infobits = $form.infobits.concat(new Infobit());
     $errors.infobits = $errors.infobits.concat(new Infobit());
@@ -101,8 +104,7 @@ import InfoBitEditor from './InfoBitEditor.svelte';
 
 <style>
   input,
-  select,
-  textarea {
+  select{
     font-family: inherit;
     font-size: inherit;
     max-width: 400px;
@@ -115,21 +117,16 @@ import InfoBitEditor from './InfoBitEditor.svelte';
     background: var(--white);
   }
 
-  select {
-    height: 45px;
-  }
 
   input:focus,
-  select:focus,
-  textarea:focus {
+  select:focus{
     outline: none;
     box-shadow: 0 0 0 4px rgb(227, 227, 245);
     border-color: var(--grey);
   }
 
   input:disabled,
-  select:disabled,
-  textarea:disabled {
+  select:disabled {
     color: #ccc;
   }
 
