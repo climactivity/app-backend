@@ -11,11 +11,14 @@ Der Infobit-Editor benutzt [Svelte-Prosemirror](https://github.com/christianhein
 
 ### Backend
 
-Das Frontend wird mit dem ```ServeStaticModule``` angezeigt. Dies ist nur eine temporäre Lösung, eigentlich sollte sich ein Webserver darum kümmern, für den development-Betrieb geht das aber (und macht die installation eines zusätzlichen Webservers wie VS-Code LiveServer unnötig). Das in Production nicht zu verwenden wollte ich in die Docker-Compose geschichte einbauen. 
+Der ServerCode ist jetzt in ./server zuhause. 
+Das Frontend wird im dev Modus mit ```NestExpressApplication.useStaticAssets```angezeigt. Die Production-Konfiguration bringt einen nginx-Container mit, der die statischen Inhalte ausliefert.
 
 Als Persistenz Schicht wird MongoDb mit Mongoose Modul betrieben (die Standard-Lösung von NestJS, TypeORM, ist zwar schick aber auch recht langsam. Ausserdem ist der Schema-Builder von Mongoose besser auf NoSQL ausgerichtet als TypeORM.
 
 Alles was aus dem Infobyte-Editor kommt wird im ```infobyte```-Modul behandelt. Infobytes werden persistiert und unterstützen CRUD-Operationen. Dabei folge ich dem Tutorial [hier](https://docs.nestjs.com/techniques/mongodb).
+
+Es gibt auch einen Editor für TreeTemplates. Diese definieren die Eigenschaften der pflanzbaren Pflanzen im Wald. TODO: Da das Verhalten von Bäumen und anderen Pflanzen jetzt hinreichend ähnlich ist, dass diese über die selben Templates konfiguriert werden können, sollte der Name des Moduls das reflektieren. 
 
 ## Fortschritt
 
@@ -44,23 +47,21 @@ Quiz-Fragen
 - [x] Antworten anlegen
 - [ ] Eingaben validierung
 
+Tree-Templates
+- [x] CRUD operationen
+- [ ] Vorschau für die ausgewählte Textur
+- [ ] Feste Optionen für die Textur- und Sektorauswahl
+
 #### Editor UI 
 - es gibt kein Feedback ob speichern erfolgreich war
 - man kann sich mit den ```-```-Buttons leicht in den Fuß schießen
 - validierung ist zwar eingeschaltat, ich habe aber noch kein Schema für [yup](https://svelte-forms-lib-sapper-docs.now.sh/yup) angelegt
 
-## Installation
-
-### Lokal:
-
-```bash
-$ npm install && cd site && npm install 
-```
-
-
 ## Running the backend
 
 ```bash
+$ cd server
+$ npm install
 # development
 $ npm run start
 
@@ -88,7 +89,7 @@ $ npm run test:cov
 
 ```bash
 $ cd site
-
+$ npm install
 # development in watch mode
 $ npm run dev
 
