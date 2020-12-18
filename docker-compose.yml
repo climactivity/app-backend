@@ -4,11 +4,25 @@ version: "3.8"
 
 services:
 
-  server:
-    build: .
+  frontend:
+    build: ./site
     restart: always
     volumes:
-      - logvolume01:/var/log
+      - ./log_frontend:/var/log/nginx
+    networks:
+      - main
+    depends_on:
+      - backend
+    env_file:
+      - .env
+    ports:
+      - 8080:80
+
+  backend:
+    build: ./server
+    restart: always
+    volumes:
+      - ./log_backend:/var/log
     links:
       - db
     networks:
@@ -19,23 +33,28 @@ services:
       - .env
 
   db: 
-    image: mongo:latest
+    image: bitnami/mongodb:latest
     restart: always
-#    environment:
-#      - MONGO_INITDB_ROOT_USERNAME=password
-#      - MONGO_INITDB_ROOT_PASSWORD=user
+    env_file:
+      - .env
+    environment:
+          MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+          MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+          MONGODB_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+          MONGODB_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+          MONGODB_DATABASE: ${MONGO_INITDB_DATABASE}
 #    ports:
 #      - 27017:27017
     volumes:
+      # named volumes
+      - mongoconfig:/data/configdb
       - ./mongodb_data_container:/data/db
+      - ./mongoshell:/home/mongodb/
     networks:
       - main
-    env_file:
-      - .env
-
 volumes:
-  logvolume01: {}
-
+  mongoconfig: {}
+  mongoshell: {}
 
 networks:
   main:

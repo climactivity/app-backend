@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { currentInfobyte, Infobyte } from './stores';
+  import { currentInfobyte, Infobyte, baseUrl } from './stores';
 
   let selectedInfobyte;
 
   const refetch = async () => {
-    const response = await fetch('/infobyte');
+    const response = await fetch(`${baseUrl}/infobyte`);
     return await response.json();
   };
 
@@ -24,7 +24,7 @@
 
   const fetchInfoBtye = async (id) => {
     if (!id) return;
-    const response = await fetch(`/infobyte/${id}`);
+    const response = await fetch(`${baseUrl}/infobyte/${id}`);
     return await response.json();
   };
 

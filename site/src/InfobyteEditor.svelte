@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createForm } from 'svelte-forms-lib';
   import { createEventDispatcher } from 'svelte';
-  import { Answer, Question, currentInfobyte, Infobyte, Infobit } from './stores';
+  import { Answer, Question, currentInfobyte, Infobyte, Infobit, baseUrl } from './stores';
 import InfoBitEditor from './InfoBitEditor.svelte';
 
   export let selectedInfobyte;
@@ -22,7 +22,7 @@ import InfoBitEditor from './InfoBitEditor.svelte';
       if (infobyte._id === '') delete infobyte._id;
       console.log(values);
       let result = await fetch(
-        `/infobyte${infobyte._id ? '/' + infobyte._id : ''}`,
+        `${baseUrl}/infobyte${infobyte._id ? '/' + infobyte._id : ''}`,
         {
           method: infobyte._id ? 'PUT' : 'POST',
           headers: {

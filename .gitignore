@@ -1,7 +1,5 @@
-node_modules
-node_modules
-dist
-.vscode
-build
-.env
-mongodb_data_container
+/mongodb_data_container/
+report*
+/log_*
+./.env
+/mongo*
