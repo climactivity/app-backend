@@ -6,6 +6,7 @@ services:
 
   frontend:
     build: ./site
+    image: de.climactivity.frontend:0.1.0
     restart: always
     volumes:
       - ./log_frontend:/var/log/nginx
@@ -13,13 +14,12 @@ services:
       - main
     depends_on:
       - backend
-    env_file:
-      - .env
     ports:
       - 8080:80
 
   backend:
     build: ./server
+    image: de.climactivity.backend:0.1.0
     restart: always
     volumes:
       - ./log_backend:/var/log
@@ -29,20 +29,29 @@ services:
       - main
     depends_on:
       - db
-    env_file:
-      - .env
+    environment:
+      SERVE_STATIC: "false"
+      DB_HOST: db
+      DB_PORT: 27017
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGODB_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGODB_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGODB_DATABASE: ${MONGO_INITDB_DATABASE}
+#    env_file:
+#      - .env
 
   db: 
     image: bitnami/mongodb:latest
     restart: always
-    env_file:
-      - .env
+#    env_file:
+#      - .env
     environment:
-          MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
-          MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
-          MONGODB_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
-          MONGODB_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
-          MONGODB_DATABASE: ${MONGO_INITDB_DATABASE}
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGODB_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGODB_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGODB_DATABASE: ${MONGO_INITDB_DATABASE}
 #    ports:
 #      - 27017:27017
     volumes:
