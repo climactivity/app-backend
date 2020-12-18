@@ -1,0 +1,23 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+    env: 
+      MONGO_INITDB_ROOT_USERNAME: ${{ secrets.MONGO_INITDB_ROOT_USERNAME }} 
+      MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_INITDB_ROOT_PASSWORD }} 
+      MONGODB_USERNAME: ${{ secrets.MONGO_INITDB_ROOT_USERNAME }} 
+      MONGODB_PASSWORD: ${{ secrets.MONGO_INITDB_ROOT_PASSWORD }} 
+      MONGODB_DATABASE: ${{ secrets.MONGO_INITDB_ROOT_DATABASE }} 
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker images
+      run: docker-compose build --force-recreate
