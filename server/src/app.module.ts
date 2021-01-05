@@ -8,6 +8,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { InfobyteModule } from './infobyte/infobyte.module';
 import { ImageUploadModule } from './image-upload/image-upload.module';
 import { TreeTemplateModule } from './tree-template/tree-template.module';
+import { HeartbeatGateway } from './heartbeat.gateway';
+import { HeartbeatService } from './heartbeat/heartbeat.service';
 
 @Module({
   imports: [
@@ -30,9 +32,9 @@ import { TreeTemplateModule } from './tree-template/tree-template.module';
     //MongooseModule.forRoot('mongodb://localhost/nest'),
     InfobyteModule,
     ImageUploadModule,
-    TreeTemplateModule
+    TreeTemplateModule,
     ],
   controllers: [],
-  providers: [],
+  providers: [HeartbeatGateway, HeartbeatService],
 })
 export class AppModule {}
