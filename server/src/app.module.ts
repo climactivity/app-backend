@@ -10,6 +10,8 @@ import { ImageUploadModule } from './image-upload/image-upload.module';
 import { TreeTemplateModule } from './tree-template/tree-template.module';
 import { HeartbeatGateway } from './heartbeat.gateway';
 import { HeartbeatService } from './heartbeat/heartbeat.service';
+import { ChronoService } from './chrono/chrono.service';
+import { ChronoModule } from './chrono/chrono.module';
 
 @Module({
   imports: [
@@ -33,6 +35,7 @@ import { HeartbeatService } from './heartbeat/heartbeat.service';
     InfobyteModule,
     ImageUploadModule,
     TreeTemplateModule,
+    ChronoModule,
     ],
   controllers: [],
   providers: [HeartbeatGateway, HeartbeatService],

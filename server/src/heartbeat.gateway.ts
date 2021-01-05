@@ -1,5 +1,6 @@
 import { Logger } from '@nestjs/common';
 import { WebSocketServer, SubscribeMessage, MessageBody, WebSocketGateway, OnGatewayConnection, OnGatewayInit, OnGatewayDisconnect, ConnectedSocket } from '@nestjs/websockets';
+import { ChronoService } from './chrono/chrono.service';
 import { HeartbeatService } from './heartbeat/heartbeat.service';
 
 // TODO move this to the heartbeat module? 
@@ -11,10 +12,11 @@ export class HeartbeatGateway implements OnGatewayInit, OnGatewayConnection, OnG
   @WebSocketServer() server;
   private readonly logger = new Logger(HeartbeatGateway.name);
 
-  constructor(private readonly heartbeatService: HeartbeatService) { }
+  constructor(private readonly heartbeatService: HeartbeatService ,private readonly chronoService: ChronoService) { }
 
   afterInit(server: any) {
     this.logger.log(`Heartbeat-Gateway initialized, listening on {/heartbeat}`)
+    this.chronoService.register(() => this.handleTick(), HeartbeatGateway.name)
   }
   handleConnection(client: any, ...args: any[]) {
     this.logger.verbose(`Client connected`)
@@ -28,17 +30,16 @@ export class HeartbeatGateway implements OnGatewayInit, OnGatewayConnection, OnG
   }
 
   handleMessage(data: string, client: any) {
-    console.log(`Client connected, message: ${data}`)
-    if (this.heartbeatService.checkVersion(JSON.parse(data))) {
-      client.send(JSON.stringify({
-        serverVersion: "0.1.0",
-        clientSupported: true
-      }));
-    } else {
-      client.send(JSON.stringify({
-        serverVersion: "0.1.0",
-        clientSupported: false
-      }));
+    // console.log(`Client connected, message: ${data}`)
+    let messageData = JSON.parse(data); 
+
+    if ( typeof(messageData.type) != 'undefined' ) {
+      client.send(JSON.stringify(this.heartbeatService.handleMessage(messageData)))
     }
+  }
+
+  handleTick() {
+    this.logger.verbose(`Tock`)
+
   }
 }
