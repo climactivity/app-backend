@@ -10,7 +10,6 @@ import { ImageUploadModule } from './image-upload/image-upload.module';
 import { TreeTemplateModule } from './tree-template/tree-template.module';
 import { HeartbeatGateway } from './heartbeat.gateway';
 import { HeartbeatService } from './heartbeat/heartbeat.service';
-import { ChronoService } from './chrono/chrono.service';
 import { ChronoModule } from './chrono/chrono.module';
 
 @Module({
