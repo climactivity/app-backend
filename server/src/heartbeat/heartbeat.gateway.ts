@@ -1,7 +1,7 @@
 import { Logger } from '@nestjs/common';
 import { WebSocketServer, SubscribeMessage, MessageBody, WebSocketGateway, OnGatewayConnection, OnGatewayInit, OnGatewayDisconnect, ConnectedSocket } from '@nestjs/websockets';
-import { ChronoService } from './chrono/chrono.service';
-import { HeartbeatService } from './heartbeat/heartbeat.service';
+import { ChronoService } from '../chrono/chrono.service';
+import { HeartbeatService } from './heartbeat.service';
 
 // TODO move this to the heartbeat module? 
 // Gateways apparently don't work if they aren't part of the app module!?

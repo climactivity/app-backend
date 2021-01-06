@@ -8,9 +8,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { InfobyteModule } from './infobyte/infobyte.module';
 import { ImageUploadModule } from './image-upload/image-upload.module';
 import { TreeTemplateModule } from './tree-template/tree-template.module';
-import { HeartbeatGateway } from './heartbeat.gateway';
 import { HeartbeatService } from './heartbeat/heartbeat.service';
 import { ChronoModule } from './chrono/chrono.module';
+import { HeartbeatModule } from './heartbeat/heartbeat.module';
 
 @Module({
   imports: [
@@ -35,8 +35,9 @@ import { ChronoModule } from './chrono/chrono.module';
     ImageUploadModule,
     TreeTemplateModule,
     ChronoModule,
+    HeartbeatModule,
     ],
   controllers: [],
-  providers: [HeartbeatGateway, HeartbeatService],
+  providers: [],
 })
 export class AppModule {}
