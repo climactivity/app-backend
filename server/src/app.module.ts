@@ -11,6 +11,7 @@ import { TreeTemplateModule } from './tree-template/tree-template.module';
 import { HeartbeatService } from './heartbeat/heartbeat.service';
 import { ChronoModule } from './chrono/chrono.module';
 import { HeartbeatModule } from './heartbeat/heartbeat.module';
+import { PlayerGameStateModule } from './player-game-state/player-game-state.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { HeartbeatModule } from './heartbeat/heartbeat.module';
     TreeTemplateModule,
     ChronoModule,
     HeartbeatModule,
+    PlayerGameStateModule,
     ],
   controllers: [],
   providers: [],
