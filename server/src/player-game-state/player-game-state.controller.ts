@@ -19,6 +19,11 @@ export class PlayerGameStateController {
         return this.playerGameStateService.findBoardStateForDevice(install_id)
     }
 
+    @Post(":install_id/create-player-state")
+    createNewPlayerState(@Param('install_id') install_id): Promise<PlayerGameStateDto|string> {
+        return this.playerGameStateService.createNewPlayerStateForDevice(install_id)
+    }
+
     @Get(":install_id/inventory")
     findInventory(@Param('install_id') install_id): Promise<PlayerBoardStateDto> {
         return this.playerGameStateService.findInventoryForDevice(install_id)
@@ -31,6 +36,21 @@ export class PlayerGameStateController {
 
     @Put(":install_id/board-state/entites/:entity_id")
     updateBoardEntity(@Param('install_id') install_id,  @Param('entity_id') entity_id, @Body() updateBoardEntityDto: any) {
-        
+        return this.playerGameStateService.updateBoardEntityForDevice(install_id, entity_id, updateBoardEntityDto); 
+    }
+
+    @Get(":install_id/tracking/")
+    findTrackedAspectsFor(@Param('install_id') install_id) {
+        return this.playerGameStateService.findTrackedAspectsForDevice(install_id);
+    }
+
+    @Get(":install_id/tracking/:aspect")
+    findTrackedAspectFor(@Param('install_id') install_id, @Param('aspect') aspect) {
+        return this.playerGameStateService.findTrackedAspectForDevice(install_id, aspect);
+    }
+    
+    @Post(":install_id/tracking/:aspect")
+    updateTracking(@Param('install_id') install_id, @Param('aspect') aspect, @Body() level) {
+        return this.playerGameStateService.setTrackedAspectForDevice(install_id, aspect, level);
     }
 }

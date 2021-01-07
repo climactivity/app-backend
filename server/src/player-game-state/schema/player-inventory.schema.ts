@@ -12,6 +12,12 @@ export class PlayerInventory {
     coins: number
 
     @Prop()
+    xp: number
+
+    @Prop()
+    level: number
+
+    @Prop()
     history: InventoryTransaction[]
 
 }
