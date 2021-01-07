@@ -39,7 +39,7 @@ export class HeartbeatGateway implements OnGatewayInit, OnGatewayConnection, OnG
   }
 
   handleTick() {
-    this.logger.verbose(`Tock`)
+    //this.logger.verbose(`Tock`)
 
   }
 }

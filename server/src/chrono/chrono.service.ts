@@ -15,7 +15,7 @@ export class ChronoService  {
 
     @Cron('* * * * * *')
     handleCron() {
-        this.logger.debug('Tick');
+        //this.logger.debug('Tick');
         this.callbacks.map(cb => cb())
     }
 
