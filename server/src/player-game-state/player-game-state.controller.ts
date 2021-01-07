@@ -3,6 +3,7 @@ import { CreateBoardEntityDto } from './dto/create-board-entity.dto';
 import { PlayerBoardStateDto } from './dto/player-board-state.dto';
 import { PlayerGameStateDto } from './dto/player-game-state.dto';
 import { PlayerGameStateService } from './player-game-state.service';
+import { InventoryStateDto } from './dto/inventory-state.dto';
 
 @Controller('player-game-state')
 export class PlayerGameStateController {
@@ -15,7 +16,7 @@ export class PlayerGameStateController {
     }
 
     @Get(":install_id/board-state")
-    findBoardState(@Param('install_id') install_id): Promise<PlayerBoardStateDto> {
+    findBoardState(@Param('install_id') install_id): Promise<PlayerBoardStateDto|string> {
         return this.playerGameStateService.findBoardStateForDevice(install_id)
     }
 
@@ -25,7 +26,7 @@ export class PlayerGameStateController {
     }
 
     @Get(":install_id/inventory")
-    findInventory(@Param('install_id') install_id): Promise<PlayerBoardStateDto> {
+    findInventory(@Param('install_id') install_id): Promise<InventoryStateDto|string> {
         return this.playerGameStateService.findInventoryForDevice(install_id)
     }
 

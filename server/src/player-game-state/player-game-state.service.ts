@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateBoardEntityDto } from './dto/create-board-entity.dto';
+import { InventoryStateDto } from './dto/inventory-state.dto';
 import { PlayerBoardStateDto } from './dto/player-board-state.dto';
 import { PlayerGameStateDto } from './dto/player-game-state.dto';
 import { BoardEntity, BoardEntityDocument } from './schema/board-entity.schema';
@@ -30,7 +31,8 @@ export class PlayerGameStateService {
         if(playerId) return this.findPlayerStateByInstallId(install_id)
         playerId = await new this.PlayerInstallsModel(
             {
-                installs: [install_id]
+                installs: [install_id],
+                cyNetworkAccount: null
             }).save()
         return this.playerGameStateToDto(await new this.PlayerGameStateModel({
             playerInstalls: playerId,
@@ -76,23 +78,20 @@ export class PlayerGameStateService {
 
         throw new Error('Method not implemented.');
     }
-    async findInventoryForDevice(install_id: any): Promise<PlayerBoardStateDto> {
-        const playerId : PlayerInstalls = await this.getPlayerForInstallId(install_id); 
-        if(!playerId) return "NO_PLAYER_RECORD"
-
-        throw new Error('Method not implemented.');
+    async findInventoryForDevice(install_id: any): Promise<InventoryStateDto|string> {
+        const playerGameState = await this.getPlayerStateForInstallId(install_id);
+        if(playerGameState == null) return "NO_PLAYER_RECORD"
+        return this.inventoryToDto(playerGameState.inventory) 
     }
-    async findBoardStateForDevice(install_id: any): Promise<PlayerBoardStateDto> {
-        const playerId : PlayerInstalls = await this.getPlayerForInstallId(install_id); 
-        if(!playerId) return "NO_PLAYER_RECORD"
-
-        throw new Error('Method not implemented.');
+    async findBoardStateForDevice(install_id: any): Promise<PlayerBoardStateDto|string> {
+        const playerGameState = await this.getPlayerStateForInstallId(install_id);
+        if(playerGameState == null) return "NO_PLAYER_RECORD"
+        return this.playerGameStateToBoardStateDto(playerGameState.boardState) 
     }
 
     async findPlayerStateByInstallId(install_id: string): Promise<PlayerGameStateDto|string> {
-        const playerId : PlayerInstalls = await this.getPlayerForInstallId(install_id); 
-        if(!playerId) return "NO_PLAYER_RECORD"
-        const playerGameState = await this.PlayerGameStateModel.findOne({playerInstalls: playerId}).exec();
+        const playerGameState = await this.getPlayerStateForInstallId(install_id);
+        if(playerGameState == null) return "NO_PLAYER_RECORD"
         return this.playerGameStateToDto(playerGameState);
     }
 
@@ -100,9 +99,21 @@ export class PlayerGameStateService {
        return  this.PlayerInstallsModel.findOne( { installs: install_id} ).exec();
     }
 
+    async getPlayerStateForInstallId(install_id: string) {
+        const playerId : PlayerInstalls = await this.getPlayerForInstallId(install_id); 
+        if(!playerId) return null
+        return this.PlayerGameStateModel.findOne({playerInstalls: playerId}).exec();
+
+    }
+
+    playerGameStateToBoardStateDto(boardState) {
+        return boardState
+    }
+
     playerGameStateToDto(playerGameState) {
         return {
             player_id: playerGameState.playerInstalls._id,
+            cyNetworkAccount: playerGameState.playerInstalls.cyNetworkAccount,
             inventory: this.inventoryToDto(playerGameState.inventory)
         }
     }

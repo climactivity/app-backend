@@ -7,7 +7,6 @@ export type BoardEntityDocument = BoardEntity & Document
 export class BoardEntity {
 
     @Prop({
-        index: true,
         unique: true
     })
     entity_id: string;
