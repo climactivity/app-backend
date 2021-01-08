@@ -12,6 +12,8 @@ import { HeartbeatService } from './heartbeat/heartbeat.service';
 import { ChronoModule } from './chrono/chrono.module';
 import { HeartbeatModule } from './heartbeat/heartbeat.module';
 import { PlayerGameStateModule } from './player-game-state/player-game-state.module';
+import { AspectModule } from './aspect/aspect.module';
+import { RewardsModule } from './rewards/rewards.module';
 
 @Module({
   imports: [
@@ -38,6 +40,8 @@ import { PlayerGameStateModule } from './player-game-state/player-game-state.mod
     ChronoModule,
     HeartbeatModule,
     PlayerGameStateModule,
+    AspectModule,
+    RewardsModule,
     ],
   controllers: [],
   providers: [],

@@ -3,6 +3,13 @@ import { Document } from 'mongoose';
 
 export type TrackedAspectsDocument = TrackedAspects & Document
 
+export class Tracking {
+
+    aspectName: string; 
+    level: number; 
+    
+}
+
 @Schema()
 export class TrackedAspects {
     @Prop()

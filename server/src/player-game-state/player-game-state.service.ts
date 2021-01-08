@@ -72,11 +72,11 @@ export class PlayerGameStateService {
         throw new Error('Method not implemented.');
     }
     async createBoardEntityForDevice(install_id: any, createBoardEntityDto: CreateBoardEntityDto) {
-     
-        const playerId : PlayerInstalls = await this.getPlayerForInstallId(install_id); 
-        if(!playerId) return "NO_PLAYER_RECORD"
-
-        throw new Error('Method not implemented.');
+        const playerGameState = await this.getPlayerStateForInstallId(install_id);
+        if(playerGameState == null) return "NO_PLAYER_RECORD"
+        let boardEntity = await new this.BoardEntityModel({...createBoardEntityDto}).save()
+        playerGameState.boardState.entities.push(boardEntity)
+        return this.playerGameStateToBoardStateDto((await playerGameState.save()).boardState)
     }
     async findInventoryForDevice(install_id: any): Promise<InventoryStateDto|string> {
         const playerGameState = await this.getPlayerStateForInstallId(install_id);
