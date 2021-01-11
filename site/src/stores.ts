@@ -1,4 +1,5 @@
 import { text } from 'svelte/internal';
+import type { Writable } from 'svelte/store';
 import { writable } from 'svelte/store'
 
 export class Answer {
@@ -38,7 +39,9 @@ export class Infobyte {
     infobits: any[];
 }
 
-export const currentInfobyte: Observable<DeepPartial<Infobyte>> = writable( new Infobyte())
+declare const __frontend_env; //
+
+export const currentInfobyte: Writable<Infobyte> = writable( new Infobyte())
 const isProd = __frontend_env.env.isProd
 const apiUrl = __frontend_env.env.SVELTE_APP_API_HOST_BASE || ''
 export var baseUrl =  __frontend_env && isProd ? apiUrl : ''

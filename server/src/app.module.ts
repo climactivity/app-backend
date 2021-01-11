@@ -8,6 +8,12 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { InfobyteModule } from './infobyte/infobyte.module';
 import { ImageUploadModule } from './image-upload/image-upload.module';
 import { TreeTemplateModule } from './tree-template/tree-template.module';
+import { HeartbeatService } from './heartbeat/heartbeat.service';
+import { ChronoModule } from './chrono/chrono.module';
+import { HeartbeatModule } from './heartbeat/heartbeat.module';
+import { PlayerGameStateModule } from './player-game-state/player-game-state.module';
+import { AspectModule } from './aspect/aspect.module';
+import { RewardsModule } from './rewards/rewards.module';
 
 @Module({
   imports: [
@@ -30,7 +36,12 @@ import { TreeTemplateModule } from './tree-template/tree-template.module';
     //MongooseModule.forRoot('mongodb://localhost/nest'),
     InfobyteModule,
     ImageUploadModule,
-    TreeTemplateModule
+    TreeTemplateModule,
+    ChronoModule,
+    HeartbeatModule,
+    PlayerGameStateModule,
+    AspectModule,
+    RewardsModule,
     ],
   controllers: [],
   providers: [],
