@@ -19,16 +19,16 @@ export class AspectController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.aspectService.findOne(+id);
+    return this.aspectService.findOne(id);
   }
 
   @Put(':id')
   update(@Param('id') id: string, @Body() updateAspectDto: UpdateAspectDto) {
-    return this.aspectService.update(+id, updateAspectDto);
+    return this.aspectService.update(id, updateAspectDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.aspectService.remove(+id);
+    return this.aspectService.remove(id);
   }
 }

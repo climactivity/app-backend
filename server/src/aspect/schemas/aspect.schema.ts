@@ -1,12 +1,37 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose'; 
 import { Reward } from 'src/rewards/schemas/reward.schema';
+import { Image } from 'src/image-upload/schemas/image.schema'; 
+import { InfoByte } from 'src/infobyte/schemas/infobyte.schema';
 
 export type AspectDocument = Aspect & Document
 
 export class TrackingData {
-    question: string
-    options: {value: string, reward: Reward}[] 
+    options: [{locale_id: string, reward: Reward}]
+    localized_strings: TrackingDataLocalization;
+}
+
+export class TrackingDataLocalization {
+    language: string;
+    strings: {
+        question: string; 
+        options: [{locale_id: string, value: string}]
+    }
+}
+
+export class AspectLocalization {
+    language: string; 
+    strings: {
+        title: string
+    }
+}
+
+export class Infograph {
+    entries: [{
+        info: InfoByte, 
+        requires: [InfoByte]
+        layer: number
+    }]
 }
 
 @Schema()
@@ -15,16 +40,19 @@ export class Aspect {
     name: string; 
 
     @Prop()
-    icon: any; 
+    icon: Image; 
 
     @Prop()
-    quizGraph: any; 
+    infograph: Infograph; 
 
     @Prop()
     trackingData: TrackingData; 
 
     @Prop()
-    localizedStrings: any; 
+    localizedStrings: AspectLocalization[]; 
+
+    @Prop()
+    region: string;
 
 }
 
