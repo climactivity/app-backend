@@ -1,13 +1,17 @@
 module.exports = {
     "transform": {
-        "\\.ts$": "babel-jest",
-        "\\.js$": "babel-jest",
-        "\\.svelte$": "svelte-jest"
+        "^.+\\.svelte$": [
+            "svelte-jester",
+            {
+                "preprocess": true
+            }
+        ],
+        "^.+\\.ts$": "ts-jest",
+        "^.+\\.js$": "babel-jest"
     },
     "moduleFileExtensions": [
         "js",
         "ts",
-        "json",
         "svelte"
     ]
-  }
+}
