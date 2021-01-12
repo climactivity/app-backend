@@ -1,7 +1,7 @@
 <script lang="ts">
     import {Alert, ListGroup, ListGroupItem, Button, Col, Row} from 'sveltestrap';
     import type Aspect from "./AspectTypes";
-    import { createEventDispatcher } from 'svelte';
+    import {createEventDispatcher} from 'svelte';
 
     const dispatch = createEventDispatcher();
 
@@ -11,11 +11,28 @@
         dispatch("message")
     }
 
-    export let selectedAspect : Aspect;
+    function addAspect() {
+        aspects = [...aspects, {
+            name: "New Aspect",
+            trackingOptions: [],
+            question: ""
+        }]
+        console.log(aspects);
+    }
+
+    export let selectedAspect: Aspect;
     export let aspects: Aspect[];
 </script>
 
-<h4 class="mt-3">All Aspects</h4>
+<Row>
+    <Col xs="auto">
+        <h4 class="mt-3">All Aspects</h4>
+    </Col>
+
+    <Col xs="auto">
+        <Button color="success" on:click={() => addAspect()}>+</Button>
+    </Col>
+</Row>
 
 {#if aspects.length === 0}
     <Alert color="warning" fade={false}>No aspects exist yet.</Alert>
@@ -31,8 +48,3 @@
     </ListGroup>
 {/if}
 
-<Row>
-    <Col xs={{ size:6, offset: 3 }}>
-        <Button>New aspect</Button>
-    </Col>
-</Row>
