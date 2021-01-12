@@ -1,0 +1,71 @@
+{
+	"info": {
+		"_postman_id": "480ff2ea-d83f-4e66-a334-3da5409b1040",
+		"name": "climactivity-app-backend-test-data-local",
+		"description": "- creates test data in mongo\n- runs against localhost:3000 (the standard port in dev mode)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:3000/aspect/",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"pflanzliche_ernährung\",\r\n    \"region\": \"DE\",\r\n    \"localizedStrings\": [{\r\n        \"language\": \"DE\", \r\n        \"strings\": {\r\n            \"title\": \"Pflanzliche Ernährung\"\r\n        }\r\n    }],\r\n    \"infoGraph\": {\r\n        \"entries\": [{\r\n            \"info\": \"5fc7d0dfaa87f0110644522b\",\r\n            \"requires\": [],\r\n            \"layer\": 0\r\n        }]\r\n    }, \r\n    \"trackingData\": {\r\n        \"options\": [\r\n            {\r\n            \"locale_id\": \"options_0\", \r\n            \"reward\": {\r\n                \"xp\": 10,\r\n                \"coins\": 0, \r\n                \"water\": 1\r\n               }\r\n            },\r\n            {\r\n            \"locale_id\": \"options_1\", \r\n            \"reward\": {\r\n                \"xp\": 50,\r\n                \"coins\": 0, \r\n                \"water\": 2\r\n               }\r\n            },\r\n            {\r\n            \"locale_id\": \"options_2\", \r\n            \"reward\": {\r\n                \"xp\": 100,\r\n                \"coins\": 0, \r\n                \"water\": 3\r\n               }\r\n            },\r\n            {\r\n            \"locale_id\": \"options_3\", \r\n            \"reward\": {\r\n                \"xp\": 250,\r\n                \"coins\": 0, \r\n                \"water\": 4\r\n               }\r\n            },\r\n            {\r\n            \"locale_id\": \"options_4\", \r\n            \"reward\": {\r\n                \"xp\": 500,\r\n                \"coins\": 0, \r\n                \"water\": 5\r\n               }\r\n            }\r\n        ],\r\n        \"localized_strings\": {\r\n            \"language\": \"DE\",\r\n            \"strings\": {\r\n                \"question\": \"Wie oft isst Du Fleisch?\",\r\n                \"options\": [\r\n                    {\r\n                        \"locale_id\": \"options_0\",\r\n                        \"value\": \"Ich esse jeden Tag Fleisch\"\r\n                    },\r\n                    {\r\n                        \"locale_id\": \"options_0\",\r\n                        \"value\": \"Ich esse es 4-5x pro Woche\"\r\n                    },\r\n                    {\r\n                        \"locale_id\": \"options_0\",\r\n                        \"value\": \"Ich esse es 1-3x pro Woche\"\r\n                    },\r\n                    {\r\n                        \"locale_id\": \"options_0\",\r\n                        \"value\": \"Ich lebe vegetarisch\"\r\n                    },\r\n                    {\r\n                        \"locale_id\": \"options_0\",\r\n                        \"value\": \"Ich lebe vegan\"\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/aspect/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"aspect",
+						""
+					]
+				},
+				"description": "create test aspect"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/infobyte",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"questions\": [\n        {\n            \"question\": \"Wieviel trägt tierische Nahrung zur menschlichen versorgung bei?\",\n            \"answers\": [\n                {\n                    \"value\": \"etwa 17%\",\n                    \"correct\": true\n                },\n                {\n                    \"value\": \"zwischen 50 und 60%\",\n                    \"correct\": false\n                },\n                {\n                    \"value\": \"mehr als 75%\",\n                    \"correct\": false\n                },\n                {\n                    \"value\": \"100%\",\n                    \"correct\": false\n                }\n            ]\n        },\n        {\n            \"question\": \"Wieviel der landwirtschaftlichen Nutzfläche verwendet um tierische Nahrung herzustellen?\",\n            \"answers\": [\n                {\n                    \"value\": \"weniger als 30%\",\n                    \"correct\": false\n                },\n                {\n                    \"value\": \"zwischen 50 und 60%\",\n                    \"correct\": false\n                },\n                {\n                    \"value\": \"mehr als 75%\",\n                    \"correct\": true\n                },\n                {\n                    \"value\": \"100%\",\n                    \"correct\": false\n                }\n            ]\n        },\n        {\n            \"question\": \"Wieviel der menschengemanchten Erderwärmung geht von der Umwandlung von Wald aus? \",\n            \"answers\": [\n                {\n                    \"value\": \"Spielt keine Rolle\",\n                    \"correct\": false\n                },\n                {\n                    \"value\": \"etwa ein Virtel\",\n                    \"correct\": true\n                },\n                {\n                    \"value\": \"mehr als 75%\",\n                    \"correct\": false\n                },\n                {\n                    \"value\": \"100%\",\n                    \"correct\": false\n                }\n            ]\n        },\n        {\n            \"question\": \"Welche Ernährungsform hat den niedrigsten CO₂e-Fußabdruck (mit Opportunitätseffekten)?\",\n            \"answers\": [\n                {\n                    \"value\": \"spielt keine Rolle\",\n                    \"correct\": false\n                },\n                {\n                    \"value\": \"Standard Mischkost\",\n                    \"correct\": false\n                },\n                {\n                    \"value\": \"vegetarisch\",\n                    \"correct\": false\n                },\n                {\n                    \"value\": \"vegan\",\n                    \"correct\": true\n                }\n            ]\n        },\n        {\n            \"question\": \"Wie sollte man die durchpflanzliche Ernährung freigestellten Flächen nutzen?\",\n            \"answers\": [\n                {\n                    \"value\": \"Parkplätze bauen\",\n                    \"correct\": false\n                },\n                {\n                    \"value\": \"Atommüll entlagern\",\n                    \"correct\": false\n                },\n                {\n                    \"value\": \"egal\",\n                    \"correct\": false\n                },\n                {\n                    \"value\": \"wieder Aufforstung\",\n                    \"correct\": true\n                }\n            ]\n        }\n    ],\n    \"infobits\": [\n        {\n            \"doc\": {\n                \"type\": \"doc\",\n                \"content\": [\n                    {\n                        \"type\": \"heading\",\n                        \"attrs\": {\n                            \"level\": 1\n                        },\n                        \"content\": [\n                            {\n                                \"type\": \"text\",\n                                \"text\": \"Ein weniger beachteter Aspekt der Tierhaltung ist der immense Flächenbedarf, der damit einhergeht.\"\n                            }\n                        ]\n                    }\n                ]\n            },\n            \"selection\": {\n                \"type\": \"text\",\n                \"anchor\": 1,\n                \"head\": 99\n            }\n        },\n        {\n            \"doc\": {\n                \"type\": \"doc\",\n                \"content\": [\n                    {\n                        \"type\": \"paragraph\",\n                        \"content\": [\n                            {\n                                \"type\": \"text\",\n                                \"text\": \"Eine pflanzliche Ernährung könnte von daher gleichzeitig eine bessere Versorgung der Menschheit sicherstellen und den Flächenbedarf für die Landwirtschaft deutlich reduzieren. \"\n                            },\n                            {\n                                \"type\": \"hard_break\"\n                            },\n                            {\n                                \"type\": \"hard_break\"\n                            },\n                            {\n                                \"type\": \"text\",\n                                \"text\": \"Dann kann die Rodung der Urwälder dieser Erde beendet werden und es wird Land frei, auf dem zugunsten des Klimaschutzes aufgeforstet werden kann.\"\n                            },\n                            {\n                                \"type\": \"hard_break\"\n                            }\n                        ]\n                    }\n                ]\n            },\n            \"selection\": {\n                \"type\": \"text\",\n                \"anchor\": 177,\n                \"head\": 177\n            }\n        },\n        {\n            \"doc\": {\n                \"type\": \"doc\",\n                \"content\": [\n                    {\n                        \"type\": \"paragraph\",\n                        \"content\": [\n                            {\n                                \"type\": \"text\",\n                                \"text\": \"Die Umwandlung von Wald in landwirtschaftliche Nutzfläche und das Umbrechen von Weideland in Ackerland machen etwa ein Viertel der heutigen menschengemachten Erderwärmung aus. Es geht also wahrlich nicht um Peanuts sondern um einen big point der Erdüberhitzung. Vor dem Hintergrund des Umgangs mit Wald im globalen Norden und als Hauptemittenten von CO2 aus fossilen Energieträgern sollte der globale Norden die richtige Forderung nach dem Schutz des Amazonas-Regenwaldes nicht aus der empörten Haltung der Weltenretter:innen stellen, sondern im Bewusstsein, dass wir eine Nation und Menschen darum bitten, auf Rodungen zu verzichten, die im globalen Norden und zugunsten von dessen Entwicklung schon längst vorgenommen wurden.\"\n                            }\n                        ]\n                    }\n                ]\n            },\n            \"selection\": {\n                \"type\": \"text\",\n                \"anchor\": 1,\n                \"head\": 1\n            }\n        },\n        {\n            \"doc\": {\n                \"type\": \"doc\",\n                \"content\": [\n                    {\n                        \"type\": \"paragraph\",\n                        \"content\": [\n                            {\n                                \"type\": \"text\",\n                                \"text\": \"Wenn der sogenannte Opportunitätseffekt – also die Unmöglichkeit bisher für Viehzucht genutzte Flächen zur Aufforstung zu nutzen– berücksichtigt wird, hat die Mischkost nicht wie beim UBA-Rechner einen gut 1,5-mal so großen Fußabdruck, wie eine vegane Ernährung, sondern sie hat einen fast 5 mal so großen.\"\n                            }\n                        ]\n                    }\n                ]\n            },\n            \"selection\": {\n                \"type\": \"text\",\n                \"anchor\": 307,\n                \"head\": 307\n            }\n        },\n        {\n            \"doc\": {\n                \"type\": \"doc\",\n                \"content\": [\n                    {\n                        \"type\": \"paragraph\",\n                        \"content\": [\n                            {\n                                \"type\": \"text\",\n                                \"text\": \"Aber egal wie die Zahl nun ganz genau lautet: Es ist unbestreitbar richtig, dass eine weit überwiegend pflanzliche Ernährung über die Freistellung von Flächen einen wesentlichen Beitrag zum Klimaschutz leisten kann.\"\n                            }\n                        ]\n                    }\n                ]\n            },\n            \"selection\": {\n                \"type\": \"text\",\n                \"anchor\": 216,\n                \"head\": 216\n            }\n        }\n    ],\n    \"name\": \"Aufforstung\",\n    \"frontmatter\": \"Wälder sind voll ok\",\n    \"language\": \"DE\",\n    \"published\": false,\n    \"region\": \"DE\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/infobyte",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"infobyte"
+					]
+				},
+				"description": "create a test infobyte"
+			},
+			"response": []
+		}
+	]
+}

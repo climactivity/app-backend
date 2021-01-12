@@ -4,3 +4,4 @@ report*
 ./.env
 /mongo*
 .idea
+.DS_Store
