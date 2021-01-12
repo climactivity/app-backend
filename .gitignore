@@ -3,3 +3,4 @@ report*
 /log_*
 ./.env
 /mongo*
+.idea
