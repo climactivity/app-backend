@@ -2,6 +2,7 @@
     import {
         Row,
         Col,
+        Button,
         InputGroup,
         InputGroupAddon,
         InputGroupText,
@@ -11,11 +12,32 @@
         Container
     } from 'sveltestrap';
     import type Aspect from "./AspectTypes";
+    import {createEventDispatcher} from 'svelte';
 
     export let aspect : Aspect;
+
+    const dispatch = createEventDispatcher();
+
+    function handleDelete() {
+        dispatch("deleteAspect", {
+            aspect: aspect
+        });
+        aspect = null;
+    }
+
 </script>
 
-<h4 class="mt-3">Current Aspect</h4>
+<Row>
+    <Col xs="auto">
+        <h4 class="mt-3">Current Aspect</h4>
+    </Col>
+
+    <Col xs="auto">
+        <Button color="danger" on:click={handleDelete}>Remove</Button>
+    </Col>
+</Row>
+
+
 <div>
     <Row>
         <Col>

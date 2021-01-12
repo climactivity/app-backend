@@ -3,6 +3,9 @@
     import type Aspect from "./AspectTypes";
     import {createEventDispatcher} from 'svelte';
 
+    export let selectedAspect: Aspect;
+    export let aspects: Aspect[];
+
     const dispatch = createEventDispatcher();
 
     function handleAspectSelected(event, aspect) {
@@ -11,17 +14,20 @@
         dispatch("message")
     }
 
+    let addCounter = 1;
+
     function addAspect() {
-        aspects = [...aspects, {
-            name: "New Aspect",
+        const newAspect = {
+            name: "New Aspect " + addCounter,
             trackingOptions: [],
             question: ""
-        }]
-        console.log(aspects);
+        }
+        aspects = [...aspects, newAspect];
+        selectedAspect = newAspect;
+        addCounter++;
     }
 
-    export let selectedAspect: Aspect;
-    export let aspects: Aspect[];
+
 </script>
 
 <Row>
@@ -30,7 +36,7 @@
     </Col>
 
     <Col xs="auto">
-        <Button color="success" on:click={() => addAspect()}>+</Button>
+        <Button color="success" on:click={() => addAspect()}>Add</Button>
     </Col>
 </Row>
 

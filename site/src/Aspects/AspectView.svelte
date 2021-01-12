@@ -6,15 +6,22 @@
     import {writable} from "svelte/store";
 
     const selectedAspect = writable(null);
+    const aspects = writable(mockAspects);
+
+    function handleDelete(event) {
+        $aspects = $aspects.filter(a => a.name !== event.detail.aspect?.name);
+    }
+
+
 </script>
 
 <section>
     <Row>
         <Col xs="12" sm="3">
-            <AspectList aspects={mockAspects} bind:selectedAspect={$selectedAspect}/>
+            <AspectList bind:aspects={$aspects} bind:selectedAspect={$selectedAspect}/>
         </Col>
         <Col sm="9">
-            <AspectItem aspect={$selectedAspect}/>
+            <AspectItem aspect={$selectedAspect} on:deleteAspect={handleDelete}/>
         </Col>
     </Row>
 </section>
