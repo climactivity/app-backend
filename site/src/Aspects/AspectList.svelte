@@ -1,7 +1,17 @@
 <script lang="ts">
     import {Alert, ListGroup, ListGroupItem, Button, Col, Row} from 'sveltestrap';
     import type Aspect from "./AspectTypes";
+    import { createEventDispatcher } from 'svelte';
 
+    const dispatch = createEventDispatcher();
+
+    function handleAspectSelected(event, aspect) {
+        selectedAspect = selectedAspect === aspect ? null : aspect;
+        console.log(selectedAspect);
+        dispatch("message")
+    }
+
+    export let selectedAspect : Aspect;
     export let aspects: Aspect[];
 </script>
 
@@ -12,7 +22,11 @@
 {:else}
     <ListGroup>
         {#each aspects as aspect}
-            <ListGroupItem active tag="button" action>{aspect.name}</ListGroupItem>
+            <ListGroupItem tag="button" action
+                           active={aspect === selectedAspect}
+                           on:click={(event) => handleAspectSelected(event, aspect)}>
+                {aspect.name}
+            </ListGroupItem>
         {/each}
     </ListGroup>
 {/if}

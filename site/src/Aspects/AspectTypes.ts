@@ -8,7 +8,7 @@ export default interface Aspect {
 interface TrackingOption {
     id: string,
     answer: string,
-    xp: string,
+    xp: number,
     coins: number,
     water: number
 }

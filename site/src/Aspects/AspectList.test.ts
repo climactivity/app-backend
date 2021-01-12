@@ -13,7 +13,7 @@ test("should let the user know when list is empty", () => {
     expect(getByText("No aspects exist yet.")).toBeInTheDocument();
 });
 
-test("should always show the new aspect button", () => {
+test("should show the new aspect button in an empty List", () => {
     const {container} = render(AspectList, {
         props: {
             aspects: []
@@ -21,6 +21,7 @@ test("should always show the new aspect button", () => {
     })
 
     expect(container.querySelector("button")).toBeInTheDocument();
+    expect(container.querySelector("button")).toContainHTML("New aspect");
 });
 
 test("should display a list with the names of the provided aspects", () => {

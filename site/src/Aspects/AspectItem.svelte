@@ -10,6 +10,9 @@
         ListGroupItem,
         Container
     } from 'sveltestrap';
+    import type Aspect from "./AspectTypes";
+
+    export let aspect : Aspect;
 </script>
 
 <h4 class="mt-3">Current Aspect</h4>
@@ -20,7 +23,7 @@
                 <InputGroupAddon addonType="prepend">
                     <InputGroupText>@</InputGroupText>
                 </InputGroupAddon>
-                <Input placeholder="aspect name"/>
+                <Input placeholder="{aspect?.name}"/>
             </InputGroup>
         </Col>
         <Col>
