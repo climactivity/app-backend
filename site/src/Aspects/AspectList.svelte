@@ -1,6 +1,6 @@
 <script lang="ts">
     import {Alert, ListGroup, ListGroupItem, Button, Col, Row} from 'sveltestrap';
-    import type Aspect from "./AspectTypes";
+    import type {Aspect} from "./AspectTypes";
     import {createEventDispatcher} from 'svelte';
 
     export let selectedAspect: Aspect;

@@ -1,11 +1,11 @@
-export default interface Aspect {
+export interface Aspect {
     name: string,
     trackingOptions: TrackingOption[],
     question: string
 
 }
 
-interface TrackingOption {
+export interface TrackingOption {
     id: string,
     answer: string,
     xp: number,

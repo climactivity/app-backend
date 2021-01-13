@@ -1,7 +1,7 @@
 import {render} from "@testing-library/svelte";
 import AspectList from "./AspectList.svelte"
 import '@testing-library/jest-dom';
-import type Aspect from "./AspectTypes";
+import type {Aspect} from "./AspectTypes";
 
 test("should let the user know when list is empty", () => {
     const {getByText} = render(AspectList, {
