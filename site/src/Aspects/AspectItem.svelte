@@ -1,20 +1,12 @@
 <script lang="ts">
-    import {
-        Row,
-        Col,
-        Button,
-        InputGroup,
-        InputGroupAddon,
-        InputGroupText,
-        Input,
-        Table,
-        Container
-    } from 'sveltestrap';
+    import {Button, Col, Container, Input, InputGroup, InputGroupAddon, InputGroupText, Row, Table} from 'sveltestrap';
     import type {Aspect} from "./AspectTypes";
+    import {LocalizationLanguage} from "./AspectTypes";
     import {createEventDispatcher} from 'svelte';
 
     export let aspect: Aspect;
 
+    let selectedLanguage : LocalizationLanguage = LocalizationLanguage.DE;
     const dispatch = createEventDispatcher();
 
     function handleDelete() {
@@ -22,6 +14,10 @@
             aspect: aspect
         });
         aspect = null;
+    }
+
+    function handleLanguageSelect() {
+
     }
 
 </script>
@@ -44,29 +40,32 @@
                 <InputGroupAddon addonType="prepend">
                     <InputGroupText>@</InputGroupText>
                 </InputGroupAddon>
-                <Input placeholder="Aspect Name" value={aspect?.name}/>
+                <Input placeholder="Aspect Name" value={aspect?.localizedData.get(selectedLanguage).title}/>
             </InputGroup>
         </Col>
         <Col>
             <InputGroup>
                 <InputGroupAddon addonType="prepend">
-                    <InputGroupText>@</InputGroupText>
+                    <InputGroupText>Language</InputGroupText>
                 </InputGroupAddon>
-                <Input disabled placeholder="icon"/>
+                <Input type="select" name="select" id="exampleSelect" bind:value={selectedLanguage} on:select={handleLanguageSelect}>
+                        <option>{LocalizationLanguage.DE}</option>
+                        <option>{LocalizationLanguage.EN}</option>
+                </Input>
             </InputGroup>
         </Col>
     </Row>
     <Row>
         <h5 class="mt-3">Question</h5>
         <InputGroup>
-            <Input type="textarea" placeholder="How much meat do you eat?" value={aspect?.question}/>
+            <Input type="textarea" placeholder="How much meat do you eat?" value={aspect?.localizedData.get(selectedLanguage)?.question}/>
         </InputGroup>
     </Row>
 
     <Row>
         <h5 class="mt-3">Tracking options</h5>
         <Container>
-            <Table bordered >
+            <Table bordered>
                 <thead>
                 <tr>
                     <th>#</th>
@@ -77,13 +76,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                {#each aspect?.trackingOptions  || [] as trackingOption}
+                {#each aspect?.trackingRewards || [] as reward}
                     <tr>
-                        <th scope="row">{trackingOption.id}</th>
-                        <td><Input type="textarea" value={trackingOption.answer}/></td>
-                        <td><Input type="number" value={trackingOption.xp}/></td>
-                        <td><Input type="number" value={trackingOption.coins}/></td>
-                        <td><Input type="number" value={trackingOption.water}/></td>
+                        <th scope="row">{reward.id}</th>
+                        <td><Input row="1" type="textarea" value={aspect?.localizedData.get(selectedLanguage).rewardAnswers.get(reward.id)}/></td>
+                        <td><Input type="number" step="10" min="0" value={reward.xp}/></td>
+                        <td><Input type="number" step="5" min="0" value={reward.coins}/></td>
+                        <td><Input type="number" min="0" value={reward.water}/></td>
                     </tr>
                 {/each}
                 </tbody>

@@ -1,14 +1,27 @@
 export interface Aspect {
     name: string,
-    trackingOptions: TrackingOption[],
-    question: string
-
+    trackingRewards : TrackingRewards[],
+    localizedData: LocalizedAspectData
 }
 
-export interface TrackingOption {
-    id: string,
-    answer: string,
+type LocalizedAspectData = Map<LocalizationLanguage, AspectData>
+
+export interface AspectData {
+    title: string,
+    question: string,
+    rewardAnswers: RewardAnswer
+}
+
+interface TrackingRewards {
+    id: number,
     xp: number,
     coins: number,
     water: number
+}
+
+type RewardAnswer = Map<number, string>
+
+export enum LocalizationLanguage {
+    DE= "Deutsch",
+    EN = "English"
 }
