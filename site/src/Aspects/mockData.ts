@@ -13,17 +13,18 @@ export const mockAspects: Aspect[] = [
                 {id: 4, xp: 500, coins: 0, water: 5}
             ],
         localizedData: new Map([
-            [LocalizationLanguage.DE, {
-                title: "Pflanzliche Ernährung",
-                question: "Wie oft isst Du Fleisch?",
-                rewardAnswers: new Map([
-                    [0, "Ich esse jeden Tag Fleisch"],
-                    [1, "Ich esse es 4-5x pro Woche"],
-                    [2, "Ich esse es 1-3x pro Woche"],
-                    [3, "Ich lebe vegetarisch"],
-                    [4, "Ich lebe vegan"],
-                ])
-            }],
+            [LocalizationLanguage.DE,
+                {
+                    title: "Pflanzliche Ernährung",
+                    question: "Wie oft isst Du Fleisch?",
+                    rewardAnswers: new Map([
+                        [0, "Ich esse jeden Tag Fleisch"],
+                        [1, "Ich esse es 4-5x pro Woche"],
+                        [2, "Ich esse es 1-3x pro Woche"],
+                        [3, "Ich lebe vegetarisch"],
+                        [4, "Ich lebe vegan"],
+                    ])
+                }],
             [LocalizationLanguage.EN, {
                 title: "Plantbased Nutrition",
                 question: "How often do you eat meat?",

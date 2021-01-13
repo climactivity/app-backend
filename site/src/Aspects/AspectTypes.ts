@@ -4,19 +4,19 @@ export interface Aspect {
     localizedData: LocalizedAspectData
 }
 
+interface TrackingRewards {
+    id: number,
+    xp: number,
+    coins: number,
+    water: number
+}
+
 type LocalizedAspectData = Map<LocalizationLanguage, AspectData>
 
 export interface AspectData {
     title: string,
     question: string,
     rewardAnswers: RewardAnswer
-}
-
-interface TrackingRewards {
-    id: number,
-    xp: number,
-    coins: number,
-    water: number
 }
 
 type RewardAnswer = Map<number, string>
