@@ -6,5 +6,4 @@ export class CreateAspectDto {
     readonly infoGraph?: any;
     readonly trackingData?: TrackingData;
     readonly localizedStrings: AspectLocalization[]; 
-
 }
