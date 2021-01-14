@@ -5,7 +5,8 @@
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "start": "sirv public",
-    "validate": "svelte-check"
+    "validate": "svelte-check",
+    "lint": "eslint \"{src,apps,libs,test}/**/*\" --fix"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
@@ -17,9 +18,16 @@
     "@rollup/plugin-typescript": "^6.0.0",
     "@tsconfig/svelte": "^1.0.0",
     "@types/jest": "^26.0.19",
+    "@typescript-eslint/eslint-plugin": "^4.13.0",
+    "@typescript-eslint/parser": "^4.13.0",
     "babel-jest": "^26.6.3",
     "dotenv": "^8.2.0",
+    "eslint": "^7.12.1",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-svelte3": "^3.0.0",
     "jest": "^26.6.3",
+    "prettier": "^2.1.2",
     "postcss": "^8.2.1",
     "rollup": "^2.3.4",
     "rollup-plugin-livereload": "^2.0.0",
