@@ -1,6 +1,6 @@
 <script lang="ts">
     import {Alert, ListGroup, ListGroupItem, Button, Col, Row} from 'sveltestrap';
-    import type {Aspect} from "./AspectTypes";
+    import {Aspect} from "./AspectTypes";
     import {createEventDispatcher} from 'svelte';
 
     export let selectedAspect: Aspect;
@@ -16,18 +16,12 @@
 
     let addCounter = 1;
 
-    <!--function addAspect() {-->
-    <!--    const newAspect = {-->
-    <!--        name: "New Aspect " + addCounter,-->
-    <!--        trackingOptions: [],-->
-    <!--        question: ""-->
-    <!--    }-->
-    <!--    aspects = [...aspects, newAspect];-->
-    <!--    selectedAspect = newAspect;-->
-    <!--    addCounter++;-->
-    // }
-
-
+    function addAspect() {
+        const newAspect: Aspect = new Aspect("New Aspect " + addCounter);
+        aspects = [...aspects, newAspect];
+        selectedAspect = newAspect;
+        addCounter++;
+    }
 </script>
 
 <Row>
@@ -36,7 +30,7 @@
     </Col>
 
     <Col xs="auto">
-<!--        <Button color="success" on:click={() => addAspect()}>Add</Button>-->
+        <Button color="success" on:click={() => addAspect()}>Add</Button>
     </Col>
 </Row>
 

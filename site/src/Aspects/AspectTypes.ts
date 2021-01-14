@@ -1,7 +1,13 @@
-export interface Aspect {
-    name: string,
-    trackingRewards : TrackingRewards[],
-    localizedData: LocalizedAspectData
+export class Aspect {
+    name: string;
+    trackingRewards: TrackingRewards[];
+    localizedData: LocalizedAspectData;
+
+    constructor(name: string) {
+        this.name = name;
+        this.trackingRewards = [];
+        this.localizedData = new Map<LocalizationLanguage, AspectData>();
+    }
 }
 
 interface TrackingRewards {
@@ -22,6 +28,6 @@ export interface AspectData {
 type RewardAnswer = Map<number, string>
 
 export enum LocalizationLanguage {
-    DE= "Deutsch",
+    DE = "Deutsch",
     EN = "English"
 }

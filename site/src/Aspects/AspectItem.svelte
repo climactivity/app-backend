@@ -6,7 +6,7 @@
 
     export let aspect: Aspect;
 
-    let selectedLanguage : LocalizationLanguage = LocalizationLanguage.DE;
+    let selectedLanguage: LocalizationLanguage = LocalizationLanguage.DE;
     const dispatch = createEventDispatcher();
 
     function handleDelete() {
@@ -16,10 +16,31 @@
         aspect = null;
     }
 
-    function handleLanguageSelect() {
+    function addTrackingOption() {
+        if (aspect === null) return;
+
+        let highestId = aspect.trackingRewards.length === 0
+            ? 0
+            : Math.max(...aspect?.trackingRewards.map(t => t.id)) + 1;
+
+        let newTrackingReward = {
+            id: highestId,
+            coins: 0,
+            water: 0,
+            xp: 0
+        }
+        aspect?.trackingRewards = [...aspect?.trackingRewards, newTrackingReward]
+        aspect?.localizedData.forEach(localizedData => localizedData.rewardAnswers.set(highestId, ""))
 
     }
 
+    function removeTrackingOption(id : number) {
+        if(aspect === null) return;
+        aspect.trackingRewards = aspect.trackingRewards.filter(t => t.id !== id);
+        aspect.localizedData.forEach(localizedData => localizedData.rewardAnswers.delete(id));
+
+        console.log(aspect);
+    }
 </script>
 
 <Row>
@@ -40,7 +61,7 @@
                 <InputGroupAddon addonType="prepend">
                     <InputGroupText>@</InputGroupText>
                 </InputGroupAddon>
-                <Input placeholder="Aspect Name" value={aspect?.localizedData.get(selectedLanguage).title}/>
+                <Input placeholder="Aspect Name" value={aspect?.localizedData?.get(selectedLanguage)?.title}/>
             </InputGroup>
         </Col>
         <Col>
@@ -48,9 +69,9 @@
                 <InputGroupAddon addonType="prepend">
                     <InputGroupText>Language</InputGroupText>
                 </InputGroupAddon>
-                <Input type="select" name="select" id="exampleSelect" bind:value={selectedLanguage} on:select={handleLanguageSelect}>
-                        <option>{LocalizationLanguage.DE}</option>
-                        <option>{LocalizationLanguage.EN}</option>
+                <Input type="select" name="select" id="exampleSelect" bind:value={selectedLanguage}>
+                    <option>{LocalizationLanguage.DE}</option>
+                    <option>{LocalizationLanguage.EN}</option>
                 </Input>
             </InputGroup>
         </Col>
@@ -58,34 +79,45 @@
     <Row>
         <h5 class="mt-3">Question</h5>
         <InputGroup>
-            <Input type="textarea" placeholder="How much meat do you eat?" value={aspect?.localizedData.get(selectedLanguage)?.question}/>
+            <Input type="textarea" placeholder="How much meat do you eat?"
+                   value={aspect?.localizedData?.get(selectedLanguage)?.question}/>
         </InputGroup>
     </Row>
 
     <Row>
-        <h5 class="mt-3">Tracking options</h5>
+        <Col xs="auto">
+            <h5 class="mt-3">Tracking options</h5>
+        </Col>
+        <Col xs="auto">
+        </Col>
         <Container>
             <Table bordered>
                 <thead>
                 <tr>
-                    <th>#</th>
                     <th>Answer</th>
                     <th>XP</th>
                     <th>Coins</th>
                     <th>Water</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
                 {#each aspect?.trackingRewards || [] as reward}
                     <tr>
-                        <th scope="row">{reward.id}</th>
-                        <td><Input row="1" type="textarea" value={aspect?.localizedData.get(selectedLanguage).rewardAnswers.get(reward.id)}/></td>
+                        <td><Input row="1" type="textarea"
+                                   value={aspect?.localizedData?.get(selectedLanguage)?.rewardAnswers?.get(reward.id)}/>
+                        </td>
                         <td><Input type="number" step="10" min="0" value={reward.xp}/></td>
                         <td><Input type="number" step="5" min="0" value={reward.coins}/></td>
                         <td><Input type="number" min="0" value={reward.water}/></td>
+                        <td>
+                            <Button color="danger" on:click={()=> removeTrackingOption(reward.id)}>Remove</Button>
+                        </td>
                     </tr>
                 {/each}
+                <Button color="success" on:click={() => addTrackingOption()}>Add</Button>
                 </tbody>
+
             </Table>
         </Container>
     </Row>
