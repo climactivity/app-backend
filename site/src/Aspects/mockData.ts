@@ -4,6 +4,7 @@ import {LocalizationLanguage} from "./AspectTypes";
 export const mockAspects: Aspect[] = [
     {
         name: "First Aspect",
+        persisted: true,
         trackingRewards:
             [
                 {id: 0, xp: 10, coins: 0, water: 1},

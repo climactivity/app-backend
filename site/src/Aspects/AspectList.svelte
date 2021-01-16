@@ -39,7 +39,7 @@
 {:else}
     <ListGroup>
         {#each aspects as aspect}
-            <ListGroupItem tag="button" action
+            <ListGroupItem tag="button" action color={aspect.persisted ? "success" : "warning"}
                            active={aspect === selectedAspect}
                            on:click={(event) => handleAspectSelected(event, aspect)}>
                 {aspect.name}

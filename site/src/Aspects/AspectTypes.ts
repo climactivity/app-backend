@@ -2,11 +2,13 @@ export class Aspect {
     name: string;
     trackingRewards: TrackingRewards[];
     localizedData: LocalizedAspectData;
+    persisted? : boolean;
 
     constructor(name: string) {
         this.name = name;
         this.trackingRewards = [];
         this.localizedData = new Map<LocalizationLanguage, AspectData>();
+        this.persisted = false;
     }
 }
 
