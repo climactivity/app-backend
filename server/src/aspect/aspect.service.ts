@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { title } from 'process';
 import { CreateAspectForLocaleDto } from './dto/create-aspect-for-locale.dto';
 import { CreateAspectDto } from './dto/create-aspect.dto';
 import { LocalizedAspectDto } from './dto/localized-aspect.dto';
@@ -74,7 +75,35 @@ export class AspectService {
     }
   }
 
-  updateAspectFromUpdateAspectForLocale(updateAspectForLocale: UpdateAspectForLocaleDto): UpdateAspectDto {
-    return this.createAspectFromCreateAspectForLocale(updateAspectForLocale)
+  updateAspectFromUpdateAspectForLocale(id, updateAspectForLocale: CreateAspectForLocaleDto) {
+    const aspectData = this.createAspectFromCreateAspectForLocale(updateAspectForLocale)
+    return this.aspectModel.findByIdAndUpdate(id, aspectData).exec();
+  }
+
+  async findLocalizedAspect(id: string, lang: string, region: string) {
+    const aspect = await this.aspectModel.findById(id).exec();
+    return this.localizeAspect(aspect, lang, region);
+  }
+
+  localizeAspect(aspect: Aspect, lang: string, region: string): LocalizedAspectDto {
+
+    const aspectLocalizedStrings = aspect.localizedStrings.find(ls => ls.language == lang); 
+    const localizedTrackingData = aspect.trackingData.localized_strings
+    return {
+      name: aspect.name,
+      title: aspectLocalizedStrings.strings.title,
+      forLanguage: lang,
+      forRegion: region,
+      localizedTrackingData: {
+        question: localizedTrackingData.strings.question,
+        options: aspect.trackingData.options.map( option => {
+          return {
+            reward: option.reward,
+            option: localizedTrackingData.strings.options.find(locale => locale.locale_id == option.locale_id).value
+          } 
+        }
+        )
+      }
+    }
   }
 }

@@ -3,6 +3,7 @@ import { query } from 'express';
 import { AspectService } from './aspect.service';
 import { CreateAspectForLocaleDto } from './dto/create-aspect-for-locale.dto';
 import { CreateAspectDto } from './dto/create-aspect.dto';
+import { UpdateAspectForLocaleDto } from './dto/update-aspect-for-locale.dto';
 import { UpdateAspectDto } from './dto/update-aspect.dto';
 
 @Controller('localized-aspect')
@@ -23,13 +24,15 @@ export class AspectController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.aspectService.findOne(id);
+  findOne(@Query() query, @Param('id') id: string) {
+    let region = query.r || "DE"; 
+    let  lang = query.l || "DE";
+    return this.aspectService.findLocalizedAspect(id, lang, region);
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateAspectDto: UpdateAspectDto) {
-    return this.aspectService.update(id, updateAspectDto);
+  update(@Param('id') id: string, @Body() updateAspectDto: CreateAspectForLocaleDto) {
+    return this.aspectService.updateAspectFromUpdateAspectForLocale(id, updateAspectDto);
   }
 
   @Delete(':id')
