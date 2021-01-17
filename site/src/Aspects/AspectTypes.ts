@@ -12,7 +12,7 @@ export class Aspect {
     }
 }
 
-interface TrackingRewards {
+export interface TrackingRewards {
     id: number,
     xp: number,
     coins: number,

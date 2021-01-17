@@ -1,7 +1,7 @@
 <script lang="ts">
     import {Col, Row} from 'sveltestrap'
     import AspectList from "./AspectList.svelte";
-    import AspectItem from "./AspectItem.svelte";
+    import AspectItem from "./components/templates/AspectItem.svelte";
     import {mockAspects} from "./mockData";
     import {writable} from "svelte/store";
 
