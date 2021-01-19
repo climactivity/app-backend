@@ -7,7 +7,7 @@ import { UpdateAspectForLocaleDto } from './dto/update-aspect-for-locale.dto';
 import { UpdateAspectDto } from './dto/update-aspect.dto';
 
 @Controller('localized-aspect')
-export class AspectController {
+export class LocalizedAspectController {
   constructor(private readonly aspectService: AspectService) {}
 
   @Post()
@@ -20,7 +20,7 @@ export class AspectController {
     let region = query.r || "DE"; 
     let  lang = query.l || "DE";
 
-    return this.aspectService.findAll();
+    return this.aspectService.findAllLocalized(lang, region);
   }
 
   @Get(':id')

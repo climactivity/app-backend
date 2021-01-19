@@ -27,11 +27,11 @@ export class AspectLocalization {
 }
 
 export class Infograph {
-    entries: [{
+    entries: {
         info: InfoByte, 
-        requires: [InfoByte]
+        requires: InfoByte[]
         layer: number
-    }]
+    }[]
 }
 
 @Schema()

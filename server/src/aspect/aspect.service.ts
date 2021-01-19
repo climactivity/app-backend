@@ -80,6 +80,10 @@ export class AspectService {
     return this.aspectModel.findByIdAndUpdate(id, aspectData).exec();
   }
 
+  async findAllLocalized(lang: string, region: string) {
+    return (await this.findAll()).map(aspect => this.localizeAspect(aspect, lang, region))
+  }
+
   async findLocalizedAspect(id: string, lang: string, region: string) {
     const aspect = await this.aspectModel.findById(id).exec();
     return this.localizeAspect(aspect, lang, region);
