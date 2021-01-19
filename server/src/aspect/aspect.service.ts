@@ -13,7 +13,7 @@ import { Aspect, AspectDocument } from './schemas/aspect.schema';
 export class AspectService {
 
   private logger = new Logger(AspectService.name)
-  constructor(@InjectModel(Aspect.name) private aspectModel: Model<AspectDocument>) {}
+  constructor(@InjectModel(Aspect.name) private aspectModel: Model<AspectDocument>) { }
 
   async create(createAspectDto: CreateAspectDto) {
     const newAspect = await new this.aspectModel(createAspectDto).save()
@@ -33,21 +33,22 @@ export class AspectService {
   }
 
   remove(id: string) {
-    return this.aspectModel.deleteOne({_id: id}).exec(); 
+    return this.aspectModel.deleteOne({ _id: id }).exec();
   }
 
   async createFromLocalizedAspect(createAspectForLocaleDto: CreateAspectForLocaleDto) {
     return this.create(this.createAspectFromCreateAspectForLocale(createAspectForLocaleDto))
   }
 
-  createAspectFromCreateAspectForLocale(createAspectForLocaleDto: CreateAspectForLocaleDto): CreateAspectDto { 
-    const localizedOptions =  createAspectForLocaleDto.localizedTrackingData.options.map((option, index) => {
-      var value = option.option; 
+  createAspectFromCreateAspectForLocale(createAspectForLocaleDto: CreateAspectForLocaleDto): CreateAspectDto {
+    const localizedOptions = createAspectForLocaleDto.localizedTrackingData.options.map((option, index) => {
+      var value = option.option;
       var reward = option.reward
       var locale_id = `option-${index}-${createAspectForLocaleDto.forLanguage}`
-      return {locale_id, value, reward}
-    }) 
+      return { locale_id, value, reward }
+    })
     return {
+      bigpoint: createAspectForLocaleDto.bigpoint,
       name: createAspectForLocaleDto.name,
       icon: createAspectForLocaleDto.icon,
       infoGraph: createAspectForLocaleDto.infoGraph,
@@ -55,21 +56,22 @@ export class AspectService {
         language: createAspectForLocaleDto.forLanguage,
         strings: {
           title: createAspectForLocaleDto.title
-      }}],
+        }
+      }],
       trackingData: {
         localized_strings: {
           language: createAspectForLocaleDto.forLanguage,
           strings: {
             question: createAspectForLocaleDto.localizedTrackingData.question,
             options: localizedOptions.map(localizedOption => {
-              let {locale_id, value} = localizedOption
-              return {locale_id, value}
+              let { locale_id, value } = localizedOption
+              return { locale_id, value }
             })
           }
         },
         options: localizedOptions.map(localizedOption => {
-          let {locale_id, reward} = localizedOption
-          return {locale_id, reward}
+          let { locale_id, reward } = localizedOption
+          return { locale_id, reward }
         })
       }
     }
@@ -81,7 +83,21 @@ export class AspectService {
   }
 
   async findAllLocalized(lang: string, region: string) {
-    return (await this.findAll()).map(aspect => this.localizeAspect(aspect, lang, region))
+    try {
+      return (await this.aspectModel.find({region}).exec()).map(aspect => this.localizeAspect(aspect, lang, region))
+    } catch (e) {
+      this.logger.log(e)
+      return e
+    }
+  }
+
+  async findAllLocalizedForBigpoint(bigpoint: string, lang: string, region: string) {
+    try {
+      return (await this.aspectModel.find({region}).exec()).map(aspect => this.localizeAspect(aspect, lang, region))
+    } catch (e) {
+      this.logger.log(e)
+      return e
+    }
   }
 
   async findLocalizedAspect(id: string, lang: string, region: string) {
@@ -91,23 +107,50 @@ export class AspectService {
 
   localizeAspect(aspect: Aspect, lang: string, region: string): LocalizedAspectDto {
 
-    const aspectLocalizedStrings = aspect.localizedStrings.find(ls => ls.language == lang); 
-    const localizedTrackingData = aspect.trackingData.localized_strings
-    return {
-      name: aspect.name,
-      title: aspectLocalizedStrings.strings.title,
-      forLanguage: lang,
-      forRegion: region,
-      localizedTrackingData: {
-        question: localizedTrackingData.strings.question,
-        options: aspect.trackingData.options.map( option => {
-          return {
-            reward: option.reward,
-            option: localizedTrackingData.strings.options.find(locale => locale.locale_id == option.locale_id).value
-          } 
-        }
-        )
+    let aspectLocalizedStrings = aspect.localizedStrings.find(ls => ls.language == lang);
+    let localizedTrackingData = aspect.trackingData.localized_strings
+    let error = (!aspectLocalizedStrings || !localizedTrackingData) ? `Aspect not localized to ${lang} in ${region}!` : ""
+    if (error !== "") {
+      let aspectLocalizedStrings = aspect.localizedStrings[0];
+      let localizedTrackingData = aspect.trackingData.localized_strings  
+      return {
+        bigpoint: aspect.bigpoint,
+        name: aspect.name,
+        title: aspectLocalizedStrings.strings.title,
+        forLanguage: aspectLocalizedStrings.language,
+        forRegion: region,
+        localizedTrackingData: {
+          question: localizedTrackingData.strings.question,
+          options: aspect.trackingData.options.map(option => {
+            return {
+              reward: option.reward,
+              option: localizedTrackingData.strings.options.find(locale => locale.locale_id == option.locale_id).value
+            }
+          }
+          )
+        },
+        message: error
+      }
+    } else {
+
+      return {
+        bigpoint: aspect.bigpoint,
+        name: aspect.name,
+        title: aspectLocalizedStrings.strings.title,
+        forLanguage: lang,
+        forRegion: region,
+        localizedTrackingData: {
+          question: localizedTrackingData.strings.question,
+          options: aspect.trackingData.options.map(option => {
+            return {
+              reward: option.reward,
+              option: localizedTrackingData.strings.options.find(locale => locale.locale_id == option.locale_id).value
+            }
+          }
+          )
+        },
       }
     }
+
   }
 }

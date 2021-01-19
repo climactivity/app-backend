@@ -17,4 +17,6 @@ export class LocalizedAspectDto {
     };
     readonly forRegion: string;
     readonly forLanguage: string;
+    readonly message?: string;
+    readonly bigpoint?:string;
 }

@@ -54,6 +54,9 @@ export class Aspect {
     @Prop()
     region: string;
 
+    @Prop()
+    bigpoint: string;
+
 }
 
 export const AspectSchema = SchemaFactory.createForClass(Aspect); 
