@@ -93,7 +93,7 @@ export class AspectService {
 
   async findAllLocalizedForBigpoint(bigpoint: string, lang: string, region: string) {
     try {
-      return (await this.aspectModel.find({region}).exec()).map(aspect => this.localizeAspect(aspect, lang, region))
+      return (await this.aspectModel.find({region, bigpoint}).exec()).map(aspect => this.localizeAspect(aspect, lang, region))
     } catch (e) {
       this.logger.log(e)
       return e

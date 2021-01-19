@@ -23,6 +23,18 @@ export class LocalizedAspectController {
     return this.aspectService.findAllLocalized(lang, region);
   }
 
+  @Get('/s/:sector')
+  findAllForBigpoint(@Query() query, @Param('sector') sector: string) {
+    let bigpoint = sector
+    let region = query.r || "DE"; 
+    let  lang = query.l || "DE";
+    if (!bigpoint) {
+      return {message: "No bigpoint provided"}
+    }
+    return this.aspectService.findAllLocalizedForBigpoint(bigpoint, lang, region);
+  }
+
+
   @Get(':id')
   findOne(@Query() query, @Param('id') id: string) {
     let region = query.r || "DE"; 
