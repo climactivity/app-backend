@@ -105,7 +105,7 @@ export class AspectService {
     return this.localizeAspect(aspect, lang, region);
   }
 
-  localizeAspect(aspect: Aspect, lang: string, region: string): LocalizedAspectDto {
+  localizeAspect(aspect, lang: string, region: string): LocalizedAspectDto {
 
     let aspectLocalizedStrings = aspect.localizedStrings.find(ls => ls.language == lang);
     let localizedTrackingData = aspect.trackingData.localized_strings
@@ -114,6 +114,7 @@ export class AspectService {
       let aspectLocalizedStrings = aspect.localizedStrings[0];
       let localizedTrackingData = aspect.trackingData.localized_strings  
       return {
+        _id: aspect._id,
         bigpoint: aspect.bigpoint,
         name: aspect.name,
         title: aspectLocalizedStrings.strings.title,
@@ -134,6 +135,7 @@ export class AspectService {
     } else {
 
       return {
+        _id: aspect._id,
         bigpoint: aspect.bigpoint,
         name: aspect.name,
         title: aspectLocalizedStrings.strings.title,

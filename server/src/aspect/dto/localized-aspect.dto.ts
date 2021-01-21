@@ -2,6 +2,7 @@ import { Reward } from "src/rewards/schemas/reward.schema";
 import { AspectLocalization, TrackingData } from "../schemas/aspect.schema";
 
 export class LocalizedAspectDto {
+    readonly _id: string;
     readonly name: string;
     readonly title: string;
     readonly icon?: any;
