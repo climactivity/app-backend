@@ -14,6 +14,7 @@ import { HeartbeatModule } from './heartbeat/heartbeat.module';
 import { PlayerGameStateModule } from './player-game-state/player-game-state.module';
 import { AspectModule } from './aspect/aspect.module';
 import { RewardsModule } from './rewards/rewards.module';
+import { ClientCacheModule } from './client-cache/client-cache.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { RewardsModule } from './rewards/rewards.module';
     PlayerGameStateModule,
     AspectModule,
     RewardsModule,
+    ClientCacheModule,
     ],
   controllers: [],
   providers: [],
