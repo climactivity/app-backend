@@ -11,7 +11,7 @@ export class ClientCacheController {
     @Post()
     checkIsCurrent(@Body() chachePreflightDto: ChachePreflightDto) {
         this.logger.verbose(chachePreflightDto)
-        this.clientCacheService.getLastModification(chachePreflightDto)
+        return this.clientCacheService.getLastModification(chachePreflightDto)
     }
 
     @Post('/update')

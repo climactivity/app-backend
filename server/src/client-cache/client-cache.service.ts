@@ -22,9 +22,9 @@ export class ClientCacheService {
         let currentAspects = await this.aspectSerice.findAllLocalized(currentCacheManifestDto.lang, currentCacheManifestDto.region)
         return {
             "update_at": new Date().getTime(),
-            "current_tree_templates": null,
+            //"current_tree_templates": null,
             "current_aspects": currentAspects,
-            "current_infobytes": null
+            //"current_infobytes": null
         }
     }
 
