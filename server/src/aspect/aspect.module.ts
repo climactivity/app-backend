@@ -14,6 +14,7 @@ import { LocalizedAspectController } from './localized-aspect.controller';
     }])
   ],
   controllers: [AspectController, LocalizedAspectController],
-  providers: [AspectService]
+  providers: [AspectService],
+  exports: [AspectService],
 })
 export class AspectModule {}
