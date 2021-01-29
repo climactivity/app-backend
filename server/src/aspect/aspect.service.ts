@@ -43,9 +43,12 @@ export class AspectService {
   createAspectFromCreateAspectForLocale(createAspectForLocaleDto: CreateAspectForLocaleDto): CreateAspectDto {
     const localizedOptions = createAspectForLocaleDto.localizedTrackingData.options.map((option, index) => {
       var value = option.option;
-      var reward = option.reward
+      var reward = option.reward;
+      var level = option.level;
+      var co2value = option.co2value ?? -1.0;
+
       var locale_id = `option-${index}-${createAspectForLocaleDto.forLanguage}`
-      return { locale_id, value, reward }
+      return { locale_id, value, reward, level }
     })
     return {
       bigpoint: createAspectForLocaleDto.bigpoint,
@@ -64,14 +67,14 @@ export class AspectService {
           strings: {
             question: createAspectForLocaleDto.localizedTrackingData.question,
             options: localizedOptions.map(localizedOption => {
-              let { locale_id, value } = localizedOption
-              return { locale_id, value }
+              let { locale_id, value, level } = localizedOption
+              return { locale_id, value, level }
             })
           }
         },
         options: localizedOptions.map(localizedOption => {
-          let { locale_id, reward } = localizedOption
-          return { locale_id, reward }
+          let { locale_id, reward, level } = localizedOption
+          return { locale_id, reward, level }
         })
       }
     }
@@ -125,7 +128,9 @@ export class AspectService {
           options: aspect.trackingData.options.map(option => {
             return {
               reward: option.reward,
-              option: localizedTrackingData.strings.options.find(locale => locale.locale_id == option.locale_id).value
+              option: localizedTrackingData.strings.options.find(locale => locale.locale_id == option.locale_id).value,
+              level: option.level,
+              co2value: option.co2value ?? -1.0
             }
           }
           )
@@ -146,7 +151,9 @@ export class AspectService {
           options: aspect.trackingData.options.map(option => {
             return {
               reward: option.reward,
-              option: localizedTrackingData.strings.options.find(locale => locale.locale_id == option.locale_id).value
+              option: localizedTrackingData.strings.options.find(locale => locale.locale_id == option.locale_id).value,
+              level: option.level,
+              co2value: option.co2value ?? -1.0
             }
           }
           )

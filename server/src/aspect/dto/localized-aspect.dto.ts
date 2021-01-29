@@ -12,7 +12,9 @@ export class LocalizedAspectDto {
         options: 
             {
                 option: string, 
-                reward: Reward
+                reward: Reward,
+                level: number,
+                co2value?: number
             }[]
         
     };
