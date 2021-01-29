@@ -7,7 +7,7 @@ import { InfoByte } from 'src/infobyte/schemas/infobyte.schema';
 export type AspectDocument = Aspect & Document
 
 export class TrackingData {
-    options: {locale_id: string, reward: Reward}[]
+    options: {locale_id: string, reward: Reward, level: number, co2value?: number}[]
     localized_strings: TrackingDataLocalization;
 }
 
@@ -27,11 +27,11 @@ export class AspectLocalization {
 }
 
 export class Infograph {
-    entries: [{
+    entries: {
         info: InfoByte, 
-        requires: [InfoByte]
+        requires: InfoByte[]
         layer: number
-    }]
+    }[]
 }
 
 @Schema()
@@ -53,6 +53,9 @@ export class Aspect {
 
     @Prop()
     region: string;
+
+    @Prop()
+    bigpoint: string;
 
 }
 

@@ -4,6 +4,7 @@ import { AspectController } from './aspect.controller';
 import { RewardsModule } from 'src/rewards/rewards.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Aspect, AspectSchema } from './schemas/aspect.schema';
+import { LocalizedAspectController } from './localized-aspect.controller';
 
 @Module({
   imports: [
@@ -12,7 +13,8 @@ import { Aspect, AspectSchema } from './schemas/aspect.schema';
       name: Aspect.name, schema: AspectSchema
     }])
   ],
-  controllers: [AspectController],
-  providers: [AspectService]
+  controllers: [AspectController, LocalizedAspectController],
+  providers: [AspectService],
+  exports: [AspectService],
 })
 export class AspectModule {}

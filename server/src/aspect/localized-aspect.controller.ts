@@ -7,7 +7,7 @@ import { UpdateAspectForLocaleDto } from './dto/update-aspect-for-locale.dto';
 import { UpdateAspectDto } from './dto/update-aspect.dto';
 
 @Controller('localized-aspect')
-export class AspectController {
+export class LocalizedAspectController {
   constructor(private readonly aspectService: AspectService) {}
 
   @Post()
@@ -20,8 +20,20 @@ export class AspectController {
     let region = query.r || "DE"; 
     let  lang = query.l || "DE";
 
-    return this.aspectService.findAll();
+    return this.aspectService.findAllLocalized(lang, region);
   }
+
+  @Get('/s/:sector')
+  findAllForBigpoint(@Query() query, @Param('sector') sector: string) {
+    let bigpoint = sector
+    let region = query.r || "DE"; 
+    let  lang = query.l || "DE";
+    if (!bigpoint) {
+      return {message: "No bigpoint provided"}
+    }
+    return this.aspectService.findAllLocalizedForBigpoint(bigpoint, lang, region);
+  }
+
 
   @Get(':id')
   findOne(@Query() query, @Param('id') id: string) {
