@@ -8,6 +8,7 @@ import { InfobyteService } from './infobyte.service';
 @Module({
     imports: [MongooseModule.forFeature([{ name: InfoByte.name, schema: InfoByteSchema}])],
     controllers: [InfobyteController],
-    providers: [InfobyteService]
+    providers: [InfobyteService],
+    exports: [InfobyteService]
 })
 export class InfobyteModule {}
