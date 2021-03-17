@@ -3,7 +3,7 @@ import { TreeTemplateDto } from './dto/treeTemplate.dto';
 import { TreeTemplate } from './schemas/treeTemplate.schema';
 import { TreeTemplateService } from './tree-template.service';
 
-@Controller('tree-template')
+@Controller('admin/tree-template')
 export class TreeTemplateController {
     private readonly logger = new Logger(TreeTemplateService.name);
 

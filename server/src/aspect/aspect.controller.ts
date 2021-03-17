@@ -3,7 +3,7 @@ import { AspectService } from './aspect.service';
 import { CreateAspectDto } from './dto/create-aspect.dto';
 import { UpdateAspectDto } from './dto/update-aspect.dto';
 
-@Controller('aspect')
+@Controller('admin/aspect')
 export class AspectController {
   constructor(private readonly aspectService: AspectService) {}
 

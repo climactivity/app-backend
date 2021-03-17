@@ -15,6 +15,7 @@ import { PlayerGameStateModule } from './player-game-state/player-game-state.mod
 import { AspectModule } from './aspect/aspect.module';
 import { RewardsModule } from './rewards/rewards.module';
 import { ClientCacheModule } from './client-cache/client-cache.module';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [

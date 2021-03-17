@@ -22,7 +22,7 @@ import InfoBitEditor from './InfoBitEditor.svelte';
       if (infobyte._id === '') delete infobyte._id;
       console.log(values);
       let result = await fetch(
-        `${baseUrl}/infobyte${infobyte._id ? '/' + infobyte._id : ''}`,
+        `${baseUrl}/admin/infobyte${infobyte._id ? '/' + infobyte._id : ''}`,
         {
           method: infobyte._id ? 'PUT' : 'POST',
           headers: {

@@ -7,7 +7,11 @@ import { WsAdapter } from '@nestjs/platform-ws';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-  if (configuration().use_static_assets) app.useStaticAssets(join(__dirname, '../..', 'site/public'));
+  if (configuration().use_static_assets) {
+    app.useStaticAssets(join(__dirname, '../..', 'site/public'));
+    app.useStaticAssets(join(__dirname, '../..', 'site/public'), {prefix: '/admin/'});
+
+  }
   app.enableCors({
     origin: "*",
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',

@@ -6,7 +6,7 @@
   let selectedInfobyte;
 
   const refetch = async () => {
-    const response = await fetch(`${baseUrl}/infobyte`);
+    const response = await fetch(`${baseUrl}/admin/infobyte`);
     return await response.json();
   };
 
@@ -26,7 +26,7 @@
 
   const fetchInfoBtye = async (id) => {
     if (!id) return;
-    const response = await fetch(`${baseUrl}/infobyte/${id}`);
+    const response = await fetch(`${baseUrl}/admin/infobyte/${id}`);
     return await response.json();
   };
 

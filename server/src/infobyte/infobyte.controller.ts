@@ -4,7 +4,7 @@ import { UpdateInfoByteDto } from './dto/update-info-byte.dto';
 import { InfobyteService } from './infobyte.service';
 import { InfoByte } from './schemas/infobyte.schema';
 
-@Controller('infobyte')
+@Controller('admin/infobyte')
 export class InfobyteController {
 
     constructor(private readonly infobyteService: InfobyteService) {}

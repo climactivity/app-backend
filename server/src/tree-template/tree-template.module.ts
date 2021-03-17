@@ -9,6 +9,7 @@ import { TreeTemplate, TreeTemplateSchema } from './schemas/treeTemplate.schema'
 @Module({
   imports: [MongooseModule.forFeature([{ name: TreeTemplate.name, schema: TreeTemplateSchema}])],
   controllers: [TreeTemplateController],
-  providers: [TreeTemplateService]
+  providers: [TreeTemplateService],
+  exports: [TreeTemplateService]
 })
 export class TreeTemplateModule {}
