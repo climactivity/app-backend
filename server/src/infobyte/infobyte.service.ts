@@ -17,6 +17,10 @@ export class InfobyteService {
         return this.infoByteModel.find().select('name _id').exec();
     }
 
+    async findEverything(): Promise<InfoByte[]> {
+        return this.infoByteModel.find().exec();
+    }
+
     async findById(id): Promise<any> {
         return this.infoByteModel.findById(id).exec();
     }

@@ -1,38 +1,60 @@
 <script lang="ts">
-
-    import Infobytes from "./Infobytes/Infobytes.svelte";
+    import Dashboard from "./Dashboard.svelte";
     import {
+        Col,
+        Container,
+        Row,
+        Collapse,
+        Navbar,
+        NavbarToggler,
+        NavbarBrand,
         Nav,
         NavItem,
-        Container
-    } from 'sveltestrap';
-    import MyNavLink from "./MyNavLink.svelte";
-    import TreeTemplateView from "./TreeTemplates/TreeTemplateView.svelte";
-    import AspectView from "./Aspects/AspectView.svelte";
+        NavLink,
+        UncontrolledDropdown,
+        DropdownToggle,
+        DropdownMenu,
+        DropdownItem
+    } from "sveltestrap";
+    $: path = location.pathname;
+    let isOpen = false;
 
-    let activeTab = "aspects"
-
-    let tabs = [
-        {target: "health", name: "Health"},
-        {target: "analytics", name: "Analytics"},
-        {target: "logs", name: "Logs"},
-        {target: "baeume", name: "Bäume"},
-        {target: "aspects", name: "Aspekte"},
-        {target: "infobytes", name: "Infobytes"},
-        {target: "tasks", name: "Aufgaben"},
-        {target: "danger-zone", name: "Danger Zone"}
-    ]
-
-    function setActiveTab(path) {
-        return function () {
-            console.log(path)
-            activeTab = path
-        };
-    }
-
+function handleUpdate(event) {
+  isOpen = event.detail.isOpen;
+}
 </script>
-<style>
 
+<main>
+    {#if path === "/admin/"}
+        <Dashboard />
+    {:else}
+        <Container>
+            <Navbar color="light" light expand='lg'>
+                <NavbarBrand href="/">
+                    <img src="/img/logo.png" height="30" class="d-inline-block align-top" alt="CyLogo">
+                </NavbarBrand>
+                <NavbarToggler on:click={() => (isOpen = !isOpen)} />
+                <Collapse {isOpen} navbar expand="md" on:update={handleUpdate}>
+                    <Nav class="ml-auto" navbar pills>
+                        <NavItem>
+                            <NavLink href="/admin/">Admin-Bereich</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink
+                                href="https://github.com/climactivity"
+                                >GitHub</NavLink
+                            >
+                        </NavItem>
+                    </Nav>
+                </Collapse>
+            </Navbar>
+
+            <h1>TODO: Landing page für die App bauen</h1>
+        </Container>
+    {/if}
+</main>
+
+<style>
     :global(:root) {
         --primary-light: #a6f9d6;
         --primary: #5be2a9;
@@ -43,10 +65,6 @@
         --grey-dark: #6d7098;
         --red: #ff6b6b;
         --red-dark: #9e3c3c;
-    }
-
-    main {
-        margin: 0;
     }
 
     :global(button) {
@@ -87,27 +105,4 @@
         color: var(--red);
         margin-top: 10px;
     }
-
 </style>
-
-<main>
-    <Nav tabs justified>
-        {#each tabs as tab}
-            <NavItem>
-                <MyNavLink target={tab.target} currentTab={activeTab} callback={setActiveTab}>{tab.name}</MyNavLink>
-            </NavItem>
-        {/each}
-    </Nav>
-
-    <Container>
-        {#if activeTab === ''}
-            <h1> start page </h1>
-        {:else if activeTab === "baeume" }
-            <TreeTemplateView/>
-        {:else if activeTab === "aspects" }
-            <AspectView/>
-        {:else if activeTab === "infobytes" }
-            <Infobytes/>
-        {/if}
-    </Container>
-</main>
