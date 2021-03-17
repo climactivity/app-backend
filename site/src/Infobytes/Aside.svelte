@@ -6,14 +6,17 @@
     CardBody,
     Col,
     Container,
-    Row, Button
+    Row,
+    Button,
   } from "sveltestrap";
   import { currentInfobyte, Infobyte, baseUrl } from "../stores";
 
   let selectedInfobyte;
   export let unsavedChanges;
   const refetch = async () => {
-    const response = await fetch(`${baseUrl}/admin/infobyte`);
+    const response = await fetch(`${baseUrl}/admin/infobyte`, {
+      credentials: "include",
+    });
     return await response.json();
   };
 
@@ -40,7 +43,9 @@
 
   const fetchInfoBtye = async (id) => {
     if (!id) return;
-    const response = await fetch(`${baseUrl}/admin/infobyte/${id}`);
+    const response = await fetch(`${baseUrl}/admin/infobyte/${id}`, {
+      credentials: "include",
+    });
     return await response.json();
   };
 
@@ -81,4 +86,3 @@
 {:catch error}
   <p>An error occurred!</p>
 {/await}
-
