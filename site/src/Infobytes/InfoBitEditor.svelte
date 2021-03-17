@@ -1,6 +1,17 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import ProsemirrorEditor from 'prosemirror-svelte';
+  import { onMount } from "svelte";
+  import {
+    Alert,
+    ListGroup,
+    ListGroupItem,
+    Button,
+    ButtonGroup,
+    ButtonToolbar,
+    Col,
+    Row,
+  } from "sveltestrap";
+
+  import ProsemirrorEditor from "prosemirror-svelte";
   import {
     createRichTextEditor,
     toPlainText,
@@ -10,31 +21,37 @@
     toggleMark,
     setBlockType,
     toHTML,
-    richTextSchema
-  } from 'prosemirror-svelte/state';
+    richTextSchema,
+  } from "prosemirror-svelte/state";
+
+
   import {
     getCurrentMarks,
     getNodeTypeAtSelectionHead,
-  } from 'prosemirror-svelte/helpers';
-
+  } from "prosemirror-svelte/helpers";
+  import {exampleSetup} from "prosemirror-example-setup"
   export let value;
-  const plugins = [];
+  const plugins = exampleSetup({schema: richTextSchema, history: false, floatingMenu: false});
+
+
 
   const rehydrateEditorState = (jsonData) => {
     try {
-      return fromJSON(jsonData, richTextSchema)
-    } catch(e) {
-      console.log("Could not restore Prosemirror state from json", e); 
-      return createRichTextEditor()
+      return fromJSON(jsonData, richTextSchema, plugins);
+    } catch (e) {
+      console.log("Could not restore Prosemirror state from json", e);
+      return createRichTextEditor("", plugins);
     }
-  }
+  };
 
   // create the initial editor state
-  let editorState = value ? rehydrateEditorState(value) : createRichTextEditor()
+  let editorState = value
+    ? rehydrateEditorState(value)
+    : createRichTextEditor("", plugins);
   let focusEditor;
 
   function handleTransaction(event) {
-    preventDefault(event)
+    preventDefault(event);
 
     // get the new editor state from event.detail
     editorState = event.detail.editorState;
@@ -42,32 +59,35 @@
   }
 
   function clearEditor(event) {
-    preventDefault(event)
+    preventDefault(event);
 
     editorState = clear(editorState);
     focusEditor();
   }
 
   function resetEditor(event) {
-    preventDefault(event)
+    preventDefault(event);
 
     editorState = createRichTextEditor(value);
     focusEditor();
   }
 
-  function handleToggleBold(event) {
-    preventDefault(event)
-    editorState = toggleMark(editorState, 'strong');
+  function handleToggleItalics(event) {
+    preventDefault(event);
+    editorState = toggleMark(editorState, "em");
   }
 
-  function handleSetBlockType( type, attrs = null) {
+  function handleToggleBold(event) {
+    preventDefault(event);
+    editorState = toggleMark(editorState, "strong");
+  }
 
+  function handleSetBlockType(type, attrs = null) {
     return function (event) {
-      preventDefault(event)
+      preventDefault(event);
 
       editorState = setBlockType(editorState, type, attrs);
       value = toJSON(editorState);
-
     };
   }
 
@@ -79,7 +99,7 @@
     if (!node) return null;
     if (
       node.attrs &&
-      typeof node.attrs.level !== 'undefined' &&
+      typeof node.attrs.level !== "undefined" &&
       node.attrs.level !== null
     ) {
       return `${node.type.name}-${node.attrs.level}`;
@@ -97,67 +117,49 @@
   $: isBold =
     currentMarks && currentMarks.activeMarks && currentMarks.activeMarks.strong;
 
+  $: isItalics =
+    currentMarks && currentMarks.activeMarks && currentMarks.activeMarks.strong;
+
   onMount(() => focusEditor());
   // log the text content of the editor state, just for fun
   //$: value = toJSON(editorState);
+
+  import Fa from "svelte-fa";
+  import { faBold, faItalic } from "@fortawesome/free-solid-svg-icons";
 </script>
+
+<div class="infobit-editor justify-content-between">
+
+  <div class="editor">
+    <ProsemirrorEditor
+      placeholder="Go ahead and type something"
+      {editorState}
+      bind:focus={focusEditor}
+      on:transaction={handleTransaction}
+    />
+  </div>
+</div>
+
+<svelte:head>
+	<link rel="stylesheet" href="styles/pm-menu.css">
+</svelte:head>
 
 <style>
   .controls {
     display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
   .infobit-editor {
-    background-color:  var(--grey);
+    background-color: var(--grey);
     border: 1px solid var(--grey);
     border-radius: 4px;
   }
   .editor {
     background-color: white;
-
+    max-height: 600px; 
+    overflow: auto;
   }
+
+
 </style>
-
-<div class="infobit-editor">
-  <div class="controls">
-    <button on:click={clearEditor}>Clear</button>
-    <!--<button on:click={resetEditor}>Reset</button> really broken :/-->
-
-    <button
-      style="margin-left: .5em"
-      on:click={handleToggleBold}
-      on:mousedown={preventDefault}>
-      {#if isBold}Too bold for me{:else}Make it bold{/if}
-    </button>
-
-    <button
-      style="margin-left: .5em"
-      disabled={activeBlockType === 'paragraph'}
-      on:click={handleSetBlockType('paragraph')}
-      on:mousedown={preventDefault}>p</button>
-
-    <button
-      disabled={activeBlockType === 'heading-1'}
-      on:click={handleSetBlockType('heading', { level: 1 })}
-      on:mousedown={preventDefault}>h1</button>
-
-    <button
-      disabled={activeBlockType === 'heading-2'}
-      on:click={
-        handleSetBlockType('heading', { level: 2 })}
-      on:mousedown={preventDefault}>h2</button>
-
-    <button
-      disabled={activeBlockType === 'heading-3'}
-      on:click={handleSetBlockType('heading', { level: 3 })}
-      on:mousedown={preventDefault}>h3</button>
-  </div>
-  
-  <div class="editor">
-  <ProsemirrorEditor
-    placeholder="Go ahead and type something"
-    {editorState}
-    bind:focus={focusEditor}
-    on:transaction={handleTransaction} />
-  </div>
- 
-</div>

@@ -4,7 +4,14 @@
     import {
         Nav,
         NavItem,
-        Container
+        Container,
+        Row,
+        Col,
+Collapse,
+NavbarToggler,
+NavLink,
+Navbar,
+NavbarBrand
     } from 'sveltestrap';
     import MyNavLink from "./MyNavLink.svelte";
     import TreeTemplateView from "./TreeTemplates/TreeTemplateView.svelte";
@@ -13,14 +20,14 @@
     let activeTab = "aspects"
 
     let tabs = [
-        {target: "health", name: "Health"},
-        {target: "analytics", name: "Analytics"},
-        {target: "logs", name: "Logs"},
+        {target: "health", name: "Health", disabled: true},
+        {target: "analytics", name: "Analytics", disabled: true},
+        {target: "logs", name: "Logs", disabled: true},
         {target: "baeume", name: "Bäume"},
         {target: "aspects", name: "Aspekte"},
         {target: "infobytes", name: "Infobytes"},
-        {target: "tasks", name: "Aufgaben"},
-        {target: "danger-zone", name: "Danger Zone"}
+        {target: "tasks", name: "Aufgaben", disabled: true},
+        {target: "danger-zone", name: "Danger Zone", disabled: true}
     ]
 
     function setActiveTab(path) {
@@ -30,6 +37,12 @@
         };
     }
 
+
+    let isOpen = false;
+
+function handleUpdate(event) {
+  isOpen = event.detail.isOpen;
+}
 </script>
 <style>
 
@@ -91,15 +104,37 @@
 </style>
 
 <main>
-    <Nav tabs justified>
-        {#each tabs as tab}
-            <NavItem>
-                <MyNavLink target={tab.target} currentTab={activeTab} callback={setActiveTab}>{tab.name}</MyNavLink>
-            </NavItem>
-        {/each}
-    </Nav>
+    <Navbar color="light" light expand='xl'>
+        <NavbarToggler on:click={() => (isOpen = !isOpen)} />
+
+        <NavbarBrand href="/">
+            <img src="/img/logo.png" height="30" class="d-inline-block align-top" alt="CyLogo">
+        </NavbarBrand>
+
+        <Collapse {isOpen} navbar expand="xl" on:update={handleUpdate}>
+            <Nav>
+                {#each tabs as tab}
+                    <NavItem>
+                        <MyNavLink target={tab.target} currentTab={activeTab} callback={setActiveTab} disabled={tab.disabled}>{tab.name}</MyNavLink>
+                    </NavItem>
+                {/each}
+            </Nav>
+        </Collapse>
+        <NavItem>
+            <NavLink>Abmelden</NavLink>
+        </NavItem>
+    </Navbar>
+    <Row>
+
 
     <Container>
+
+        <Row>
+        <Col xs="3">
+
+         </Col>
+         <Col xs="auto">
+
         {#if activeTab === ''}
             <h1> start page </h1>
         {:else if activeTab === "baeume" }
@@ -109,5 +144,8 @@
         {:else if activeTab === "infobytes" }
             <Infobytes/>
         {/if}
+         </Col>
+        </Row>
     </Container>
+</Row>
 </main>

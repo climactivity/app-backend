@@ -1,10 +1,17 @@
 <script lang="ts">
-  import {  
-    ListGroup, ListGroupItem , Card, CardBody, Col, Container, Row } from 'sveltestrap';
-  import { currentInfobyte, Infobyte, baseUrl } from '../stores';
+  import {
+    ListGroup,
+    ListGroupItem,
+    Card,
+    CardBody,
+    Col,
+    Container,
+    Row, Button
+  } from "sveltestrap";
+  import { currentInfobyte, Infobyte, baseUrl } from "../stores";
 
   let selectedInfobyte;
-
+  export let unsavedChanges;
   const refetch = async () => {
     const response = await fetch(`${baseUrl}/admin/infobyte`);
     return await response.json();
@@ -18,11 +25,18 @@
     selectedInfobyte = value;
   });
 
-  const onInfobyteSelected = async (infobyte: { name: string; _id: string }) => {
-    infobyte = await fetchInfoBtye(infobyte._id)
+  const onInfobyteSelected = async (infobyte: {
+    name: string;
+    _id: string;
+  }) => {
+    if (unsavedChanges) {
+      alert("Ungespeicherte Änderungen gehen verloren");
+      return;
+    }
+    infobyte = await fetchInfoBtye(infobyte._id);
     currentInfobyte.set(infobyte);
     console.log(infobyte);
-  }
+  };
 
   const fetchInfoBtye = async (id) => {
     if (!id) return;
@@ -30,33 +44,41 @@
     return await response.json();
   };
 
-
   const newInfobyte = () => {
+    if (unsavedChanges) {
+      alert("Ungespeicherte Änderungen gehen verloren");
+      return;
+    }
     currentInfobyte.set(new Infobyte());
-  }
+  };
 </script>
 
-<Col xs="3">
-  <Card>
-    <CardBody>
-  {#await infobytes}
-    <p>...waiting</p>
-  {:then data}
-    <ListGroup vertical>
-      {#each data as infobyte}
-      <ListGroupItem 
-        tag="button" action  
+<Row>
+  <Col xs="auto">
+    <h4 class="mt-3">Alle Infobytes</h4>
+  </Col>
+
+  <Col xs="auto">
+    <Button color="success" on:click={newInfobyte}>+</Button>
+  </Col>
+</Row>
+
+{#await infobytes}
+  <p>...waiting</p>
+{:then data}
+  <ListGroup vertical>
+    {#each data as infobyte}
+      <ListGroupItem
+        tag="button"
+        action
         on:click={() => onInfobyteSelected(infobyte)}
         active={selectedInfobyte._id === infobyte._id}
-         >
-          {infobyte.name}
+      >
+        {infobyte.name}
       </ListGroupItem>
-      {/each}
-    </ListGroup>
-  {:catch error}
-    <p>An error occurred!</p>
-  {/await}
-</CardBody>
-</Card>
-  <button on:click={newInfobyte}> Add new </button>
-  </Col>
+    {/each}
+  </ListGroup>
+{:catch error}
+  <p>An error occurred!</p>
+{/await}
+

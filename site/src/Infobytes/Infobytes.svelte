@@ -1,22 +1,28 @@
 <script lang="ts">
-  import Aside from './Aside.svelte';
+  import Aside from "./Aside.svelte";
   import InfobyteEditor from "./InfobyteEditor.svelte";
-  import { currentInfobyte, baseUrl } from '../stores';
-  import {
-    Row,
-    Col
-  } from 'sveltestrap';
+  import { currentInfobyte, baseUrl } from "../stores";
+  import { Row, Col, Container } from "sveltestrap";
 
-  let selectedInfobyte = undefined
-
+  let selectedInfobyte = undefined;
+  let unsavedChanges = false;
   const unsubscribe = currentInfobyte.subscribe((value) => {
     selectedInfobyte = value;
   });
-
 </script>
 
+<Container>
+  <Row>
+    <Col xs="12" sm="3">
+      <Aside bind:unsavedChanges />
+    </Col>
+    <Col sm="9">
+      <InfobyteEditor bind:selectedInfobyte bind:unsavedChanges />
+    </Col>
+  </Row>
+</Container>
+
 <style>
-    
   h1 {
     color: var(--red);
     text-transform: uppercase;
@@ -28,19 +34,4 @@
   .padded {
     margin: 1em 1em 0 1em;
   }
- </style>
-
-<Row>
-    <Aside/>
-    <Col xs="9">
- 
-    <section id="editor-container">
-  
-      <div  class="padded">
-      <InfobyteEditor bind:selectedInfobyte={selectedInfobyte} />
-      </div>
-  
-    </section>
-    </Col>
-  
-</Row>
+</style>

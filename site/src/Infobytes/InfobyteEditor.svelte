@@ -5,7 +5,7 @@
 import InfoBitEditor from './InfoBitEditor.svelte';
 
   export let selectedInfobyte;
-
+  export let unsavedChanges;
   const initialQuestions = [new Question()];
 
   const {
@@ -15,6 +15,7 @@ import InfoBitEditor from './InfoBitEditor.svelte';
     handleChange,
     handleSubmit,
     handleReset,
+    isModified
   } = createForm({
     initialValues: selectedInfobyte,
     onSubmit: async (values) => {
@@ -41,6 +42,7 @@ import InfoBitEditor from './InfoBitEditor.svelte';
     console.log(editorTest)
   }
 
+  $: unsavedChanges = isModified
   
   $: if (selectedInfobyte) {
     console.log(form._id, selectedInfobyte._id);
