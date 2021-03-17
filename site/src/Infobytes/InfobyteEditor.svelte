@@ -31,6 +31,7 @@ import InfoBitEditor from './InfoBitEditor.svelte';
             // 'Content-Type': 'application/x-www-form-urlencoded',
           },
           body: JSON.stringify(infobyte),
+          credentials: 'include',
         },
       );
       currentInfobyte.set(new Infobyte());
@@ -97,6 +98,8 @@ import InfoBitEditor from './InfoBitEditor.svelte';
   const deleteInfoByte = async () => {
     if (!selectedInfobyte._id) return;
     const response = await fetch(`/infobyte/${selectedInfobyte._id}`, {
+      credentials: 'include',
+
       method: 'DELETE',
     });
     currentInfobyte.set(new Infobyte());

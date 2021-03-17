@@ -68,6 +68,8 @@
                     'Content-Type': 'application/json',
                     // 'Content-Type': 'application/x-www-form-urlencoded',
                 },
+                credentials: 'include',
+
                 body: JSON.stringify(treeTemplate),
                 },
             );
@@ -85,6 +87,8 @@
         let result = await fetch(
                 `${baseUrl}/admin/tree-template/${id}`,
                 {
+                    credentials: 'include',
+
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
