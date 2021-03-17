@@ -3,7 +3,7 @@ import { RewardsService } from './rewards.service';
 import { CreateRewardDto } from './dto/create-reward.dto';
 import { UpdateRewardDto } from './dto/update-reward.dto';
 
-@Controller('rewards')
+@Controller('admin/rewards')
 export class RewardsController {
   constructor(private readonly rewardsService: RewardsService) {}
 

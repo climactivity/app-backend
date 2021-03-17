@@ -2,7 +2,7 @@ import { Controller, UploadedFile, Post, UseInterceptors } from '@nestjs/common'
 import { FileInterceptor } from "@nestjs/platform-express"
 
 
-@Controller('image-upload')
+@Controller('admin/image-upload')
 export class ImageUploadController {
 
     @Post('upload')
