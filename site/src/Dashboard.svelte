@@ -1,5 +1,4 @@
 <script lang="ts">
-
     import Infobytes from "./Infobytes/Infobytes.svelte";
     import {
         Nav,
@@ -7,45 +6,101 @@
         Container,
         Row,
         Col,
-Collapse,
-NavbarToggler,
-NavLink,
-Navbar,
-NavbarBrand
-    } from 'sveltestrap';
+        Collapse,
+        NavbarToggler,
+        NavLink,
+        Navbar,
+        NavbarBrand,
+    } from "sveltestrap";
     import MyNavLink from "./MyNavLink.svelte";
     import TreeTemplateView from "./TreeTemplates/TreeTemplateView.svelte";
     import AspectView from "./Aspects/AspectView.svelte";
 
-    let activeTab = "aspects"
+    let activeTab = "aspects";
 
     let tabs = [
-        {target: "health", name: "Health", disabled: true},
-        {target: "analytics", name: "Analytics", disabled: true},
-        {target: "logs", name: "Logs", disabled: true},
-        {target: "baeume", name: "Bäume"},
-        {target: "aspects", name: "Aspekte"},
-        {target: "infobytes", name: "Infobytes"},
-        {target: "tasks", name: "Aufgaben", disabled: true},
-        {target: "danger-zone", name: "Danger Zone", disabled: true}
-    ]
+        { target: "health", name: "Health", disabled: true },
+        { target: "analytics", name: "Analytics", disabled: true },
+        { target: "logs", name: "Logs", disabled: true },
+        { target: "baeume", name: "Bäume" },
+        { target: "aspects", name: "Aspekte" },
+        { target: "infobytes", name: "Infobytes" },
+        { target: "tasks", name: "Aufgaben", disabled: true },
+        { target: "danger-zone", name: "Danger Zone", disabled: true },
+    ];
 
     function setActiveTab(path) {
+        //if (!tabs.some((e) => e.target === path)) return; 
         return function () {
-            console.log(path)
-            activeTab = path
+            console.log(path);
+            activeTab = path;
+            window.location.hash = path;
         };
     }
 
-
     let isOpen = false;
 
-function handleUpdate(event) {
-  isOpen = event.detail.isOpen;
-}
-</script>
-<style>
+    function handleUpdate(event) {
+        isOpen = event.detail.isOpen;
+    }
 
+    
+    setActiveTab(window.location.hash)
+    
+</script>
+
+<main>
+    <Navbar color="light" light expand="xl">
+        <NavbarToggler on:click={() => (isOpen = !isOpen)} />
+
+        <NavbarBrand href="/">
+            <img
+                src="/img/logo.png"
+                height="30"
+                class="d-inline-block align-top"
+                alt="CyLogo"
+            />
+        </NavbarBrand>
+
+        <Collapse {isOpen} navbar expand="xl" on:update={handleUpdate}>
+            <Nav>
+                {#each tabs as tab}
+                    <NavItem>
+                        <MyNavLink
+                            target={tab.target}
+                            currentTab={activeTab}
+                            callback={setActiveTab}
+                            disabled={tab.disabled}>{tab.name}</MyNavLink
+                        >
+                    </NavItem>
+                {/each}
+            </Nav>
+        </Collapse>
+        <NavItem>
+            <NavLink>Abmelden</NavLink>
+        </NavItem>
+    </Navbar>
+    <Row>
+        <Container>
+            <Row>
+                <Col xs="3" />
+                <Col xs="auto">
+                    {#if activeTab === ""}
+                        <h1>start page</h1>
+                    {:else if activeTab === "baeume"}
+                        <TreeTemplateView />
+                    {:else if activeTab === "aspects"}
+                        <AspectView />
+                    {:else if activeTab === "infobytes"}
+                        <Infobytes />
+                    {/if}
+                </Col>
+            </Row>
+        </Container>
+    </Row>
+</main>
+
+<style>
     :global(:root) {
         --primary-light: #a6f9d6;
         --primary: #5be2a9;
@@ -100,52 +155,4 @@ function handleUpdate(event) {
         color: var(--red);
         margin-top: 10px;
     }
-
 </style>
-
-<main>
-    <Navbar color="light" light expand='xl'>
-        <NavbarToggler on:click={() => (isOpen = !isOpen)} />
-
-        <NavbarBrand href="/">
-            <img src="/img/logo.png" height="30" class="d-inline-block align-top" alt="CyLogo">
-        </NavbarBrand>
-
-        <Collapse {isOpen} navbar expand="xl" on:update={handleUpdate}>
-            <Nav>
-                {#each tabs as tab}
-                    <NavItem>
-                        <MyNavLink target={tab.target} currentTab={activeTab} callback={setActiveTab} disabled={tab.disabled}>{tab.name}</MyNavLink>
-                    </NavItem>
-                {/each}
-            </Nav>
-        </Collapse>
-        <NavItem>
-            <NavLink>Abmelden</NavLink>
-        </NavItem>
-    </Navbar>
-    <Row>
-
-
-    <Container>
-
-        <Row>
-        <Col xs="3">
-
-         </Col>
-         <Col xs="auto">
-
-        {#if activeTab === ''}
-            <h1> start page </h1>
-        {:else if activeTab === "baeume" }
-            <TreeTemplateView/>
-        {:else if activeTab === "aspects" }
-            <AspectView/>
-        {:else if activeTab === "infobytes" }
-            <Infobytes/>
-        {/if}
-         </Col>
-        </Row>
-    </Container>
-</Row>
-</main>

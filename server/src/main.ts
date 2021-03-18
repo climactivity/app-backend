@@ -16,6 +16,8 @@ async function bootstrap() {
     origin: "*",
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
+    allowedHeaders: "Origin, Content-Type, Accept",
+    maxAge: 1728000
   });
   app.useWebSocketAdapter(new WsAdapter(app))
   await app.listen(3000);

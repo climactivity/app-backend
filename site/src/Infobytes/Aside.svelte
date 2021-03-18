@@ -14,7 +14,7 @@
   let selectedInfobyte;
   export let unsavedChanges;
   const refetch = async () => {
-    const response = await fetch(`${baseUrl}/admin/infobyte`, {
+    const response = await fetch(`${baseUrl}infobyte`, {
       credentials: "include",
     });
     return await response.json();
@@ -43,7 +43,7 @@
 
   const fetchInfoBtye = async (id) => {
     if (!id) return;
-    const response = await fetch(`${baseUrl}/admin/infobyte/${id}`, {
+    const response = await fetch(`${baseUrl}infobyte/${id}`, {
       credentials: "include",
     });
     return await response.json();

@@ -5,7 +5,7 @@ import { ListGroup, ListGroupItem , Card, CardBody, Col, Container, Row } from '
 import TreeTemplateEditor from './TreeTemplateEditor.svelte';
 
 const refetch = async () => {
-    const response = await fetch(`${baseUrl}/admin/tree-template`,{          credentials: 'include',
+    const response = await fetch(`${baseUrl}tree-template`,{          credentials: 'include',
 });
     return await response.json();
 };
@@ -38,7 +38,7 @@ const ontreeTemplateSelected = async (treeTemplate: { name: string; _id: string 
 
   const fetchTreeTemplate = async (id) => {
     if (!id) return;
-    const response = await fetch(`${baseUrl}/admin/tree-template/${id}`);
+    const response = await fetch(`${baseUrl}tree-template/${id}`);
     return await response.json();
   };
 

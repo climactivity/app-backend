@@ -43,5 +43,10 @@ declare const __frontend_env; //
 
 export const currentInfobyte: Writable<Infobyte> = writable( new Infobyte())
 const isProd = __frontend_env.env.isProd
-const apiUrl = __frontend_env.env.SVELTE_APP_API_HOST_BASE || ''
-export var baseUrl = ( __frontend_env && isProd ? apiUrl : '' )
+const apiUrl = ( __frontend_env.env.SVELTE_APP_API_HOST_BASE || '' )
+export var baseUrl = ( __frontend_env && isProd ? apiUrl : window.location.href.replace(window.location.hash,"") )
+console.log("base URL set to: ", baseUrl ); 
+
+export const myFetch =  () => {
+
+}

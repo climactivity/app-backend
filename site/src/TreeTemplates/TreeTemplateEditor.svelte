@@ -61,7 +61,7 @@
             console.log($form, values, treeTemplate)
             if (treeTemplate._id === '') delete treeTemplate._id;
             let result = await fetch(
-                `${baseUrl}/admin/tree-template${treeTemplate._id ? '/' + treeTemplate._id : ''}`,
+                `${baseUrl}tree-template${treeTemplate._id ? '/' + treeTemplate._id : ''}`,
                 {
                 method: treeTemplate._id ? 'PUT' : 'POST',
                 headers: {
@@ -85,7 +85,7 @@
         }
 
         let result = await fetch(
-                `${baseUrl}/admin/tree-template/${id}`,
+                `${baseUrl}tree-template/${id}`,
                 {
                     credentials: 'include',
 
