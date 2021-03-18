@@ -6,7 +6,7 @@ import { CreateAspectDto } from './dto/create-aspect.dto';
 import { UpdateAspectForLocaleDto } from './dto/update-aspect-for-locale.dto';
 import { UpdateAspectDto } from './dto/update-aspect.dto';
 
-@Controller('localized-aspect')
+@Controller('admin/localized-aspect')
 export class LocalizedAspectController {
   constructor(private readonly aspectService: AspectService) {}
 

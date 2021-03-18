@@ -1,4 +1,4 @@
-import { AspectLocalization, TrackingData } from "../schemas/aspect.schema";
+import { AspectLocalization, Factor, TrackingData } from "../schemas/aspect.schema";
 
 export class CreateAspectDto {
     readonly name: string;
@@ -7,4 +7,5 @@ export class CreateAspectDto {
     readonly trackingData?: TrackingData;
     readonly localizedStrings: AspectLocalization[]; 
     readonly bigpoint: string;
+    readonly factors: Factor[]
 }

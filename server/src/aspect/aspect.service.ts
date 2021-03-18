@@ -58,7 +58,8 @@ export class AspectService {
       localizedStrings: [{
         language: createAspectForLocaleDto.forLanguage,
         strings: {
-          title: createAspectForLocaleDto.title
+          title: createAspectForLocaleDto.title,
+          factors: createAspectForLocaleDto.localizedFactors,
         }
       }],
       trackingData: {
@@ -76,7 +77,8 @@ export class AspectService {
           let { locale_id, reward, level } = localizedOption
           return { locale_id, reward, level }
         })
-      }
+      },
+      factors: createAspectForLocaleDto.localizedFactors,
     }
   }
 
@@ -123,6 +125,7 @@ export class AspectService {
         title: aspectLocalizedStrings.strings.title,
         forLanguage: aspectLocalizedStrings.language,
         forRegion: region,
+        localizedFactors: aspectLocalizedStrings.strings.factors,
         localizedTrackingData: {
           question: localizedTrackingData.strings.question,
           options: aspect.trackingData.options.map(option => {
@@ -135,6 +138,7 @@ export class AspectService {
           }
           )
         },
+
         message: error
       }
     } else {
@@ -158,6 +162,7 @@ export class AspectService {
           }
           )
         },
+        localizedFactors: aspectLocalizedStrings.strings.factors
       }
     }
 

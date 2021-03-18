@@ -15,9 +15,7 @@
     import MyNavLink from "./MyNavLink.svelte";
     import TreeTemplateView from "./TreeTemplates/TreeTemplateView.svelte";
     import AspectView from "./Aspects/AspectView.svelte";
-
-    let activeTab = "aspects";
-
+	import { onMount } from 'svelte';
     let tabs = [
         { target: "health", name: "Health", disabled: true },
         { target: "analytics", name: "Analytics", disabled: true },
@@ -29,8 +27,14 @@
         { target: "danger-zone", name: "Danger Zone", disabled: true },
     ];
 
+    let activeTab = "infobytes";
+
     function setActiveTab(path) {
-        //if (!tabs.some((e) => e.target === path)) return; 
+        path = path.split("#").pop()
+        if (!tabs.some((e) => e.target === path)) {
+            console.log("Path ", path, " not defined!")
+            return; 
+        }
         return function () {
             console.log(path);
             activeTab = path;
@@ -44,8 +48,10 @@
         isOpen = event.detail.isOpen;
     }
 
-    
-    setActiveTab(window.location.hash)
+    onMount(async () => {
+        console.log("Dashboard mounted!")
+        setActiveTab(window.location.hash)()
+    })
     
 </script>
 

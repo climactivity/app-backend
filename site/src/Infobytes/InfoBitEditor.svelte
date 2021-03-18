@@ -9,6 +9,7 @@
     ButtonToolbar,
     Col,
     Row,
+Form,
   } from "sveltestrap";
 
   import ProsemirrorEditor from "prosemirror-svelte";
@@ -24,6 +25,7 @@
     richTextSchema,
   } from "prosemirror-svelte/state";
 
+  import { baseUrl } from "../stores";
 
   import {
     getCurrentMarks,
@@ -123,9 +125,7 @@
   onMount(() => focusEditor());
   // log the text content of the editor state, just for fun
   //$: value = toJSON(editorState);
-
-  import Fa from "svelte-fa";
-  import { faBold, faItalic } from "@fortawesome/free-solid-svg-icons";
+ 
 </script>
 
 <div class="infobit-editor justify-content-between">

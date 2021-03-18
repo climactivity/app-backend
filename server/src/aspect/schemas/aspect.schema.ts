@@ -23,6 +23,7 @@ export class AspectLocalization {
     language: string; 
     strings: {
         title: string
+        factors?: {id: number, name: string}[]
     }
 }
 
@@ -32,6 +33,11 @@ export class Infograph {
         requires: InfoByte[]
         layer: number
     }[]
+}
+
+export class Factor {
+    id: number ;
+
 }
 
 @Schema()
@@ -57,6 +63,8 @@ export class Aspect {
     @Prop()
     bigpoint: string;
 
+    @Prop()
+    factors: Factor[];
 }
 
 export const AspectSchema = SchemaFactory.createForClass(Aspect); 
