@@ -140,10 +140,6 @@ Form,
   </div>
 </div>
 
-<svelte:head>
-	<link rel="stylesheet" href="styles/pm-menu.css">
-</svelte:head>
-
 <style>
   .controls {
     display: flex;
