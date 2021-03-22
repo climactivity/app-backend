@@ -12,9 +12,9 @@
   } from "../../stores";
   import InfoBitEditor from "./InfoBitEditor.svelte";
   export let selectedInfobyte: Infobyte;
-  export let unsavedChanges: boolean;
   import { Input, Label, Card, Button, ButtonToolbar } from "sveltestrap";
-  const { form, errors, handleChange, handleSubmit, isModified } = createForm({
+  import InfobyteInputFields from "../organisms/InfobyteInputFields.svelte";
+  const { form, errors, handleSubmit } = createForm({
     initialValues: selectedInfobyte,
     onSubmit: async (values) => {
       let infobyte = values;
@@ -41,8 +41,6 @@
   $: if (editorTest) {
     console.log(editorTest);
   }
-
-  $: unsavedChanges = isModified;
 
   $: if (selectedInfobyte) {
     console.log(form._id, selectedInfobyte._id);
@@ -140,108 +138,18 @@
 
 <section>
   <form on:submit={handleSubmit}>
-    <h1>Infobyte hinzufügen</h1>
-
-    <label for="region">Region</label>
-    <Input
-      id="region"
-      name="region"
-      type="select"
-      on:change={handleChange}
-      on:blur={handleChange}
-      bind:value={$form.region}
-    >
-      <option>DE</option>
-    </Input>
-
-    <label for="language">Sprache</label>
-    <Input
-      id="language"
-      name="language"
-      type="select"
-      on:change={handleChange}
-      on:blur={handleChange}
-      bind:value={$form.language}
-    >
-      <option>DE</option>
-      <option>EN</option>
-    </Input>
-
-    <label for="name">name</label>
-    <Input
-      id="name"
-      name="name"
-      on:change={handleChange}
-      bind:value={$form.name}
+    <InfobyteInputFields
+      bind:region={$form.region}
+      bind:language={$form.language}
+      bind:name={$form.name}
+      bind:frontmatter={$form.frontmatter}
+      bind:aspect={$form.aspect}
+      bind:factor={$form.factor}
+      bind:difficulty={$form.difficulty}
+      bind:aspectsPromise={aspects}
+      bind:factorsPromise={factors}
     />
 
-    <label for="frontmatter">Klappentext</label>
-    <Input
-      id="frontmatter"
-      name="frontmatter"
-      on:change={handleChange}
-      bind:value={$form.frontmatter}
-    />
-
-    <label for="aspect">Aspekt</label>
-    <Input
-      id="aspect"
-      name="aspect"
-      type="select"
-      on:change={handleChange}
-      bind:value={$form.aspect}
-    >
-      <option disabled selected value={null}> -- Aspekt -- </option>
-      {#await aspects}
-        <option disabled value={null}>Lade...</option>
-      {:then data}
-        {#each data as aspect}
-          <option value={aspect._id}>{aspect.name}</option>
-        {/each}
-      {:catch error}
-        <option disabled value={null}>An error occurred!</option>
-      {/await}
-    </Input>
-
-    <label for="factor">Gesichtspunkt</label>
-    <Input
-      id="factor"
-      name="factor"
-      type="select"
-      on:change={handleChange}
-      bind:value={$form.factor}
-    >
-      <option disabled selected value={null}> -- Gesichtspunkt -- </option>
-      {#await factors}
-        <option disabled value={null}>Lade...</option>
-      {:then data}
-        {#each data as factor}
-          <option value={factor.id}>{factor.name}</option>
-        {/each}
-      {:catch error}
-        <option disabled value={null}>An error occurred!</option>
-      {/await}
-    </Input>
-
-    <label for="difficulty">Schwierigkeit</label>
-    <Input
-      id="difficulty"
-      name="difficulty"
-      type="select"
-      on:change={handleChange}
-      bind:value={$form.difficulty}
-    >
-      <option value={1}>Leicht</option>
-      <option value={2}>Mittel</option>
-      <option value={3}>Schwer</option>
-    </Input>
-
-    <!--<InfoBitEditor bind:value={editorTest}/>-->
-
-    <!-- <Carousel perPage={1} autoplay={false} infinite={false}> -->
-    <!-- <span class="control" slot="left-control">
-        <Fa icon={faCaretLeft} />
-      </span> -->
     {#if $form.infobits.length !== 0}
       {#each $form.infobits as infobit, i}
         <InfoBitEditor bind:value={infobit} />
@@ -286,8 +194,6 @@
             type="textarea"
             name={`questions[${j}].question`}
             placeholder="question"
-            on:change={handleChange}
-            on:blur={handleChange}
             bind:value={$form.questions[j].question}
           />
           {#if $errors.questions[j].answer}
@@ -308,8 +214,6 @@
                 <Input
                   name={`questions[${j}].answers[${k}].value`}
                   placeholder="Antwort"
-                  on:change={handleChange}
-                  on:blur={handleChange}
                   bind:value={$form.questions[j].answers[k].value}
                 />
 

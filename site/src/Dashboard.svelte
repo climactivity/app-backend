@@ -11,7 +11,7 @@
         NavLink,
     } from "sveltestrap";
     import AspectView from "./Aspects/AspectView.svelte";
-    import InfobytePage from "./Infobytes/templates/InfobytePage.svelte";
+    import InfobytePage from "./Infobytes/InfobytePage.svelte";
     import MyNavLink from "./MyNavLink.svelte";
     import TreeTemplateView from "./TreeTemplates/TreeTemplateView.svelte";
 
