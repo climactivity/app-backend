@@ -1,21 +1,20 @@
 <script lang="ts">
-    import Infobytes from "./Infobytes/templates/Infobytes.svelte";
+    import { onMount } from "svelte";
     import {
-        Nav,
-        NavItem,
-        Container,
-        Row,
-        Col,
         Collapse,
-        NavbarToggler,
-        NavLink,
+        Container,
+        Nav,
         Navbar,
         NavbarBrand,
+        NavbarToggler,
+        NavItem,
+        NavLink,
     } from "sveltestrap";
+    import AspectView from "./Aspects/AspectView.svelte";
+    import InfobytePage from "./Infobytes/templates/InfobytePage.svelte";
     import MyNavLink from "./MyNavLink.svelte";
     import TreeTemplateView from "./TreeTemplates/TreeTemplateView.svelte";
-    import AspectView from "./Aspects/AspectView.svelte";
-    import { onMount } from "svelte";
+
     let tabs = [
         { target: "health", name: "Health", disabled: true },
         { target: "analytics", name: "Analytics", disabled: true },
@@ -93,7 +92,7 @@
         {:else if activeTab === "aspects"}
             <AspectView />
         {:else if activeTab === "infobytes"}
-            <Infobytes />
+            <InfobytePage />
         {/if}
     </Container>
 </main>

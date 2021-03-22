@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Aside from "./Aside.svelte";
+  import InfobyteSidebar from "../organisms/InfobyteSidebar.svelte";
   import InfobyteEditor from "./InfobyteEditor.svelte";
   import { currentInfobyte } from "../../stores";
   import { Row, Col, Container } from "sveltestrap";
@@ -14,7 +14,7 @@
 
 <Row>
   <Col xs="12" sm="3">
-    <Aside bind:unsavedChanges />
+    <InfobyteSidebar />
   </Col>
   <Col sm="9">
     <InfobyteEditor bind:selectedInfobyte bind:unsavedChanges />
