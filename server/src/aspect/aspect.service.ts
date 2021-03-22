@@ -41,7 +41,7 @@ export class AspectService {
   }
 
   createAspectFromCreateAspectForLocale(createAspectForLocaleDto: CreateAspectForLocaleDto): CreateAspectDto {
-    const localizedOptions = createAspectForLocaleDto.localizedTrackingData.options.map((option, index) => {
+    const localizedOptions = createAspectForLocaleDto.localizedTrackingData == null ? null : createAspectForLocaleDto.localizedTrackingData.options.map((option, index) => {
       var value = option.option;
       var reward = option.reward;
       var level = option.level;
@@ -66,14 +66,14 @@ export class AspectService {
         localized_strings: {
           language: createAspectForLocaleDto.forLanguage,
           strings: {
-            question: createAspectForLocaleDto.localizedTrackingData.question,
-            options: localizedOptions.map(localizedOption => {
+            question: createAspectForLocaleDto.localizedTrackingData == null ? null : createAspectForLocaleDto.localizedTrackingData.question,
+            options:createAspectForLocaleDto.localizedTrackingData == null ? null : localizedOptions.map(localizedOption => {
               let { locale_id, value, level } = localizedOption
               return { locale_id, value, level }
             })
           }
         },
-        options: localizedOptions.map(localizedOption => {
+        options: createAspectForLocaleDto.localizedTrackingData == null ? null : localizedOptions.map(localizedOption => {
           let { locale_id, reward, level } = localizedOption
           return { locale_id, reward, level }
         })
@@ -89,7 +89,8 @@ export class AspectService {
 
   async findAllLocalized(lang: string, region: string): Promise<LocalizedAspectDto[]> {
     try {
-      return (await this.aspectModel.find({region}).exec()).map(aspect => this.localizeAspect(aspect, lang, region))
+      const de = (await this.aspectModel.find({ region }).exec()).map(aspect => this.localizeAspect(aspect, "DE", region));
+      return [...de]
     } catch (e) {
       this.logger.log(e)
       return e

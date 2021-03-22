@@ -4,13 +4,20 @@
     import AspectItem from "./AspectItem.svelte";
     import {mockAspects} from "./mockData";
     import {writable} from "svelte/store";
+    import {getAspects} from "./AspectData"; 
+import { onMount } from 'svelte';
 
     const selectedAspect = writable(null);
-    const aspects = writable(mockAspects);
+    const aspects = writable([]);
 
-    function handleDelete(event) {
+    async function handleDelete(event) {
         $aspects = $aspects.filter(a => a.name !== event.detail.aspect?.name);
     }
+
+
+    onMount( async () => {
+        $aspects = await getAspects()
+    })
 
 
 </script>
