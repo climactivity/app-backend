@@ -18,3 +18,12 @@ export const getInfobytes = async (): Promise<Infobyte[]> => {
 
     return response;
 };
+
+export const fetchAspects = async (region: string, language: string): Promise<any[]> => {
+
+    const response = fetch(`${baseUrl}localized-aspect?${new URLSearchParams({ r: region, l: language, })}`
+        , { credentials: "include", })
+        .then(data => data.json());
+
+    return response;
+};

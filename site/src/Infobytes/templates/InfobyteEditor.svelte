@@ -1,19 +1,22 @@
 <script lang="ts">
   import { createForm } from "svelte-forms-lib";
   import { Confirm } from "svelte-confirm";
+  import { Button, Input, Label } from "sveltestrap";
   import {
-    Answer,
-    Question,
+    baseUrl,
     currentInfobyte,
     Infobyte,
-    Infobit,
-    baseUrl,
     isProd,
+    Question,
   } from "../../stores";
-  import InfoBitEditor from "./InfoBitEditor.svelte";
-  export let selectedInfobyte: Infobyte;
-  import { Input, Label, Card, Button, ButtonToolbar } from "sveltestrap";
+  import DebugInfobyteOutput from "../atoms/DebugInfobyteOutput.svelte";
+  import { fetchAspects } from "../InfobyteService";
+  import InfobitsInput from "../organisms/InfobitsInput.svelte";
   import InfobyteInputFields from "../organisms/InfobyteInputFields.svelte";
+  import QuestionsInput from "../organisms/QuestionsInput.svelte";
+
+  export let selectedInfobyte: Infobyte;
+
   const { form, errors, handleSubmit } = createForm({
     initialValues: selectedInfobyte,
     onSubmit: async (values) => {
@@ -36,12 +39,6 @@
     },
   });
 
-  let editorTest =
-    "<h3>Welcome to Prosemirror Svelte</h3><p>Feel free to <b>edit me</b>!</p>";
-  $: if (editorTest) {
-    console.log(editorTest);
-  }
-
   $: if (selectedInfobyte) {
     console.log(form._id, selectedInfobyte._id);
     if (form._id !== selectedInfobyte._id) {
@@ -55,47 +52,6 @@
     }
   }
 
-  const addInfobit = () => {
-    $form.infobits = $form.infobits.concat(new Infobit());
-    $errors.infobits = $errors.infobits.concat(new Infobit());
-  };
-
-  const removeInfobit = (i) => () => {
-    $form.infobits = $form.infobits.filter((u, j) => j !== i);
-    $errors.infobits = $errors.infobits.filter((u, j) => j !== i);
-  };
-
-  const addQuestion = () => {
-    $form.questions = $form.questions.concat(new Question());
-    $errors.questions = $errors.questions.concat(new Question());
-  };
-
-  const removeQuestion = (i) => () => {
-    $form.questions = $form.questions.filter((u, j) => j !== i);
-    $errors.question = $errors.questions.filter((u, j) => j !== i);
-  };
-
-  const addAnswer = (j) => () => {
-    //console.log(j, $form.questions[j].answers, $form.questions[j].answers.concat(new Answer()))
-    if (j) {
-      $form.questions[j].answers = $form.questions[j].answers.concat(
-        new Answer()
-      ); //what?
-    }
-    $errors.questions[j].answers = $errors.questions[j].answers.concat(
-      new Answer()
-    );
-  };
-
-  const removeAnswer = (j, k) => () => {
-    $form.questions[j].answers = $form.questions[j].answers.filter(
-      (u, i) => k !== i
-    );
-    $errors.questions[j].answers = $form.questions[j].answers.filter(
-      (u, i) => k !== i
-    );
-  };
-
   const deleteInfoByte = async () => {
     if (!selectedInfobyte._id) return;
     const response = await fetch(`/infobyte/${selectedInfobyte._id}`, {
@@ -104,19 +60,6 @@
       method: "DELETE",
     });
     currentInfobyte.set(new Infobyte());
-    return await response.json();
-  };
-
-  const fetchAspects = async () => {
-    const response = await fetch(
-      `${baseUrl}localized-aspect?${new URLSearchParams({
-        r: $form.region,
-        l: $form.language,
-      })}`,
-      {
-        credentials: "include",
-      }
-    );
     return await response.json();
   };
 
@@ -132,7 +75,7 @@
     } else return [];
   };
 
-  let aspects: Promise<any[]> = fetchAspects();
+  let aspects: Promise<any[]> = fetchAspects($form.region, $form.language);
   $: factors = fetchFactorsForAspect($form.aspect);
 </script>
 
@@ -150,143 +93,16 @@
       bind:factorsPromise={factors}
     />
 
-    {#if $form.infobits.length !== 0}
-      {#each $form.infobits as infobit, i}
-        <InfoBitEditor bind:value={infobit} />
-        <div class="form-control-row">
-          {#if i === $form.infobits.length - 1}
-            <button
-              type="button"
-              class="form-control-button"
-              on:click={addInfobit}>+</button
-            >
-          {/if}
-          {#if $form.infobits.length !== 1}
-            <button
-              type="button"
-              class="form-control-button"
-              on:click={removeInfobit(i)}>-</button
-            >
-          {/if}
-        </div>
-      {/each}
-    {:else}
-      <Card body
-        >Klicke auf 'Infobit hinzufügen +' um ein Infobit hinzu zufügen!</Card
-      >
-    {/if}
-    <!-- <span class="control" slot="right-control">
-        <Fa icon={faCaretRight} />
-      </span> -->
-    <!-- </Carousel> -->
-    {#if $form.infobits.length === 0}
-      <Button type="button" class="form-control-button" on:click={addInfobit}
-        >Infobit hinzufügen +</Button
-      >
-    {/if}
-    {#each $form.questions as question, j}
-      <div class="form-group">
-        <label for={`questions[${j}]`}>Frage {j + 1}</label>
+    <InfobitsInput
+      bind:infobits={$form.infobits}
+      bind:errorInfobits={$errors.infobits}
+    />
 
-        <div>
-          <label for={`questions[${j}].question`}>Frage</label>
-          <Input
-            type="textarea"
-            name={`questions[${j}].question`}
-            placeholder="question"
-            bind:value={$form.questions[j].question}
-          />
-          {#if $errors.questions[j].answer}
-            <small class="error">{errors.questions[j].answer}</small>
-          {/if}
-        </div>
-
-        {#each $form.questions[j].answers as answer, k}
-          <div class="form-group">
-            <label for={`questions[${j}].answers[${k}]`}>
-              Antwort
-              {k + 1}</label
-            >
-
-            <div>
-              <label for={`questions[${j}].answers[${k}].value`}>Antwort</label>
-              <div class="form-control-row">
-                <Input
-                  name={`questions[${j}].answers[${k}].value`}
-                  placeholder="Antwort"
-                  bind:value={$form.questions[j].answers[k].value}
-                />
-
-                <label
-                  for={`questions[${j}].answers[${k}].correct`}
-                  style="padding: 5px;"
-                >
-                  <span class="label-text">Richtig</span>
-                  <Input
-                    class="checkbox"
-                    type="checkbox"
-                    name={`questions[${j}].answers[${k}].correct`}
-                    bind:checked={$form.questions[j].answers[k].correct}
-                  />
-                </label>
-                {#if $errors.questions[j].answers[k].answer}
-                  <small class="error"
-                    >{errors.questions[j].answers[k].answer}</small
-                  >
-                {/if}
-                <ButtonToolbar>
-                  {#if k === $form.questions[j].answers.length - 1}
-                    <Button
-                      type="button"
-                      class="form-control-button"
-                      on:click={addAnswer(j)}>+</Button
-                    >
-                  {/if}
-                  {#if $form.questions[j].answers.length !== 1}
-                    <Button
-                      type="button"
-                      class="form-control-button"
-                      on:click={removeAnswer(j, k)}>-</Button
-                    >
-                  {/if}
-                </ButtonToolbar>
-              </div>
-            </div>
-            <div>
-              <span> Für Infobit? </span>
-              <Input
-                type="select"
-                name="select"
-                id="exampleSelect"
-                bind:value={$form.questions[j].infobit}
-              >
-                <option selected value={null}> -- Allgemeine Frage -- </option>
-                {#each $form.infobits as infobit, i}
-                  <option>{i + 1}</option>
-                {/each}
-              </Input>
-            </div>
-          </div>
-        {/each}
-
-        <div class="form-control-row">
-          {#if j === $form.questions.length - 1}
-            <Button
-              type="button"
-              class="form-control-button"
-              on:click={addQuestion}>+</Button
-            >
-          {/if}
-          {#if $form.questions.length !== 1}
-            <Button
-              type="button"
-              class="form-control-button"
-              on:click={removeQuestion(j)}>-</Button
-            >
-          {/if}
-        </div>
-      </div>
-    {/each}
+    <QuestionsInput
+      bind:questions={$form.questions}
+      bind:infobits={$form.infobits}
+      bind:errorQuestions={$errors.questions}
+    />
 
     <Label for={"published"} style="padding: 5px;">
       <Input
@@ -304,42 +120,6 @@
       </Button>
     </Confirm>
   </form>
-  {#if !isProd}
-    <div>
-      <span>Debug</span>
-      <pre>{JSON.stringify($form, null, 2)}</pre>
-    </div>
-  {/if}
+
+  <DebugInfobyteOutput visible={!isProd} {form} />
 </section>
-
-<style>
-  label {
-    display: block;
-    color: var(--grey-dark);
-    font-weight: bold;
-    margin-top: 20px;
-    margin-bottom: 4px;
-    text-transform: uppercase;
-    font-size: 12px;
-    letter-spacing: 1.9px;
-    line-height: 2;
-  }
-
-  .form-group {
-    background-color: var(--grey);
-    padding: 8px;
-    border-radius: 8px;
-    display: flex;
-    align-items: baseline;
-    flex-direction: column;
-  }
-
-  .form-control-row {
-    display: flex;
-  }
-
-  .form-control-button {
-    min-width: auto;
-    margin-right: 1em;
-  }
-</style>

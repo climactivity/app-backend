@@ -1,4 +1,9 @@
 <script lang="ts">
+    import InfobyteCombobox from "../atoms/InfobyteCombobox.svelte";
+    import InfobyteInput from "../atoms/InfobyteInput.svelte";
+    import InfobyteAsyncCombobox from "../atoms/InfobyteAsyncCombobox.svelte";
+    import InfobyteValueCombobox from "../atoms/InfobyteValueCombobox.svelte";
+
     export let region: string;
     export let language: string;
     export let name: string;
@@ -9,11 +14,6 @@
 
     export let aspectsPromise: Promise<[string, number?][]>;
     export let factorsPromise: Promise<[string, number?][]>;
-
-    import InfobyteCombobox from "../atoms/InfobyteCombobox.svelte";
-    import InfobyteInput from "../atoms/InfobyteInput.svelte";
-    import InfobyteAsyncCombobox from "../atoms/InfobyteAsyncCombobox.svelte";
-    import InfobyteValueCombobox from "../atoms/InfobyteValueCombobox.svelte";
 </script>
 
 <h1>Infobyte hinzufügen</h1>
