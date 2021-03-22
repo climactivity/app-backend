@@ -1,6 +1,6 @@
 <script lang="ts">
   import { createForm } from "svelte-forms-lib";
-  import { createEventDispatcher } from "svelte";
+  import { Confirm } from "svelte-confirm";
   import {
     Answer,
     Question,
@@ -11,32 +11,16 @@
     isProd,
   } from "../stores";
   import InfoBitEditor from "./InfoBitEditor.svelte";
-  import { Confirm } from 'svelte-confirm'
-  export let selectedInfobyte;
-  export let unsavedChanges;
-  const initialQuestions = [new Question()];
-  import Carousel from "@beyonk/svelte-carousel";
-  import Fa from "svelte-fa";
-  import { faCaretLeft, faCaretRight, faLaptopCode } from "@fortawesome/free-solid-svg-icons";
-  import { Form, FormGroup, FormText, Input, Label, Card, Button, ButtonToolbar } from 'sveltestrap';
-import App from "../App.svelte";
-import Aside from "./Aside.svelte";
-import AspectItem from "../Aspects/AspectItem.svelte";
-  const {
-    form,
-    errors,
-    state,
-    handleChange,
-    handleSubmit,
-    handleReset,
-    isModified,
-  } = createForm({
+  export let selectedInfobyte: Infobyte;
+  export let unsavedChanges: boolean;
+  import { Input, Label, Card, Button, ButtonToolbar } from "sveltestrap";
+  const { form, errors, handleChange, handleSubmit, isModified } = createForm({
     initialValues: selectedInfobyte,
     onSubmit: async (values) => {
       let infobyte = values;
       if (infobyte._id === "") delete infobyte._id;
       console.log(values);
-      let result = await fetch(
+      await fetch(
         `${baseUrl}infobyte${infobyte._id ? "/" + infobyte._id : ""}`,
         {
           method: infobyte._id ? "PUT" : "POST",
@@ -95,10 +79,11 @@ import AspectItem from "../Aspects/AspectItem.svelte";
 
   const addAnswer = (j) => () => {
     //console.log(j, $form.questions[j].answers, $form.questions[j].answers.concat(new Answer()))
-    if (j)
+    if (j) {
       $form.questions[j].answers = $form.questions[j].answers.concat(
         new Answer()
       ); //what?
+    }
     $errors.questions[j].answers = $errors.questions[j].answers.concat(
       new Answer()
     );
@@ -125,31 +110,32 @@ import AspectItem from "../Aspects/AspectItem.svelte";
   };
 
   const fetchAspects = async () => {
-    const response = await fetch(`${baseUrl}localized-aspect?${new URLSearchParams({
-      r: $form.region,
-      l: $form.language
-    })}`, {
-      credentials: "include",
-    });
+    const response = await fetch(
+      `${baseUrl}localized-aspect?${new URLSearchParams({
+        r: $form.region,
+        l: $form.language,
+      })}`,
+      {
+        credentials: "include",
+      }
+    );
     return await response.json();
   };
 
-  const fetchFactorsForAspect : any = async (aspect) => {
+  const fetchFactorsForAspect: any = async (aspect) => {
     if (aspects != null) {
       if (aspect != null) {
-        let aspects_data = await aspects
-        return (aspects_data.find((a) => a._id === $form.aspect))?.localizedFactors ?? []
-      }
-      else return []
-    }
-    else return []
+        let aspects_data = await aspects;
+        return (
+          aspects_data.find((a) => a._id === $form.aspect)?.localizedFactors ??
+          []
+        );
+      } else return [];
+    } else return [];
   };
 
-
   let aspects: Promise<any[]> = fetchAspects();
-  $: factors  = fetchFactorsForAspect($form.aspect);
-  
-
+  $: factors = fetchFactorsForAspect($form.aspect);
 </script>
 
 <section>
@@ -161,7 +147,6 @@ import AspectItem from "../Aspects/AspectItem.svelte";
       id="region"
       name="region"
       type="select"
-
       on:change={handleChange}
       on:blur={handleChange}
       bind:value={$form.region}
@@ -174,7 +159,6 @@ import AspectItem from "../Aspects/AspectItem.svelte";
       id="language"
       name="language"
       type="select"
-
       on:change={handleChange}
       on:blur={handleChange}
       bind:value={$form.language}
@@ -200,93 +184,90 @@ import AspectItem from "../Aspects/AspectItem.svelte";
     />
 
     <label for="aspect">Aspekt</label>
-    <Input 
+    <Input
       id="aspect"
       name="aspect"
       type="select"
       on:change={handleChange}
       bind:value={$form.aspect}
-    >  
-    <option disabled selected value={null}> -- Aspekt -- </option>
-    {#await aspects}
-    <option disabled value={null}>Lade...</option>
-    {:then data}
-    {#each data as aspect}
-      <option value={aspect._id}>{aspect.name}</option>
-    {/each}
-    {:catch error}
-    <option disabled value={null}>An error occurred!</option>
-  {/await}
-  
-  </Input>
-
+    >
+      <option disabled selected value={null}> -- Aspekt -- </option>
+      {#await aspects}
+        <option disabled value={null}>Lade...</option>
+      {:then data}
+        {#each data as aspect}
+          <option value={aspect._id}>{aspect.name}</option>
+        {/each}
+      {:catch error}
+        <option disabled value={null}>An error occurred!</option>
+      {/await}
+    </Input>
 
     <label for="factor">Gesichtspunkt</label>
-    <Input 
+    <Input
       id="factor"
       name="factor"
       type="select"
       on:change={handleChange}
       bind:value={$form.factor}
     >
-    <option disabled selected value={null}> -- Gesichtspunkt -- </option>
-    {#await factors}
-    <option disabled value={null}>Lade...</option>
-    {:then data}
-    {#each data as factor}
-      <option value={factor.id}>{factor.name}</option>
-    {/each}
-    {:catch error}
-    <option disabled value={null}>An error occurred!</option>
-  {/await}
-
-  </Input>
+      <option disabled selected value={null}> -- Gesichtspunkt -- </option>
+      {#await factors}
+        <option disabled value={null}>Lade...</option>
+      {:then data}
+        {#each data as factor}
+          <option value={factor.id}>{factor.name}</option>
+        {/each}
+      {:catch error}
+        <option disabled value={null}>An error occurred!</option>
+      {/await}
+    </Input>
 
     <label for="difficulty">Schwierigkeit</label>
-    <Input 
+    <Input
       id="difficulty"
       name="difficulty"
       type="select"
       on:change={handleChange}
       bind:value={$form.difficulty}
     >
-    <option value={1}>Leicht</option>
-    <option value={2}>Mittel</option>
-    <option value={3}>Schwer</option>
-  </Input>
+      <option value={1}>Leicht</option>
+      <option value={2}>Mittel</option>
+      <option value={3}>Schwer</option>
+    </Input>
 
     <!--<InfoBitEditor bind:value={editorTest}/>-->
 
-
-
     <!-- <Carousel perPage={1} autoplay={false} infinite={false}> -->
-      <!-- <span class="control" slot="left-control">
+    <!-- <span class="control" slot="left-control">
         <Fa icon={faCaretLeft} />
       </span> -->
-      {#if $form.infobits.length !== 0}
-        {#each $form.infobits as infobit, i}
-          <InfoBitEditor bind:value={infobit} />
-          <div class="form-control-row">
-            {#if i === $form.infobits.length - 1}
-              <button
-                type="button"
-                class="form-control-button"
-                on:click={addInfobit}>+</button
-              >
-            {/if}
-            {#if $form.infobits.length !== 1}
-              <button
-                type="button"
-                class="form-control-button"
-                on:click={removeInfobit(i)}>-</button
-              >
-            {/if}
-          </div>
-        {/each}
-      {:else}
-      <Card body>Klicke auf 'Infobit hinzufügen +' um ein Infobit hinzu zufügen!</Card>
-      {/if}
-      <!-- <span class="control" slot="right-control">
+    {#if $form.infobits.length !== 0}
+      {#each $form.infobits as infobit, i}
+        <InfoBitEditor bind:value={infobit} />
+        <div class="form-control-row">
+          {#if i === $form.infobits.length - 1}
+            <button
+              type="button"
+              class="form-control-button"
+              on:click={addInfobit}>+</button
+            >
+          {/if}
+          {#if $form.infobits.length !== 1}
+            <button
+              type="button"
+              class="form-control-button"
+              on:click={removeInfobit(i)}>-</button
+            >
+          {/if}
+        </div>
+      {/each}
+    {:else}
+      <Card body
+        >Klicke auf 'Infobit hinzufügen +' um ein Infobit hinzu zufügen!</Card
+      >
+    {/if}
+    <!-- <span class="control" slot="right-control">
         <Fa icon={faCaretRight} />
       </span> -->
     <!-- </Carousel> -->
@@ -301,7 +282,7 @@ import AspectItem from "../Aspects/AspectItem.svelte";
 
         <div>
           <label for={`questions[${j}].question`}>Frage</label>
-          <Input 
+          <Input
             type="textarea"
             name={`questions[${j}].question`}
             placeholder="question"
@@ -350,31 +331,34 @@ import AspectItem from "../Aspects/AspectItem.svelte";
                   >
                 {/if}
                 <ButtonToolbar>
-                {#if k === $form.questions[j].answers.length - 1}
-                  <Button
-                    type="button"
-                    class="form-control-button"
-                    on:click={addAnswer(j)}>+</Button
-                  >
-                {/if}
-                {#if $form.questions[j].answers.length !== 1}
-                  <Button
-                    type="button"
-                    class="form-control-button"
-                    on:click={removeAnswer(j, k)}>-</Button
-                  >
-                {/if}
-              </ButtonToolbar>
+                  {#if k === $form.questions[j].answers.length - 1}
+                    <Button
+                      type="button"
+                      class="form-control-button"
+                      on:click={addAnswer(j)}>+</Button
+                    >
+                  {/if}
+                  {#if $form.questions[j].answers.length !== 1}
+                    <Button
+                      type="button"
+                      class="form-control-button"
+                      on:click={removeAnswer(j, k)}>-</Button
+                    >
+                  {/if}
+                </ButtonToolbar>
               </div>
             </div>
-            <div> 
-              <span>
-                Für Infobit? 
-              </span>
-              <Input type="select" name="select" id="exampleSelect" bind:value={$form.questions[j].infobit}>
+            <div>
+              <span> Für Infobit? </span>
+              <Input
+                type="select"
+                name="select"
+                id="exampleSelect"
+                bind:value={$form.questions[j].infobit}
+              >
                 <option selected value={null}> -- Allgemeine Frage -- </option>
                 {#each $form.infobits as infobit, i}
-                  <option>{i+1}</option>
+                  <option>{i + 1}</option>
                 {/each}
               </Input>
             </div>
@@ -400,7 +384,7 @@ import AspectItem from "../Aspects/AspectItem.svelte";
       </div>
     {/each}
 
-    <Label for={"published"} style="padding: 5px;">   
+    <Label for={"published"} style="padding: 5px;">
       <Input
         class="checkbox"
         type="checkbox"
@@ -410,14 +394,10 @@ import AspectItem from "../Aspects/AspectItem.svelte";
       Veröffentlichen
     </Label>
     <Button primary type="submit">Speichern</Button>
-    <Confirm
-  let:confirm="{confirmThis}"
->
-  <Button type="reset" 
-    on:click="{() => confirmThis(deleteInfoByte)}"
-  >
-  Löschen
-  </Button>
+    <Confirm let:confirm={confirmThis}>
+      <Button type="reset" on:click={() => confirmThis(deleteInfoByte)}>
+        Löschen
+      </Button>
     </Confirm>
   </form>
   {#if !isProd}
@@ -429,32 +409,6 @@ import AspectItem from "../Aspects/AspectItem.svelte";
 </section>
 
 <style>
-  input,
-  select {
-    font-family: inherit;
-    font-size: inherit;
-    max-width: 400px;
-    width: 100%;
-    padding: 12px;
-    box-sizing: border-box;
-    border: 1px solid var(--grey);
-    border-radius: 4px;
-    transition: all 150ms ease;
-    background: var(--white);
-  }
-
-  input:focus,
-  select:focus {
-    outline: none;
-    box-shadow: 0 0 0 4px rgb(227, 227, 245);
-    border-color: var(--grey);
-  }
-
-  input:disabled,
-  select:disabled {
-    color: #ccc;
-  }
-
   label {
     display: block;
     color: var(--grey-dark);

@@ -1,14 +1,5 @@
 <script lang="ts">
-  import {
-    ListGroup,
-    ListGroupItem,
-    Card,
-    CardBody,
-    Col,
-    Container,
-    Row,
-    Button,
-  } from "sveltestrap";
+  import { ListGroup, ListGroupItem, Col, Row, Button } from "sveltestrap";
   import { currentInfobyte, Infobyte, baseUrl } from "../stores";
 
   let selectedInfobyte;
@@ -22,7 +13,7 @@
 
   let infobytes: Promise<[{ name: string; _id: string }]> = refetch();
 
-  const unsubscribe = currentInfobyte.subscribe((value) => {
+  currentInfobyte.subscribe((value) => {
     if (!selectedInfobyte) selectedInfobyte = value;
     if (!value || value._id !== selectedInfobyte._id) infobytes = refetch();
     selectedInfobyte = value;
@@ -36,17 +27,17 @@
       alert("Ungespeicherte Änderungen gehen verloren");
       return;
     }
-    infobyte = await fetchInfoBtye(infobyte._id);
-    currentInfobyte.set(infobyte);
+    const fetchedInfobyte = await fetchInfoBtye(infobyte._id);
+    currentInfobyte.set(fetchedInfobyte);
     console.log(infobyte);
   };
 
-  const fetchInfoBtye = async (id) => {
+  const fetchInfoBtye = async (id: string): Promise<Infobyte> => {
     if (!id) return;
     const response = await fetch(`${baseUrl}infobyte/${id}`, {
       credentials: "include",
     });
-    return await response.json();
+    return (await response.json()) as Infobyte;
   };
 
   const newInfobyte = () => {
