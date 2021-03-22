@@ -1,6 +1,8 @@
 <script lang="ts">
-  import { ListGroup, ListGroupItem, Col, Row, Button } from "sveltestrap";
-  import { currentInfobyte, Infobyte, baseUrl } from "../stores";
+  import { ListGroup, ListGroupItem } from "sveltestrap";
+  import { baseUrl, currentInfobyte, Infobyte } from "../../stores";
+  import InfobyteSelectionList from "../atoms/InfobyteSelectionList.svelte";
+  import MasterInfobyteHeader from "../molecules/MasterInfobyteHeader.svelte";
 
   let selectedInfobyte;
   export let unsavedChanges;
@@ -39,41 +41,14 @@
     });
     return (await response.json()) as Infobyte;
   };
-
-  const newInfobyte = () => {
-    if (unsavedChanges) {
-      alert("Ungespeicherte Änderungen gehen verloren");
-      return;
-    }
-    currentInfobyte.set(new Infobyte());
-  };
 </script>
 
-<Row>
-  <Col xs="auto">
-    <h4 class="mt-3">Alle Infobytes</h4>
-  </Col>
-
-  <Col xs="auto">
-    <Button color="success" on:click={newInfobyte}>+</Button>
-  </Col>
-</Row>
+<MasterInfobyteHeader />
 
 {#await infobytes}
   <p>...waiting</p>
 {:then data}
-  <ListGroup vertical>
-    {#each data as infobyte}
-      <ListGroupItem
-        tag="button"
-        action
-        on:click={() => onInfobyteSelected(infobyte)}
-        active={selectedInfobyte._id === infobyte._id}
-      >
-        {infobyte.name}
-      </ListGroupItem>
-    {/each}
-  </ListGroup>
+  <InfobyteSelectionList infobytes={data} />
 {:catch error}
   <p>An error occurred!</p>
 {/await}

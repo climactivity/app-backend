@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Infobytes from "./Infobytes/Infobytes.svelte";
+    import Infobytes from "./Infobytes/templates/Infobytes.svelte";
     import {
         Nav,
         NavItem,
@@ -15,7 +15,7 @@
     import MyNavLink from "./MyNavLink.svelte";
     import TreeTemplateView from "./TreeTemplates/TreeTemplateView.svelte";
     import AspectView from "./Aspects/AspectView.svelte";
-	import { onMount } from 'svelte';
+    import { onMount } from "svelte";
     let tabs = [
         { target: "health", name: "Health", disabled: true },
         { target: "analytics", name: "Analytics", disabled: true },
@@ -30,10 +30,10 @@
     let activeTab = "infobytes";
 
     function setActiveTab(path) {
-        path = path.split("#").pop()
+        path = path.split("#").pop();
         if (!tabs.some((e) => e.target === path)) {
-            console.log("Path ", path, " not defined!")
-            return; 
+            console.log("Path ", path, " not defined!");
+            return;
         }
         return function () {
             console.log(path);
@@ -49,10 +49,9 @@
     }
 
     onMount(async () => {
-        console.log("Dashboard mounted!")
-        setActiveTab(window.location.hash)()
-    })
-    
+        console.log("Dashboard mounted!");
+        setActiveTab(window.location.hash)();
+    });
 </script>
 
 <main>
@@ -86,24 +85,17 @@
             <NavLink>Abmelden</NavLink>
         </NavItem>
     </Navbar>
-    <Row>
-        <Container>
-            <Row>
-                <Col xs="3" />
-                <Col xs="auto">
-                    {#if activeTab === ""}
-                        <h1>start page</h1>
-                    {:else if activeTab === "baeume"}
-                        <TreeTemplateView />
-                    {:else if activeTab === "aspects"}
-                        <AspectView />
-                    {:else if activeTab === "infobytes"}
-                        <Infobytes />
-                    {/if}
-                </Col>
-            </Row>
-        </Container>
-    </Row>
+    <Container>
+        {#if activeTab === ""}
+            <h1>start page</h1>
+        {:else if activeTab === "baeume"}
+            <TreeTemplateView />
+        {:else if activeTab === "aspects"}
+            <AspectView />
+        {:else if activeTab === "infobytes"}
+            <Infobytes />
+        {/if}
+    </Container>
 </main>
 
 <style>

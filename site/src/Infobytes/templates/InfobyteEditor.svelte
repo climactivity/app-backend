@@ -9,7 +9,7 @@
     Infobit,
     baseUrl,
     isProd,
-  } from "../stores";
+  } from "../../stores";
   import InfoBitEditor from "./InfoBitEditor.svelte";
   export let selectedInfobyte: Infobyte;
   export let unsavedChanges: boolean;
