@@ -7,5 +7,6 @@ export class CreateAspectDto {
     readonly trackingData?: TrackingData;
     readonly localizedStrings: AspectLocalization[]; 
     readonly bigpoint: string;
-    readonly factors: Factor[]
+    readonly factors: Factor[];
+    readonly region: string;
 }

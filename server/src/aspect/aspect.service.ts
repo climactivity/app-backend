@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { assert } from 'console';
 import { Model } from 'mongoose';
 import { title } from 'process';
 import { CreateAspectForLocaleDto } from './dto/create-aspect-for-locale.dto';
@@ -54,6 +55,7 @@ export class AspectService {
       bigpoint: createAspectForLocaleDto.bigpoint,
       name: createAspectForLocaleDto.name,
       icon: createAspectForLocaleDto.icon,
+      region: createAspectForLocaleDto.forRegion,
       infoGraph: createAspectForLocaleDto.infoGraph,
       localizedStrings: [{
         language: createAspectForLocaleDto.forLanguage,
@@ -89,10 +91,18 @@ export class AspectService {
 
   async findAllLocalized(lang: string, region: string): Promise<LocalizedAspectDto[]> {
     try {
-      const de = (await this.aspectModel.find({ region }).exec()).map(aspect => this.localizeAspect(aspect, "DE", region));
-      return [...de]
+      const de = await this.aspectModel.find({ region }).exec()
+      this.logger.log("de")
+
+      this.logger.log(de)
+
+      const l = de.map(aspect => this.localizeAspect(aspect, lang, region));
+      this.logger.log("l")
+
+      this.logger.log(l)
+      return l
     } catch (e) {
-      this.logger.log(e)
+      this.logger.log("hi", e)
       return e
     }
   }
@@ -129,7 +139,7 @@ export class AspectService {
         localizedFactors: aspectLocalizedStrings.strings.factors,
         localizedTrackingData: {
           question: localizedTrackingData.strings.question,
-          options: aspect.trackingData.options.map(option => {
+          options: aspect.trackingData.options == null ? null : aspect.trackingData.options.map(option => {
             return {
               reward: option.reward,
               option: localizedTrackingData.strings.options.find(locale => locale.locale_id == option.locale_id).value,
@@ -153,7 +163,7 @@ export class AspectService {
         forRegion: region,
         localizedTrackingData: {
           question: localizedTrackingData.strings.question,
-          options: aspect.trackingData.options.map(option => {
+          options: aspect.trackingData.options == null ? null : aspect.trackingData.options.map(option => {
             return {
               reward: option.reward,
               option: localizedTrackingData.strings.options.find(locale => locale.locale_id == option.locale_id).value,
