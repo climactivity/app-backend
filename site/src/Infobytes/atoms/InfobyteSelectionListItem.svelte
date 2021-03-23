@@ -1,11 +1,14 @@
 <script lang="ts">
-    import { ListGroupItem } from "sveltestrap";
-    import { currentInfobyte } from "../../stores";
+    import { Container, ListGroupItem } from "sveltestrap";
+    import { currentInfobyte, Infobit, Infobyte } from "../../stores";
     import { getInfobyte } from "../InfobyteService";
     import type { infobyteIdentifier } from "../particles/Infobyte";
+    import CreateInfobitButton from "./CreateInfobitButton.svelte";
 
     export let infobyte: infobyteIdentifier;
-    export let active: boolean;
+
+    let selectedInfobyte: Infobyte;
+    let active = false;
 
     const onInfobyteSelected = async (infobyte: infobyteIdentifier) => {
         if (active) {
@@ -15,6 +18,11 @@
             currentInfobyte.set(retrievedInfobyte);
         }
     };
+
+    currentInfobyte.subscribe((currentInfobyte: Infobyte) => {
+        selectedInfobyte = currentInfobyte;
+        active = currentInfobyte?._id === infobyte._id;
+    });
 </script>
 
 <ListGroupItem
@@ -25,3 +33,14 @@
 >
     {infobyte.name}
 </ListGroupItem>
+
+{#if active}
+    <Container>
+        {#each selectedInfobyte.infobits as infobit, i}
+            <ListGroupItem tag="button" action>
+                Infobit Nr: {i}
+            </ListGroupItem>
+        {/each}
+        <CreateInfobitButton infobyte={selectedInfobyte} />
+    </Container>
+{/if}

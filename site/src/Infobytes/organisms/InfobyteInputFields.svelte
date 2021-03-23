@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { Row, Col } from "sveltestrap";
     import InfobyteCombobox from "../atoms/InfobyteCombobox.svelte";
     import InfobyteInput from "../atoms/InfobyteInput.svelte";
     import InfobyteAsyncCombobox from "../atoms/InfobyteAsyncCombobox.svelte";
@@ -16,50 +17,71 @@
     export let factorsPromise: Promise<[string, number?][]>;
 </script>
 
-<h1>Infobyte hinzufügen</h1>
+<Row>
+    <Col lg="6">
+        <InfobyteInput
+            required={true}
+            inputId={"name"}
+            name={"Name"}
+            bind:value={name}
+        />
+    </Col>
+    <Col lg="6">
+        <InfobyteInput
+            inputId={"frontmatter"}
+            name={"Klappentext"}
+            bind:value={frontmatter}
+        />
+    </Col>
+</Row>
 
-<InfobyteCombobox
-    inputId={"region"}
-    name={"Region"}
-    bind:value={region}
-    options={["DE"]}
-/>
+<Row>
+    <Col md="6">
+        <InfobyteCombobox
+            inputId={"region"}
+            name={"Region"}
+            bind:value={region}
+            options={["DE"]}
+        />
+    </Col>
+    <Col md="6">
+        <InfobyteCombobox
+            inputId={"language"}
+            name={"Sprache"}
+            bind:value={language}
+            options={["DE", "EN"]}
+        />
+    </Col>
+</Row>
 
-<InfobyteCombobox
-    inputId={"language"}
-    name={"Sprache"}
-    bind:value={language}
-    options={["DE", "EN"]}
-/>
+<Row>
+    <Col md="6" lg="4">
+        <InfobyteAsyncCombobox
+            inputId={"aspect"}
+            name={"Aspekt"}
+            bind:value={aspect}
+            optionsPromise={aspectsPromise}
+        />
+    </Col>
+    <Col md="6" lg="4">
+        <InfobyteAsyncCombobox
+            inputId={"factor"}
+            name={"Gesichtspunkt"}
+            bind:value={factor}
+            optionsPromise={factorsPromise}
+        />
+    </Col>
 
-<InfobyteInput inputId={"name"} name={"Name"} bind:value={name} />
-<InfobyteInput
-    inputId={"frontmatter"}
-    name={"Klappentext"}
-    bind:value={frontmatter}
-/>
-
-<InfobyteAsyncCombobox
-    inputId={"aspect"}
-    name={"Aspekt"}
-    bind:value={aspect}
-    optionsPromise={aspectsPromise}
-/>
-
-<InfobyteAsyncCombobox
-    inputId={"factor"}
-    name={"Gesichtspunkt"}
-    bind:value={factor}
-    optionsPromise={factorsPromise}
-/>
-
-<InfobyteValueCombobox
-    inputId={"difficulty"}
-    name={"Schwierigkeit"}
-    bind:value={difficulty}
-    options={[
-        ["Leicht", 1],
-        ["Mittel", 2],
-        ["Schwer", 3],
-    ]}
-/>
+    <Col md="6" lg="4">
+        <InfobyteValueCombobox
+            inputId={"difficulty"}
+            name={"Schwierigkeit"}
+            bind:value={difficulty}
+            options={[
+                ["Leicht", 1],
+                ["Mittel", 2],
+                ["Schwer", 3],
+            ]}
+        />
+    </Col>
+</Row>

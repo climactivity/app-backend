@@ -7,4 +7,4 @@
   };
 </script>
 
-<Button color="success" on:click={newInfobyte}>add</Button>
+<Button color="success" on:click={newInfobyte}>Infobyte erstellen</Button>

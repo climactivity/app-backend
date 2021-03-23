@@ -85,17 +85,15 @@
             <NavLink>Abmelden</NavLink>
         </NavItem>
     </Navbar>
-    <Container>
-        {#if activeTab === ""}
-            <h1>start page</h1>
-        {:else if activeTab === "baeume"}
-            <TreeTemplateView />
-        {:else if activeTab === "aspects"}
-            <AspectView />
-        {:else if activeTab === "infobytes"}
-            <InfobytePage />
-        {/if}
-    </Container>
+    {#if activeTab === ""}
+        <h1>start page</h1>
+    {:else if activeTab === "baeume"}
+        <TreeTemplateView />
+    {:else if activeTab === "aspects"}
+        <AspectView />
+    {:else if activeTab === "infobytes"}
+        <InfobytePage />
+    {/if}
 </main>
 
 <style>

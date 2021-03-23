@@ -1,10 +1,8 @@
 <script lang="ts">
-  import { faPooStorm } from "@fortawesome/free-solid-svg-icons";
-
   import { createForm } from "svelte-forms-lib";
   import { Confirm } from "svelte-confirm";
   import { Button, Input, Label } from "sveltestrap";
-  import { currentInfobyte, Infobyte, isProd, Question } from "../../stores";
+  import { currentInfobit, Infobyte, isProd, Question } from "../../stores";
   import DebugInfobyteOutput from "../atoms/DebugInfobyteOutput.svelte";
   import DeleteInfobyteButton from "../atoms/DeleteInfobyteButton.svelte";
   import {
@@ -17,6 +15,12 @@
   import QuestionsInput from "../organisms/QuestionsInput.svelte";
 
   export let selectedInfobyte: Infobyte;
+
+  let selectedInfobit;
+
+  currentInfobit.subscribe((value) => {
+    selectedInfobit = value;
+  });
 
   const { form, errors, handleSubmit } = createForm({
     initialValues: selectedInfobyte,
@@ -56,49 +60,55 @@
 </script>
 
 <section>
-  <form on:submit={handleSubmit}>
-    <InfobyteInputFields
-      bind:region={$form.region}
-      bind:language={$form.language}
-      bind:name={$form.name}
-      bind:frontmatter={$form.frontmatter}
-      bind:aspect={$form.aspect}
-      bind:factor={$form.factor}
-      bind:difficulty={$form.difficulty}
-      bind:aspectsPromise={aspects}
-      bind:factorsPromise={factors}
-    />
+  <h1>Infobyte: {$form.name}</h1>
 
-    <InfobitsInput
-      bind:infobits={$form.infobits}
-      bind:errorInfobits={$errors.infobits}
-    />
-
-    <QuestionsInput
-      bind:questions={$form.questions}
-      bind:infobits={$form.infobits}
-      bind:errorQuestions={$errors.questions}
-    />
-
-    <Label for={"published"} style="padding: 5px;">
-      <Input
-        class="checkbox"
-        type="checkbox"
-        name={"published"}
-        bind:checked={$form.published}
+  {#if selectedInfobit === null}
+    <form on:submit={handleSubmit}>
+      <InfobyteInputFields
+        bind:region={$form.region}
+        bind:language={$form.language}
+        bind:name={$form.name}
+        bind:frontmatter={$form.frontmatter}
+        bind:aspect={$form.aspect}
+        bind:factor={$form.factor}
+        bind:difficulty={$form.difficulty}
+        bind:aspectsPromise={aspects}
+        bind:factorsPromise={factors}
       />
-      Veröffentlichen
-    </Label>
-    <Button primary type="submit">Speichern</Button>
-    <Confirm let:confirm={confirmThis}>
-      <Button
-        type="reset"
-        on:click={() => confirmThis(deleteInfobyte(selectedInfobyte?._id))}
-      >
-        Löschen
-      </Button>
-    </Confirm>
-  </form>
+      <Button primary type="submit">Speichern</Button>
+      <Confirm let:confirm={confirmThis}>
+        <Button
+          type="reset"
+          on:click={() => confirmThis(deleteInfobyte(selectedInfobyte?._id))}
+        >
+          Löschen
+        </Button>
+      </Confirm>
+
+      <InfobitsInput
+        bind:infobits={$form.infobits}
+        bind:errorInfobits={$errors.infobits}
+      />
+
+      <QuestionsInput
+        bind:questions={$form.questions}
+        bind:infobits={$form.infobits}
+        bind:errorQuestions={$errors.questions}
+      />
+
+      <Label for={"published"} style="padding: 5px;">
+        <Input
+          class="checkbox"
+          type="checkbox"
+          name={"published"}
+          bind:checked={$form.published}
+        />
+        Veröffentlichen
+      </Label>
+      <Button primary type="submit">Speichern</Button>
+    </form>
+  {/if}
+
   <DeleteInfobyteButton bind:infobyteId={selectedInfobyte._id} />
 
   <DebugInfobyteOutput visible={!isProd} {form} />
