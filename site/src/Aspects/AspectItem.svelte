@@ -18,6 +18,7 @@
     import { faVectorSquare } from "@fortawesome/free-solid-svg-icons";
 import App from "../App.svelte";
     import {postAspect} from "./AspectData"
+import { isProd } from "../stores";
     export let aspect: Aspect;
     let newFactor = "";
     const dispatch = createEventDispatcher();
@@ -175,7 +176,10 @@ import App from "../App.svelte";
     </Card>
 {/if}
 
+{#if isProd}
 <div>
-  <span>Debug</span>
-  <pre>{JSON.stringify(aspect, null, 2)}</pre>
-</div>
+    <span>Debug</span>
+    <pre>{JSON.stringify(aspect, null, 2)}</pre>
+  </div>
+{/if}
+
