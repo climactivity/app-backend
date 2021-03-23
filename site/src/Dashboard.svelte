@@ -71,6 +71,7 @@
                 {#each tabs as tab}
                     <NavItem>
                         <MyNavLink
+                            name={tab.name}
                             target={tab.target}
                             currentTab={activeTab}
                             callback={setActiveTab}

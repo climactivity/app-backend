@@ -7,12 +7,13 @@
     export let infobyte: infobyteIdentifier;
     export let active: boolean;
 
-    const onInfobyteSelected = async (infobyte: {
-        name: string;
-        _id: string;
-    }) => {
-        const retrievedInfobyte = await getInfobyte(infobyte._id);
-        currentInfobyte.set(retrievedInfobyte);
+    const onInfobyteSelected = async (infobyte: infobyteIdentifier) => {
+        if (active) {
+            currentInfobyte.set(null);
+        } else {
+            const retrievedInfobyte = await getInfobyte(infobyte._id);
+            currentInfobyte.set(retrievedInfobyte);
+        }
     };
 </script>
 

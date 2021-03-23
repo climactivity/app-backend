@@ -17,7 +17,7 @@
     {#each infobytes as infobyte}
         <InfobyteSelectionListItem
             {infobyte}
-            active={selectedInfobyte._id === infobyte._id}
+            active={selectedInfobyte?._id === infobyte._id}
         />
     {/each}
 </ListGroup>

@@ -27,3 +27,26 @@ export const fetchAspects = async (region: string, language: string): Promise<an
 
     return response;
 };
+
+export const deleteInfobyte = async (id: string): Promise<any> => {
+
+    const response = fetch(`/infobyte/${id}`, {
+        credentials: "include",
+        method: "DELETE",
+    }).then(data => data.json());
+
+    return response;
+}
+
+export const createOrUpdateInfobyte = async (infobyte: Infobyte): Promise<any> => {
+    const response = fetch(`${baseUrl}infobyte${infobyte._id ? "/" + infobyte._id : ""}`,
+        {
+            credentials: "include",
+            method: infobyte._id ? "PUT" : "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(infobyte),
+        });
+    return response;
+}

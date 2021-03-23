@@ -4,7 +4,7 @@
   import InfobyteSidebar from "./organisms/InfobyteSidebar.svelte";
   import InfobyteEditor from "./templates/InfobyteEditor.svelte";
 
-  let selectedInfobyte = undefined;
+  let selectedInfobyte = null;
 
   currentInfobyte.subscribe((value) => {
     selectedInfobyte = value;
@@ -16,6 +16,8 @@
     <InfobyteSidebar />
   </Col>
   <Col sm="9">
-    <InfobyteEditor bind:selectedInfobyte />
+    {#if selectedInfobyte}
+      <InfobyteEditor bind:selectedInfobyte />
+    {/if}
   </Col>
 </Row>
