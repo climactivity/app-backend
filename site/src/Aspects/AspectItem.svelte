@@ -176,7 +176,7 @@ import { isProd } from "../stores";
     </Card>
 {/if}
 
-{#if isProd}
+{#if !isProd}
 <div>
     <span>Debug</span>
     <pre>{JSON.stringify(aspect, null, 2)}</pre>
