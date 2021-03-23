@@ -2,24 +2,35 @@
   import { createForm } from "svelte-forms-lib";
   import { Confirm } from "svelte-confirm";
   import { Button, Input, Label } from "sveltestrap";
-  import { currentInfobit, Infobyte, isProd, Question } from "../../stores";
+  import {
+    currentInfobitIndex,
+    Infobit,
+    Infobyte,
+    isProd,
+    Question,
+  } from "../../stores";
   import DebugInfobyteOutput from "../atoms/DebugInfobyteOutput.svelte";
   import DeleteInfobyteButton from "../atoms/DeleteInfobyteButton.svelte";
-  import {
-    createOrUpdateInfobyte,
-    fetchAspects,
-    deleteInfobyte,
-  } from "../InfobyteService";
-  import InfobitsInput from "../organisms/InfobitsInput.svelte";
+
+  import InfoBitEditor from "./InfoBitEditor.svelte";
+  import { createOrUpdateInfobyte, fetchAspects } from "../InfobyteService";
   import InfobyteInputFields from "../organisms/InfobyteInputFields.svelte";
   import QuestionsInput from "../organisms/QuestionsInput.svelte";
 
   export let selectedInfobyte: Infobyte;
 
-  let selectedInfobit;
+  let selectedInfobitIndex: number;
+  let selectedInfobit: Infobit = null;
 
-  currentInfobit.subscribe((value) => {
-    selectedInfobit = value;
+  currentInfobitIndex.subscribe((index) => {
+    selectedInfobitIndex = index;
+    if (selectedInfobitIndex === null) {
+      selectedInfobit = null;
+      return;
+    } else {
+      selectedInfobit = selectedInfobyte?.infobits[selectedInfobitIndex];
+      console.log(selectedInfobit.doc);
+    }
   });
 
   const { form, errors, handleSubmit } = createForm({
@@ -62,8 +73,8 @@
 <section>
   <h1>Infobyte: {$form.name}</h1>
 
-  {#if selectedInfobit === null}
-    <form on:submit={handleSubmit}>
+  <form on:submit={handleSubmit}>
+    {#if selectedInfobit === null}
       <InfobyteInputFields
         bind:region={$form.region}
         bind:language={$form.language}
@@ -75,39 +86,27 @@
         bind:aspectsPromise={aspects}
         bind:factorsPromise={factors}
       />
-      <Button primary type="submit">Speichern</Button>
-      <Confirm let:confirm={confirmThis}>
-        <Button
-          type="reset"
-          on:click={() => confirmThis(deleteInfobyte(selectedInfobyte?._id))}
-        >
-          Löschen
-        </Button>
-      </Confirm>
+    {:else if selectedInfobit !== null}
+      <InfoBitEditor bind:value={$form.infobits[selectedInfobitIndex]} />
+    {/if}
 
-      <InfobitsInput
-        bind:infobits={$form.infobits}
-        bind:errorInfobits={$errors.infobits}
+    <QuestionsInput
+      bind:questions={$form.questions}
+      bind:infobits={$form.infobits}
+      bind:errorQuestions={$errors.questions}
+    />
+
+    <Label for={"published"} style="padding: 5px;">
+      <Input
+        class="checkbox"
+        type="checkbox"
+        name={"published"}
+        bind:checked={$form.published}
       />
-
-      <QuestionsInput
-        bind:questions={$form.questions}
-        bind:infobits={$form.infobits}
-        bind:errorQuestions={$errors.questions}
-      />
-
-      <Label for={"published"} style="padding: 5px;">
-        <Input
-          class="checkbox"
-          type="checkbox"
-          name={"published"}
-          bind:checked={$form.published}
-        />
-        Veröffentlichen
-      </Label>
-      <Button primary type="submit">Speichern</Button>
-    </form>
-  {/if}
+      Veröffentlichen
+    </Label>
+    <Button primary type="submit">Speichern</Button>
+  </form>
 
   <DeleteInfobyteButton bind:infobyteId={selectedInfobyte._id} />
 

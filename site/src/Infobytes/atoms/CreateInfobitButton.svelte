@@ -1,13 +1,13 @@
 <script lang="ts">
   import { Button } from "sveltestrap";
-  import { currentInfobit, Infobit, Infobyte } from "../../stores";
+  import { currentInfobitIndex, Infobit, Infobyte } from "../../stores";
 
   export let infobyte: Infobyte;
 
   const newInfobyte = () => {
-    let newInfobyte = new Infobit();
+    let newInfobit = new Infobit();
     infobyte.infobits.concat(newInfobyte);
-    currentInfobit.set(newInfobyte);
+    //currentInfobitIndex.set(infobyte.inf);
   };
 </script>
 

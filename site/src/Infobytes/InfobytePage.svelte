@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { Card, CardBody, Container, Col, Row } from "sveltestrap";
-  import { currentInfobit, currentInfobyte } from "../stores";
+  import { Col, Container, Row } from "sveltestrap";
+  import { currentInfobyte } from "../stores";
   import InfobyteSidebar from "./organisms/InfobyteSidebar.svelte";
   import InfobyteEditor from "./templates/InfobyteEditor.svelte";
 

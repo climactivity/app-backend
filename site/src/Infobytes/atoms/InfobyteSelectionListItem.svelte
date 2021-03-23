@@ -1,6 +1,11 @@
 <script lang="ts">
     import { Container, ListGroupItem } from "sveltestrap";
-    import { currentInfobyte, Infobit, Infobyte } from "../../stores";
+    import {
+        currentInfobitIndex,
+        currentInfobyte,
+        Infobit,
+        Infobyte,
+    } from "../../stores";
     import { getInfobyte } from "../InfobyteService";
     import type { infobyteIdentifier } from "../particles/Infobyte";
     import CreateInfobitButton from "./CreateInfobitButton.svelte";
@@ -8,20 +13,30 @@
     export let infobyte: infobyteIdentifier;
 
     let selectedInfobyte: Infobyte;
-    let active = false;
+    let selectedInfobit: number;
+    let isInfobyteActive = false;
 
     const onInfobyteSelected = async (infobyte: infobyteIdentifier) => {
-        if (active) {
+        if (isInfobyteActive) {
             currentInfobyte.set(null);
         } else {
             const retrievedInfobyte = await getInfobyte(infobyte._id);
             currentInfobyte.set(retrievedInfobyte);
         }
+        currentInfobitIndex.set(null);
+    };
+
+    const onInfobitSelected = (infobitIndex: number) => {
+        currentInfobitIndex.set(infobitIndex);
     };
 
     currentInfobyte.subscribe((currentInfobyte: Infobyte) => {
         selectedInfobyte = currentInfobyte;
-        active = currentInfobyte?._id === infobyte._id;
+        isInfobyteActive = currentInfobyte?._id === infobyte._id;
+    });
+
+    currentInfobitIndex.subscribe((currentInfobitIndex: number) => {
+        selectedInfobit = currentInfobitIndex;
     });
 </script>
 
@@ -29,16 +44,21 @@
     tag="button"
     action
     on:click={() => onInfobyteSelected(infobyte)}
-    {active}
+    active={isInfobyteActive}
 >
     {infobyte.name}
 </ListGroupItem>
 
-{#if active}
+{#if isInfobyteActive}
     <Container>
         {#each selectedInfobyte.infobits as infobit, i}
-            <ListGroupItem tag="button" action>
-                Infobit Nr: {i}
+            <ListGroupItem
+                tag="button"
+                action
+                active={selectedInfobit === i}
+                on:click={() => onInfobitSelected(i)}
+            >
+                Infobit Nr: {i + 1}
             </ListGroupItem>
         {/each}
         <CreateInfobitButton infobyte={selectedInfobyte} />
