@@ -6,6 +6,6 @@
   export let questions: Question[];
 </script>
 
-<MasterInfobyteHeader title={"Fragen:"} />
+<MasterInfobyteHeader title={"Antworten:"} />
 
 <QuestionSelectionList {questions} />

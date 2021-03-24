@@ -1,10 +1,21 @@
 <script lang="ts">
-  import { Col, Container, Row } from "sveltestrap";
   import {
+    Breadcrumb,
+    BreadcrumbItem,
+    Button,
+    Col,
+    Container,
+    Row,
+  } from "sveltestrap";
+  import {
+    currentInfobit,
     currentInfobitIndex,
     currentInfobyte,
+    currentQuestion,
     currentQuestionName,
+    Infobit,
     Infobyte,
+    Question,
   } from "../stores";
   import InfobitSidebar from "./organisms/InfobitSidebar.svelte";
   import InfobyteSidebar from "./organisms/InfobyteSidebar.svelte";
@@ -16,6 +27,7 @@
   let selectedInfobyte: Infobyte = null;
   let selectedInfobitIndex: number = null;
   let selectedQuestionName: string = null;
+  let selectedQuestionIndex: number = null;
 
   currentInfobyte.subscribe((value) => {
     selectedInfobyte = value;
@@ -25,11 +37,55 @@
     selectedInfobitIndex = value;
   });
 
+  currentInfobit.subscribe((infobit: Infobit) => {
+    if (!infobit) return;
+    if (!selectedInfobyte?.infobits?.includes(infobit)) {
+      selectedInfobyte?.infobits?.push(infobit);
+      currentInfobitIndex.set(selectedInfobyte?.infobits?.length - 1);
+    }
+  });
+
+  currentQuestion.subscribe((question: Question) => {
+    if (!question) return;
+    if (!selectedInfobyte?.questions?.includes(question)) {
+      question.question = "Frage Nr: " + selectedInfobyte.questions.length;
+      question.infobit = selectedInfobitIndex + 1;
+      selectedInfobyte?.questions?.push(question);
+      currentQuestionName.set(question.question);
+    }
+  });
+
   currentQuestionName.subscribe((value) => {
     selectedQuestionName = value;
+    selectedQuestionIndex = selectedInfobyte?.questions?.findIndex(
+      (q) => q.question === selectedQuestionName
+    );
   });
+
+  function handleBack() {
+    if (selectedQuestionName) {
+      currentQuestionName.set(null);
+    } else if (
+      selectedInfobitIndex !== null &&
+      selectedInfobitIndex !== undefined
+    ) {
+      currentInfobitIndex.set(null);
+    } else {
+      currentInfobyte.set(null);
+    }
+  }
 </script>
 
+<Row>
+  <Col sm="3">
+    <Button
+      outline
+      color={"link"}
+      disabled={!selectedInfobyte}
+      on:click={handleBack}>Zurück</Button
+    >
+  </Col>
+</Row>
 <Row>
   <Col xs="12" sm="3">
     <Container>
@@ -48,9 +104,14 @@
   </Col>
   <Col sm="9">
     {#if selectedQuestionName}
-      <QuestionEditorForm bind:selectedInfobyte />
+      <QuestionEditorForm
+        bind:selectedInfobyte
+        bind:selectedInfobitIndex
+        bind:selectedQuestionName
+        bind:selectedQuestionIndex
+      />
     {:else if selectedInfobitIndex !== null && selectedInfobitIndex !== undefined}
-      <InfobitEditorForm bind:selectedInfobyte />
+      <InfobitEditorForm bind:selectedInfobyte bind:selectedInfobitIndex />
     {:else if selectedInfobyte}
       <InfobyteEditor bind:selectedInfobyte />
     {/if}

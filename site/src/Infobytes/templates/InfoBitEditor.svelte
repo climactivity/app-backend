@@ -43,8 +43,6 @@
   onDestroy(unsubscribe);
 </script>
 
-<h2>Infobit editieren:</h2>
-
 <div class="infobit-editor justify-content-between">
   <div class="editor">
     <ProsemirrorEditor

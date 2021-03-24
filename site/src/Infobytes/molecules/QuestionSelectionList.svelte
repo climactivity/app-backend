@@ -2,6 +2,7 @@
     import { ListGroup } from "sveltestrap";
     import { currentQuestionName, Question } from "../../stores";
     import CreateInfobyteButton from "../atoms/CreateInfobyteButton.svelte";
+    import CreateQuestionButton from "../atoms/CreateQuestionButton.svelte";
     import QuestionSelectionListItem from "../atoms/QuestionSelectionListItem.svelte";
 
     export let questions: Question[];
@@ -18,5 +19,5 @@
             active={question.question === selectedQuestionName}
         />
     {/each}
-    <CreateInfobyteButton />
+    <CreateQuestionButton />
 </ListGroup>

@@ -1,12 +1,18 @@
 <script lang="ts">
+  import { beforeUpdate } from "svelte";
+
   import { createForm } from "svelte-forms-lib";
   import { Button, Col, Row } from "sveltestrap";
   import { Infobyte, isProd, Question } from "../../stores";
   import DebugInfobyteOutput from "../atoms/DebugInfobyteOutput.svelte";
   import { createOrUpdateInfobyte } from "../InfobyteService";
-  import QuestionsInput from "../organisms/QuestionsInput.svelte";
+  import QuestionInput from "../organisms/QuestionInput.svelte";
 
   export let selectedInfobyte: Infobyte;
+  export let selectedInfobitIndex: number;
+  export let selectedQuestionName: string;
+
+  export let selectedQuestionIndex: number;
 
   const { form, errors, handleSubmit } = createForm({
     initialValues: selectedInfobyte,
@@ -28,18 +34,16 @@
   <form on:submit={handleSubmit}>
     <Row>
       <Col sm="9">
-        <h1 class="mt-2">Infobyte: {$form.name}</h1>
+        <h6 class="mt-2">Infobyte: {$form.name}</h6>
+        <h4 class="mt-2">Infobit Nr: {selectedInfobitIndex}</h4>
+        <h2 class="mt-2">Frage: {selectedQuestionName}</h2>
       </Col>
       <Col sm="3">
         <Button primary type="submit">Speichern</Button>
       </Col>
     </Row>
 
-    <QuestionsInput
-      bind:questions={$form.questions}
-      bind:infobits={$form.infobits}
-      bind:errorQuestions={$errors.questions}
-    />
+    <QuestionInput bind:question={$form.questions[selectedQuestionIndex]} />
     <DebugInfobyteOutput visible={!isProd} {form} />
   </form>
 </section>

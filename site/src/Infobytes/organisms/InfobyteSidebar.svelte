@@ -7,7 +7,7 @@
   const infobytes: Promise<infobyteIdentifier[]> = getInfobytes();
 </script>
 
-<MasterInfobyteHeader />
+<MasterInfobyteHeader title={"Infobytes:"} />
 
 {#await infobytes}
   <p>...lade</p>
