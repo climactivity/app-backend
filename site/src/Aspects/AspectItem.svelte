@@ -14,14 +14,18 @@
         Card,
         Form,
         ButtonGroup,
+        Table,
     } from "sveltestrap";
-    import { Confirm } from 'svelte-confirm'
+    import { Confirm } from "svelte-confirm";
     import type Aspect from "./AspectTypes";
     import { createEventDispatcher } from "svelte";
     import { faVectorSquare } from "@fortawesome/free-solid-svg-icons";
     import App from "../App.svelte";
     import { postAspect } from "./AspectData";
     import { isProd } from "../stores";
+    import RewardDisplayer from "../Rewards/RewardDisplayer.svelte";
+    import RewardForm from "../Rewards/RewardForm.svelte";
+    import { Reward } from "../Rewards/RewardTypes";
     export let aspect: Aspect;
     let newFactor = "";
     const dispatch = createEventDispatcher();
@@ -38,6 +42,13 @@
             aspect: aspect,
         });
     }
+    let currentOption = {
+        option: "",
+        reward: new Reward(),
+        level: 0,
+        co2value: 0.0,
+        waterFactor: 0.0,
+    };
 </script>
 
 <Row>
@@ -47,7 +58,9 @@
 
     <Col xs="auto">
         <Confirm let:confirm={confirmDelete}>
-            <Button color="danger" on:click={() => confirmDelete(handleDelete)}>Remove</Button>
+            <Button color="danger" on:click={() => confirmDelete(handleDelete)}
+                >Remove</Button
+            >
         </Confirm>
     </Col>
 </Row>
@@ -173,7 +186,124 @@
         </Row>
 
         <Row>
-            <h5 class="mt-3">Quiz elements</h5>
+            <Col>
+                <h5 class="mt-3">Tracking</h5>
+                <Card body>
+                    <Label for="title">Tracking Frage</Label>
+                    <Input
+                        id="title"
+                        placeholder="Frage"
+                        bind:value={aspect.localizedTrackingData.question}
+                    />
+
+                    {#if aspect.localizedTrackingData.options}
+                        <div>
+                            <Table>
+                                <thead>
+                                    <tr>
+                                        <th>Stufe</th>
+                                        <th>Option</th>
+                                        <th>wachstumsfaktor</th>
+                                        <th>Eingespartes CO<sub>2</sub></th>
+                                        <th>Reward</th>
+                                        <th>-</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {#each aspect.localizedTrackingData.options as option}
+                                <tr>
+                                    <th>{option.level}</th>
+                                    <td>{option.option}</td>
+                                    <td>{option.waterFactor}</td>
+                                    <td
+                                        >{option.co2value > 0.0
+                                            ? option.co2value
+                                            : "N/A"}</td
+                                    >
+                                    <td><RewardDisplayer
+                                        reward={option.reward}
+                                    /></td>
+                                    <td><Button>-</Button></td>
+                                </tr>
+                                {/each}
+                                </tbody>
+                            </Table>
+                        </div>
+                        <Card body>
+                            <h5 class="mt-3">Neue Option hinzufügen</h5>
+
+                            <Label for="option">Option</Label>
+                            <Input
+                                id="option"
+                                placeholder="Option"
+                                bind:value={currentOption.option}
+                            />
+                            <Label for="waterFactor">waterFactor</Label>
+                            <Input
+                                id="waterFactor"
+                                placeholder="-1 für N/A"
+                                number
+                                bind:value={currentOption.waterFactor}
+                            />
+                            <Label for="co2value">co2value</Label>
+                            <Input
+                                id="co2value"
+                                placeholder="-1 für N/A"
+                                number
+                                bind:value={currentOption.co2value}
+                            />
+                            <RewardForm reward={currentOption.reward} />
+                            <Button
+                                on:click={(e) => {
+                                    e.preventDefault();
+                                    currentOption.level =
+                                        aspect.localizedTrackingData.options.length;
+                                    aspect.localizedTrackingData.options = [
+                                        ...aspect.localizedTrackingData.options,
+                                        currentOption,
+                                    ];
+                                    currentOption = {
+                                        option: "",
+                                        reward: new Reward(),
+                                        level: 0,
+                                        co2value: 0.0,
+                                        waterFactor: 0.0,
+                                    };
+                                }}
+                            >
+                                Option hinzufügen
+                            </Button>
+                        </Card>
+                    {:else}
+                        <Input
+                            id="language"
+                            name="language"
+                            type="select"
+                            on:change={(e) => {
+                                console.log(e);
+                                e.preventDefault();
+                                aspect.localizedTrackingData = {
+                                    question: "",
+                                    options: [],
+                                };
+                            }}
+                        >
+                            <option value={null} default>
+                                -- Tracking Type --
+                            </option>
+
+                            <option value={"steps"}>Steps</option>
+                            <option value={"Continuum"} disabled
+                                >Continuum</option
+                            >
+                        </Input>
+                    {/if}
+                </Card>
+            </Col>
+        </Row>
+
+        <Row>
+            <h5 class="mt-3">Quiz Elements</h5>
             <Container>
                 <ListGroup>
                     <ListGroupItem action>Active</ListGroupItem>
@@ -183,8 +313,16 @@
                 </ListGroup>
             </Container>
         </Row>
-
         <Row>
+            <Label for={"published"} style="padding: 5px;">   
+                <Input
+                  class="checkbox"
+                  type="checkbox"
+                  name={"published"}
+                  bind:checked={aspect.published}
+                />
+                Veröffentlichen
+              </Label>
             <ButtonGroup>
                 <Button
                     type="submit"
@@ -192,8 +330,6 @@
                     on:click={(e) => {
                         e.preventDefault();
                         postAspect(aspect).then((res) => {
-                            aspect = res;
-                            alert("Success " + aspect._id);
                             handleAdd();
                         });
                     }}>Speichern</Button

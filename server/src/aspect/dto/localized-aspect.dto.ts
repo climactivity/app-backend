@@ -14,7 +14,8 @@ export class LocalizedAspectDto {
                 option: string, 
                 reward: Reward,
                 level: number,
-                co2value?: number
+                co2value?: number,
+                waterFactor: number,
             }[]
         
     };

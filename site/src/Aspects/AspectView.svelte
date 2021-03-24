@@ -26,6 +26,7 @@ import { onMount } from 'svelte';
     })
 
     async function updateAspects() {
+        console.log("reloading aspect list")
         $aspects = await getAspects()
     }
 </script>

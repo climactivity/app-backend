@@ -1,4 +1,5 @@
 export default interface Aspect {
+published: boolean;
      _id: string;
      name: string;
      title: string;
@@ -11,7 +12,8 @@ export default interface Aspect {
                 option: string, 
                 reward: any,
                 level: number,
-                co2value?: number
+                co2value?: number,
+                waterFactor: number
             }[]
         
     };

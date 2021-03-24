@@ -38,11 +38,13 @@ export class AspectService {
   }
 
   async createFromLocalizedAspect(createAspectForLocaleDto: CreateAspectForLocaleDto) {
-    return this.create(this.createAspectFromCreateAspectForLocale(createAspectForLocaleDto))
+    let newAspect = await this.create(this.createAspectFromCreateAspectForLocale(createAspectForLocaleDto))
+    return this.localizeAspect(newAspect, createAspectForLocaleDto.forLanguage, createAspectForLocaleDto.forRegion)
   }
 
   createAspectFromCreateAspectForLocale(createAspectForLocaleDto: CreateAspectForLocaleDto): CreateAspectDto {
-    const localizedOptions = createAspectForLocaleDto.localizedTrackingData == null ? null : createAspectForLocaleDto.localizedTrackingData.options.map((option, index) => {
+
+    const localizedOptions = createAspectForLocaleDto.localizedTrackingData.options == null ? null : createAspectForLocaleDto.localizedTrackingData.options.map((option, index) => {
       var value = option.option;
       var reward = option.reward;
       var level = option.level;
@@ -69,13 +71,13 @@ export class AspectService {
           language: createAspectForLocaleDto.forLanguage,
           strings: {
             question: createAspectForLocaleDto.localizedTrackingData == null ? null : createAspectForLocaleDto.localizedTrackingData.question,
-            options:createAspectForLocaleDto.localizedTrackingData == null ? null : localizedOptions.map(localizedOption => {
+            options:localizedOptions == null ? null : localizedOptions.map(localizedOption => {
               let { locale_id, value, level } = localizedOption
               return { locale_id, value, level }
             })
           }
         },
-        options: createAspectForLocaleDto.localizedTrackingData == null ? null : localizedOptions.map(localizedOption => {
+        options: localizedOptions == null ? null : localizedOptions.map(localizedOption => {
           let { locale_id, reward, level } = localizedOption
           return { locale_id, reward, level }
         })
@@ -84,25 +86,19 @@ export class AspectService {
     }
   }
 
-  updateAspectFromUpdateAspectForLocale(id, updateAspectForLocale: CreateAspectForLocaleDto) {
-    const aspectData = this.createAspectFromCreateAspectForLocale(updateAspectForLocale)
-    return this.aspectModel.findByIdAndUpdate(id, aspectData).exec();
+  async updateAspectFromUpdateAspectForLocale(id, updateAspectForLocale: CreateAspectForLocaleDto) {
+    const aspectData = this.createAspectFromCreateAspectForLocale(updateAspectForLocale);
+    const newAspect = await this.aspectModel.findByIdAndUpdate(id, aspectData).exec();
+    return this.localizeAspect(newAspect, updateAspectForLocale.forLanguage, updateAspectForLocale.forRegion);
   }
 
   async findAllLocalized(lang: string, region: string): Promise<LocalizedAspectDto[]> {
     try {
       const de = await this.aspectModel.find({ region }).exec()
-      this.logger.log("de")
-
-      this.logger.log(de)
-
       const l = de.map(aspect => this.localizeAspect(aspect, lang, region));
-      this.logger.log("l")
-
-      this.logger.log(l)
       return l
     } catch (e) {
-      this.logger.log("hi", e)
+      this.logger.log(e)
       return e
     }
   }
@@ -122,6 +118,7 @@ export class AspectService {
   }
 
   localizeAspect(aspect, lang: string, region: string): LocalizedAspectDto {
+    console.log(aspect.localizedStrings)
 
     let aspectLocalizedStrings = aspect.localizedStrings.find(ls => ls.language == lang);
     let localizedTrackingData = aspect.trackingData.localized_strings
@@ -130,7 +127,6 @@ export class AspectService {
 
       let aspectLocalizedStrings = aspect.localizedStrings[0];
       let localizedTrackingData = aspect.trackingData.localized_strings  
-      console.log("errros",aspectLocalizedStrings)
 
       return {
         _id: aspect._id,
@@ -157,7 +153,6 @@ export class AspectService {
       }
     } else {
 
-      console.log(aspect, localizedTrackingData, aspectLocalizedStrings)
       return {
         _id: aspect._id,
         bigpoint: aspect.bigpoint,

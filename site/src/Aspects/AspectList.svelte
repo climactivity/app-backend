@@ -19,8 +19,11 @@
     function addAspect() {
         const newAspect = {
             name: "New Aspect " + addCounter,
-            trackingOptions: [],
-            question: ""
+            localizedTrackingData: {},
+            question: "",
+            forLanguage: "DE",
+            forRegion: "DE"
+
         }
         aspects = [...aspects, newAspect];
         selectedAspect = newAspect;
