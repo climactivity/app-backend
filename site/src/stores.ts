@@ -9,6 +9,7 @@ export class Answer {
 export class Question {
   question: string = "";
   answers: Answer[] = [new Answer()]
+  infobit?: number = 0;
 }
 
 export class Infobit {
@@ -43,6 +44,7 @@ declare const __frontend_env; //
 export const currentInfobyte: Writable<Infobyte> = writable(null)
 export const currentInfobitIndex: Writable<number> = writable(null)
 export const currentInfobit: Writable<Infobit> = writable(null)
+export const currentQuestionName: Writable<string> = writable(null)
 export const isProd = __frontend_env.env.isProd
 const apiUrl = (__frontend_env.env.SVELTE_APP_API_HOST_BASE || '')
 export var baseUrl = (__frontend_env && isProd ? apiUrl : window.location.href.replace(window.location.hash, ""))

@@ -1,22 +1,16 @@
 <script lang="ts">
   import { createForm } from "svelte-forms-lib";
-
-  import { Button, Row, Col } from "sveltestrap";
+  import { Button, Col, Row } from "sveltestrap";
   import {
     currentInfobit,
     currentInfobitIndex,
     Infobit,
     Infobyte,
     isProd,
-    Question,
   } from "../../stores";
   import DebugInfobyteOutput from "../atoms/DebugInfobyteOutput.svelte";
-  import DeleteInfobyteButton from "../atoms/DeleteInfobyteButton.svelte";
-
+  import { createOrUpdateInfobyte } from "../InfobyteService";
   import InfoBitEditor from "./InfoBitEditor.svelte";
-  import { createOrUpdateInfobyte, fetchAspects } from "../InfobyteService";
-  import InfobyteInputFields from "../organisms/InfobyteInputFields.svelte";
-  import QuestionsInput from "../organisms/QuestionsInput.svelte";
 
   export let selectedInfobyte: Infobyte;
 
@@ -45,30 +39,9 @@
   });
 
   $: if (selectedInfobyte) {
-    if (form._id !== selectedInfobyte._id) {
-      $form.name = selectedInfobyte.name || "";
-      $form.frontmatter = selectedInfobyte.frontmatter || "";
-      $form.questions = selectedInfobyte.questions || [new Question()];
-      $errors.questions = selectedInfobyte.questions || [new Question()];
-      $form._id = selectedInfobyte._id || "";
-      $form.infobits = selectedInfobyte.infobits || [];
-      $errors.infobits = selectedInfobyte.infobits || [];
-      ($form.aspect = ""), ($form.factor = ""), ($form.difficulty = "");
-    }
+    $form.infobits = selectedInfobyte.infobits || [];
+    $errors.infobits = selectedInfobyte.infobits || [];
   }
-
-  const fetchFactorsForAspect: any = async (aspect) => {
-    if (aspects == null) return [];
-    if (aspect == null) return [];
-
-    let aspects_data = await aspects;
-    return (
-      aspects_data.find((a) => a._id === $form.aspect)?.localizedFactors ?? []
-    );
-  };
-
-  let aspects: Promise<any[]> = fetchAspects($form.region, $form.language);
-  $: factors = fetchFactorsForAspect($form.aspect);
 </script>
 
 <section>
@@ -81,27 +54,12 @@
         <Button primary type="submit">Speichern</Button>
       </Col>
     </Row>
-    <InfobyteInputFields
-      bind:region={$form.region}
-      bind:language={$form.language}
-      bind:name={$form.name}
-      bind:frontmatter={$form.frontmatter}
-      bind:aspect={$form.aspect}
-      bind:factor={$form.factor}
-      bind:difficulty={$form.difficulty}
-      bind:aspectsPromise={aspects}
-      bind:factorsPromise={factors}
-    />
-    <QuestionsInput
-      bind:questions={$form.questions}
-      bind:infobits={$form.infobits}
-      bind:errorQuestions={$errors.questions}
-    />
+    <InfoBitEditor bind:value={$form.infobits[selectedInfobitIndex]} />
     <DebugInfobyteOutput visible={!isProd} {form} />
 
     <!--
 
-     <QuestionsInput
+    <QuestionsInput
       bind:questions={$form.questions}
       bind:infobits={$form.infobits}
       bind:errorQuestions={$errors.questions}
