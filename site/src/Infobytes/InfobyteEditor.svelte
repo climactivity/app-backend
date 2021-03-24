@@ -11,7 +11,7 @@
     isProd,
   } from "../stores";
   import InfoBitEditor from "./InfoBitEditor.svelte";
-
+  import { Confirm } from 'svelte-confirm'
   export let selectedInfobyte;
   export let unsavedChanges;
   const initialQuestions = [new Question()];
@@ -410,7 +410,15 @@ import AspectItem from "../Aspects/AspectItem.svelte";
       Veröffentlichen
     </Label>
     <Button primary type="submit">Speichern</Button>
-    <Button type="reset" on:click={deleteInfoByte} class="danger">Löschen</Button>
+    <Confirm
+  let:confirm="{confirmThis}"
+>
+  <Button type="reset" 
+    on:click="{() => confirmThis(deleteInfoByte)}"
+  >
+  Löschen
+  </Button>
+    </Confirm>
   </form>
   {#if !isProd}
     <div>

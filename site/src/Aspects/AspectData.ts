@@ -27,3 +27,16 @@ export const postAspect : (aspect : Aspect) => Promise<Aspect> = async (aspect) 
     }); 
     return await response.json() as Promise<Aspect>
 }
+
+export const dropAspect : (aspect : Aspect) => Promise<any> = async (aspect) => {
+    const response = await fetch(`${baseUrl}localized-aspect${"/" + aspect._id }`, {
+        credentials: "include",
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: JSON.stringify(aspect),
+    }); 
+    return await response.json() as Promise<Aspect>
+}

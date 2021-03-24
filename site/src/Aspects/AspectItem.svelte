@@ -11,14 +11,17 @@
         ListGroupItem,
         Container,
         Label,
-        Card, Form, ButtonGroup
+        Card,
+        Form,
+        ButtonGroup,
     } from "sveltestrap";
+    import { Confirm } from 'svelte-confirm'
     import type Aspect from "./AspectTypes";
     import { createEventDispatcher } from "svelte";
     import { faVectorSquare } from "@fortawesome/free-solid-svg-icons";
-import App from "../App.svelte";
-    import {postAspect} from "./AspectData"
-import { isProd } from "../stores";
+    import App from "../App.svelte";
+    import { postAspect } from "./AspectData";
+    import { isProd } from "../stores";
     export let aspect: Aspect;
     let newFactor = "";
     const dispatch = createEventDispatcher();
@@ -29,6 +32,12 @@ import { isProd } from "../stores";
         });
         aspect = null;
     }
+
+    function handleAdd() {
+        dispatch("addAspect", {
+            aspect: aspect,
+        });
+    }
 </script>
 
 <Row>
@@ -37,7 +46,9 @@ import { isProd } from "../stores";
     </Col>
 
     <Col xs="auto">
-        <Button color="danger" on:click={handleDelete}>Remove</Button>
+        <Confirm let:confirm={confirmDelete}>
+            <Button color="danger" on:click={() => confirmDelete(handleDelete)}>Remove</Button>
+        </Confirm>
     </Col>
 </Row>
 
@@ -103,7 +114,7 @@ import { isProd } from "../stores";
                         type="select"
                         bind:value={aspect.forRegion}
                     >
-                        <option value={null} > -- Region -- </option>
+                        <option value={null}> -- Region -- </option>
                         <option>DE</option>
                     </Input>
 
@@ -114,7 +125,7 @@ import { isProd } from "../stores";
                         type="select"
                         bind:value={aspect.forLanguage}
                     >
-                        <option value={null} > -- Sprache -- </option>
+                        <option value={null}> -- Sprache -- </option>
 
                         <option>DE</option>
                         <option>EN</option>
@@ -125,22 +136,38 @@ import { isProd } from "../stores";
                     {/each}
                     <Label>Gesichtspunkt hinzufügen</Label>
                     <InputGroup>
-                        <Input id="gesichtspunkt"type="text" placeholder="Gesichtspunkt" bind:value={newFactor} />
-                        <Button disabled={newFactor === ""} on:click={(e) => {
-                            e.preventDefault()
-                            if (aspect.localizedFactors == null) {
-                                aspect.localizedFactors = []
-                            }
-                            let addedFactor = {
-                                id: aspect.localizedFactors.length,
-                                name: newFactor
-                            }
-                            aspect.localizedFactors = [...aspect.localizedFactors, addedFactor]
-                            newFactor = ""
-                        }}>+</Button>
+                        <Input
+                            id="gesichtspunkt"
+                            type="text"
+                            placeholder="Gesichtspunkt"
+                            bind:value={newFactor}
+                        />
+                        <Button
+                            disabled={newFactor === ""}
+                            on:click={(e) => {
+                                e.preventDefault();
+                                if (aspect.localizedFactors == null) {
+                                    aspect.localizedFactors = [];
+                                }
+                                let addedFactor = {
+                                    id: aspect.localizedFactors.length,
+                                    name: newFactor,
+                                };
+                                aspect.localizedFactors = [
+                                    ...aspect.localizedFactors,
+                                    addedFactor,
+                                ];
+                                newFactor = "";
+                            }}>+</Button
+                        >
                     </InputGroup>
                     <Label for="message">Einleitungstext</Label>
-                    <Input id="message" type="textarea" placeholder="description" bind:value={aspect.message} />
+                    <Input
+                        id="message"
+                        type="textarea"
+                        placeholder="description"
+                        bind:value={aspect.message}
+                    />
                 </Card>
             </Col>
         </Row>
@@ -159,17 +186,21 @@ import { isProd } from "../stores";
 
         <Row>
             <ButtonGroup>
-                <Button type="submit" form="form" on:click={(e) => {
-                    e.preventDefault(); 
-                    postAspect(aspect).then((res) => {
-                        aspect = res
-                        alert("Success " + aspect._id)
-                    })
-                }}>Speichern</Button>
+                <Button
+                    type="submit"
+                    form="form"
+                    on:click={(e) => {
+                        e.preventDefault();
+                        postAspect(aspect).then((res) => {
+                            aspect = res;
+                            alert("Success " + aspect._id);
+                            handleAdd();
+                        });
+                    }}>Speichern</Button
+                >
             </ButtonGroup>
         </Row>
-
-        </Form>
+    </Form>
 {:else}
     <Card body>
         <h1>neuen Aspekt erstellen?</h1>
@@ -177,9 +208,8 @@ import { isProd } from "../stores";
 {/if}
 
 {#if !isProd}
-<div>
-    <span>Debug</span>
-    <pre>{JSON.stringify(aspect, null, 2)}</pre>
-  </div>
+    <div>
+        <span>Debug</span>
+        <pre>{JSON.stringify(aspect, null, 2)}</pre>
+    </div>
 {/if}
-

@@ -125,24 +125,27 @@ export class AspectService {
 
     let aspectLocalizedStrings = aspect.localizedStrings.find(ls => ls.language == lang);
     let localizedTrackingData = aspect.trackingData.localized_strings
-    let error = (!aspectLocalizedStrings || !localizedTrackingData) ? `Aspect not localized to ${lang} in ${region}!` : ""
+    let error = (!aspectLocalizedStrings || !aspectLocalizedStrings.strings || !localizedTrackingData) ? `Aspect not localized to ${lang} in ${region}!` : ""
     if (error !== "") {
+
       let aspectLocalizedStrings = aspect.localizedStrings[0];
       let localizedTrackingData = aspect.trackingData.localized_strings  
+      console.log("errros",aspectLocalizedStrings)
+
       return {
         _id: aspect._id,
         bigpoint: aspect.bigpoint,
         name: aspect.name,
-        title: aspectLocalizedStrings.strings.title,
+        title: aspectLocalizedStrings.strings == null ? "MISSING LOCALE" : aspectLocalizedStrings.strings.title,
         forLanguage: aspectLocalizedStrings.language,
         forRegion: region,
-        localizedFactors: aspectLocalizedStrings.strings.factors,
-        localizedTrackingData: {
-          question: localizedTrackingData.strings.question,
+        localizedFactors: aspectLocalizedStrings.strings == null ? null : aspectLocalizedStrings.strings.factors,
+        localizedTrackingData: localizedTrackingData == null ? null : {
+          question:  localizedTrackingData.strings.question,
           options: aspect.trackingData.options == null ? null : aspect.trackingData.options.map(option => {
             return {
               reward: option.reward,
-              option: localizedTrackingData.strings.options.find(locale => locale.locale_id == option.locale_id).value,
+              option: localizedTrackingData == null ? "MISSING LOCALE"  : localizedTrackingData.strings.options.find(locale => locale.locale_id == option.locale_id).value,
               level: option.level,
               co2value: option.co2value ?? -1.0
             }
@@ -154,6 +157,7 @@ export class AspectService {
       }
     } else {
 
+      console.log(aspect, localizedTrackingData, aspectLocalizedStrings)
       return {
         _id: aspect._id,
         bigpoint: aspect.bigpoint,
