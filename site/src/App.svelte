@@ -1,5 +1,7 @@
 <script lang="ts">
     import Dashboard from "./Dashboard.svelte";
+    import { NotificationDisplay, notifier } from '@beyonk/svelte-notifications'
+
     import {
         Col,
         Container,
@@ -25,6 +27,8 @@ function handleUpdate(event) {
 </script>
 
 <main>
+    <NotificationDisplay />
+
     {#if path === "/admin/"}
         <Dashboard />
     {:else}

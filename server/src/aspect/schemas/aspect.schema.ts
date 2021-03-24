@@ -23,7 +23,8 @@ export class AspectLocalization {
     language: string; 
     strings: {
         title: string
-        factors?: {id: number, name: string}[]
+        factors?: {id: number, name: string, intro: string }[]
+        frontmatter: string;
     }
 }
 
@@ -65,6 +66,9 @@ export class Aspect {
 
     @Prop()
     factors: Factor[];
+    
+    @Prop()
+    published: boolean;
 }
 
 export const AspectSchema = SchemaFactory.createForClass(Aspect); 

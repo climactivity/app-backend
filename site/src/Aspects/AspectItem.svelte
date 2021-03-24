@@ -14,8 +14,9 @@
         Card,
         Form,
         ButtonGroup,
-        Table,
+        Table,Spinner 
     } from "sveltestrap";
+    import { NotificationDisplay, notifier } from '@beyonk/svelte-notifications'
     import { Confirm } from "svelte-confirm";
     import type Aspect from "./AspectTypes";
     import { createEventDispatcher } from "svelte";
@@ -27,9 +28,12 @@
     import RewardForm from "../Rewards/RewardForm.svelte";
     import { Reward } from "../Rewards/RewardTypes";
     export let aspect: Aspect;
-    let newFactor = "";
+    let newFactor = {
+        name: "",
+        intro: "",
+    };
     const dispatch = createEventDispatcher();
-
+    let waiting = false
     function handleDelete() {
         dispatch("deleteAspect", {
             aspect: aspect,
@@ -50,6 +54,7 @@
         waterFactor: 0.0,
     };
 </script>
+
 
 <Row>
     <Col xs="auto">
@@ -143,20 +148,70 @@
                         <option>DE</option>
                         <option>EN</option>
                     </Input>
+                    <Label for="message">Einleitungstext</Label>
+                    <Input
+                        id="message"
+                        type="textarea"
+                        placeholder="description"
+                        bind:value={aspect.frontmatter}
+                    />
+                </Card>
+                <Col>
+                    <h5 class="mt-3">Gesichtspunkte</h5>
+
+                <Card body>
                     <Label>Gesichtspunkte</Label>
-                    {#each aspect.localizedFactors == null ? [] : aspect.localizedFactors as factor}
-                        <Label>{factor.id}: {factor.name}</Label>
-                    {/each}
+                    <Table>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Intro</th>
+                            <th>-</th>
+                        </tr>
+                        {#each aspect.localizedFactors == null ? [] : aspect.localizedFactors as factor}
+                            <tr>
+                                <th>{factor.id}</th>
+                                <td>{factor.name}</td>
+                                <td>{factor.intro}</td>
+                                <td
+                                    ><Button
+                                        danger
+                                        on:click={(e) => {
+                                            e.preventDefault();
+                                            aspect.localizedFactors = aspect.localizedFactors.filter(
+                                                (f) => f.id !== factor.id
+                                            );
+                                            aspect.localizedFactors = aspect.localizedFactors.map(
+                                                (f, i) => {
+                                                    f.id = i;
+                                                    return f;
+                                                }
+                                            );
+                                        }}>-</Button
+                                    ></td
+                                >
+                            </tr>
+                        {/each}
+                    </Table>
                     <Label>Gesichtspunkt hinzufügen</Label>
-                    <InputGroup>
+                    <Card body>
+                        <Label for="gesichtspunkt_name">Name</Label>
                         <Input
-                            id="gesichtspunkt"
+                            id="gesichtspunkt_name"
                             type="text"
-                            placeholder="Gesichtspunkt"
-                            bind:value={newFactor}
+                            placeholder="Name"
+                            bind:value={newFactor.name}
+                        />
+                        <Label for="gesichtspunkt_name">Intro</Label>
+                        <Input
+                            id="gesichtspunkt_intro"
+                            type="text"
+                            placeholder="Intor"
+                            bind:value={newFactor.intro}
                         />
                         <Button
-                            disabled={newFactor === ""}
+                            disabled={newFactor.name === "" ||
+                                newFactor.intro === ""}
                             on:click={(e) => {
                                 e.preventDefault();
                                 if (aspect.localizedFactors == null) {
@@ -164,24 +219,22 @@
                                 }
                                 let addedFactor = {
                                     id: aspect.localizedFactors.length,
-                                    name: newFactor,
+                                    name: newFactor.name,
+                                    intro: newFactor.intro,
                                 };
                                 aspect.localizedFactors = [
                                     ...aspect.localizedFactors,
                                     addedFactor,
                                 ];
-                                newFactor = "";
+                                newFactor = {
+                                    name: "",
+                                    intro: "",
+                                };
                             }}>+</Button
                         >
-                    </InputGroup>
-                    <Label for="message">Einleitungstext</Label>
-                    <Input
-                        id="message"
-                        type="textarea"
-                        placeholder="description"
-                        bind:value={aspect.message}
-                    />
+                    </Card>
                 </Card>
+            </Col>
             </Col>
         </Row>
 
@@ -210,22 +263,41 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                {#each aspect.localizedTrackingData.options as option}
-                                <tr>
-                                    <th>{option.level}</th>
-                                    <td>{option.option}</td>
-                                    <td>{option.waterFactor}</td>
-                                    <td
-                                        >{option.co2value > 0.0
-                                            ? option.co2value
-                                            : "N/A"}</td
-                                    >
-                                    <td><RewardDisplayer
-                                        reward={option.reward}
-                                    /></td>
-                                    <td><Button>-</Button></td>
-                                </tr>
-                                {/each}
+                                    {#each aspect.localizedTrackingData.options as option}
+                                        <tr>
+                                            <th>{option.level}</th>
+                                            <td>{option.option}</td>
+                                            <td>{option.waterFactor}</td>
+                                            <td
+                                                >{option.co2value > 0.0
+                                                    ? option.co2value
+                                                    : "N/A"}</td
+                                            >
+                                            <td
+                                                ><RewardDisplayer
+                                                    reward={option.reward}
+                                                /></td
+                                            >
+                                            <td
+                                                ><Button
+                                                    on:click={(e) => {
+                                                        e.preventDefault();
+                                                        aspect.localizedTrackingData.options = aspect.localizedTrackingData.options.filter(
+                                                            (o) =>
+                                                                o.level !==
+                                                                option.level
+                                                        );
+                                                        aspect.localizedTrackingData.options = aspect.localizedTrackingData.options.map(
+                                                            (o, i) => {
+                                                                o.level = i;
+                                                                return o;
+                                                            }
+                                                        );
+                                                    }}>-</Button
+                                                ></td
+                                            >
+                                        </tr>
+                                    {/each}
                                 </tbody>
                             </Table>
                         </div>
@@ -314,25 +386,33 @@
             </Container>
         </Row>
         <Row>
-            <Label for={"published"} style="padding: 5px;">   
+            <Label for={"published"} style="padding: 5px;">
                 <Input
-                  class="checkbox"
-                  type="checkbox"
-                  name={"published"}
-                  bind:checked={aspect.published}
+                    class="checkbox"
+                    type="checkbox"
+                    name={"published"}
+                    bind:checked={aspect.published}
                 />
                 Veröffentlichen
-              </Label>
+            </Label>
             <ButtonGroup>
                 <Button
                     type="submit"
                     form="form"
                     on:click={(e) => {
                         e.preventDefault();
+                        waiting = true
                         postAspect(aspect).then((res) => {
                             handleAdd();
+                           // notifier.success("Änderungen gespeichert!", 2000)
+                            waiting = false
                         });
-                    }}>Speichern</Button
+                    }}>{#if waiting}  
+                    <Spinner info type="grow" />
+                    {:else}
+                     Speichern
+                     {/if}
+                    </Button
                 >
             </ButtonGroup>
         </Row>

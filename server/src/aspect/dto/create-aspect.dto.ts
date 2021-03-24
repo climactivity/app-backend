@@ -9,4 +9,5 @@ export class CreateAspectDto {
     readonly bigpoint: string;
     readonly factors: Factor[];
     readonly region: string;
+    readonly published: boolean;
 }

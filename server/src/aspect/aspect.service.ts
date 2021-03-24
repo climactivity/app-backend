@@ -64,6 +64,7 @@ export class AspectService {
         strings: {
           title: createAspectForLocaleDto.title,
           factors: createAspectForLocaleDto.localizedFactors,
+          frontmatter: createAspectForLocaleDto.frontmatter
         }
       }],
       trackingData: {
@@ -83,6 +84,8 @@ export class AspectService {
         })
       },
       factors: createAspectForLocaleDto.localizedFactors,
+      published: createAspectForLocaleDto.published,
+
     }
   }
 
@@ -135,6 +138,7 @@ export class AspectService {
         title: aspectLocalizedStrings.strings == null ? "MISSING LOCALE" : aspectLocalizedStrings.strings.title,
         forLanguage: aspectLocalizedStrings.language,
         forRegion: region,
+        frontmatter: aspectLocalizedStrings.strings.frontmatter, 
         localizedFactors: aspectLocalizedStrings.strings == null ? null : aspectLocalizedStrings.strings.factors,
         localizedTrackingData: localizedTrackingData == null ? null : {
           question:  localizedTrackingData.strings.question,
@@ -148,7 +152,7 @@ export class AspectService {
           }
           )
         },
-
+        published: aspect.published,
         message: error
       }
     } else {
@@ -158,6 +162,7 @@ export class AspectService {
         bigpoint: aspect.bigpoint,
         name: aspect.name,
         title: aspectLocalizedStrings.strings.title,
+        frontmatter: aspectLocalizedStrings.strings.frontmatter, 
         forLanguage: lang,
         forRegion: region,
         localizedTrackingData: {
@@ -172,6 +177,7 @@ export class AspectService {
           }
           )
         },
+        published: aspect.published,
         localizedFactors: aspectLocalizedStrings.strings.factors
       }
     }

@@ -5,6 +5,7 @@ export class LocalizedAspectDto {
     readonly _id: string;
     readonly name: string;
     readonly title: string;
+    readonly frontmatter: string;
     readonly icon?: any;
     readonly infoGraph?: any;
     readonly localizedTrackingData?: {
@@ -25,6 +26,8 @@ export class LocalizedAspectDto {
     readonly bigpoint?:string;
     readonly localizedFactors?: {
         id: number,
-        name: string
+        name: string,
+        intro: string
     }[]; 
+    published: boolean;
 }
