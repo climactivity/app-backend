@@ -1,8 +1,9 @@
 <script lang="ts">
   import { createForm } from "svelte-forms-lib";
-  import { Confirm } from "svelte-confirm";
-  import { Button, Input, Label } from "sveltestrap";
+
+  import { Button, Row, Col } from "sveltestrap";
   import {
+    currentInfobit,
     currentInfobitIndex,
     Infobit,
     Infobyte,
@@ -29,7 +30,7 @@
       return;
     } else {
       selectedInfobit = selectedInfobyte?.infobits[selectedInfobitIndex];
-      console.log(selectedInfobit.doc);
+      currentInfobit.set(selectedInfobit);
     }
   });
 
@@ -71,9 +72,15 @@
 </script>
 
 <section>
-  <h1>Infobyte: {$form.name}</h1>
-
   <form on:submit={handleSubmit}>
+    <Row>
+      <Col sm="9">
+        <h1 class="mt-2">Infobyte: {$form.name}</h1>
+      </Col>
+      <Col sm="3">
+        <Button primary type="submit">Speichern</Button>
+      </Col>
+    </Row>
     {#if selectedInfobit === null}
       <InfobyteInputFields
         bind:region={$form.region}
@@ -89,6 +96,9 @@
     {:else if selectedInfobit !== null}
       <InfoBitEditor bind:value={$form.infobits[selectedInfobitIndex]} />
     {/if}
+    <DebugInfobyteOutput visible={!isProd} {form} />
+
+    <!--
 
     <QuestionsInput
       bind:questions={$form.questions}
@@ -106,9 +116,9 @@
       Veröffentlichen
     </Label>
     <Button primary type="submit">Speichern</Button>
+
+    <DeleteInfobyteButton bind:infobyteId={selectedInfobyte._id} />
+
+    -->
   </form>
-
-  <DeleteInfobyteButton bind:infobyteId={selectedInfobyte._id} />
-
-  <DebugInfobyteOutput visible={!isProd} {form} />
 </section>

@@ -27,7 +27,11 @@
     };
 
     const onInfobitSelected = (infobitIndex: number) => {
-        currentInfobitIndex.set(infobitIndex);
+        if (selectedInfobit === infobitIndex) {
+            currentInfobitIndex.set(null);
+        } else {
+            currentInfobitIndex.set(infobitIndex);
+        }
     };
 
     currentInfobyte.subscribe((currentInfobyte: Infobyte) => {

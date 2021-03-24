@@ -42,6 +42,7 @@ declare const __frontend_env; //
 
 export const currentInfobyte: Writable<Infobyte> = writable(null)
 export const currentInfobitIndex: Writable<number> = writable(null)
+export const currentInfobit: Writable<Infobit> = writable(null)
 export const isProd = __frontend_env.env.isProd
 const apiUrl = (__frontend_env.env.SVELTE_APP_API_HOST_BASE || '')
 export var baseUrl = (__frontend_env && isProd ? apiUrl : window.location.href.replace(window.location.hash, ""))
