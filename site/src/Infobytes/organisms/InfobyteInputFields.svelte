@@ -8,7 +8,6 @@
     export let region: string;
     export let language: string;
     export let name: string;
-    export let frontmatter: string;
     export let aspect: string;
     export let factor: string;
     export let difficulty: string;
@@ -18,19 +17,31 @@
 </script>
 
 <Row>
-    <Col lg="6">
+    <Col md="6" lg="4">
+        <InfobyteAsyncCombobox
+            inputId={"aspect"}
+            name={"Aspekt"}
+            bind:value={aspect}
+            optionsPromise={aspectsPromise}
+        />
+    </Col>
+    <Col md="6" lg="4">
+        <InfobyteAsyncCombobox
+            inputId={"factor"}
+            name={"Gesichtspunkt"}
+            bind:value={factor}
+            optionsPromise={factorsPromise}
+        />
+    </Col>
+</Row>
+
+<Row>
+    <Col lg="12">
         <InfobyteInput
             required={true}
             inputId={"name"}
             name={"Name"}
             bind:value={name}
-        />
-    </Col>
-    <Col lg="6">
-        <InfobyteInput
-            inputId={"frontmatter"}
-            name={"Klappentext"}
-            bind:value={frontmatter}
         />
     </Col>
 </Row>
@@ -50,25 +61,6 @@
             name={"Sprache"}
             bind:value={language}
             options={["DE", "EN"]}
-        />
-    </Col>
-</Row>
-
-<Row>
-    <Col md="6" lg="4">
-        <InfobyteAsyncCombobox
-            inputId={"aspect"}
-            name={"Aspekt"}
-            bind:value={aspect}
-            optionsPromise={aspectsPromise}
-        />
-    </Col>
-    <Col md="6" lg="4">
-        <InfobyteAsyncCombobox
-            inputId={"factor"}
-            name={"Gesichtspunkt"}
-            bind:value={factor}
-            optionsPromise={factorsPromise}
         />
     </Col>
 

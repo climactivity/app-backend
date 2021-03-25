@@ -4,7 +4,9 @@
     export let inputId: string;
     export let name: string;
     export let value: string;
-    export let optionsPromise: Promise<[string, number?][]>;
+    export let optionsPromise: Promise<any[]>;
+
+    optionsPromise.then((data) => data.forEach((d) => console.log(d)));
 </script>
 
 <label for={inputId}>{name}</label>
@@ -13,8 +15,8 @@
     {#await optionsPromise}
         <option disabled value={null}>Lade...</option>
     {:then data}
-        {#each data as option}
-            <option value={option[1]}>{option[0]}</option>
+        {#each data as aspect}
+            <option value={aspect._id}>{aspect.name}</option>
         {/each}
     {:catch error}
         <option disabled value={null}>An error occurred!</option>

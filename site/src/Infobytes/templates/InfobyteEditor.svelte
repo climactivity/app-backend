@@ -1,12 +1,26 @@
 <script lang="ts">
   import { createForm } from "svelte-forms-lib";
-  import { Button, Col, Row } from "sveltestrap";
+  import {
+    Button,
+    Col,
+    Input,
+    Label,
+    Modal,
+    ModalBody,
+    ModalFooter,
+    ModalHeader,
+    Row,
+  } from "sveltestrap";
   import { Infobyte, isProd } from "../../stores";
   import DebugInfobyteOutput from "../atoms/DebugInfobyteOutput.svelte";
+  import DeleteInfobyteButton from "../atoms/DeleteInfobyteButton.svelte";
   import { createOrUpdateInfobyte, fetchAspects } from "../InfobyteService";
   import InfobyteInputFields from "../organisms/InfobyteInputFields.svelte";
 
   export let selectedInfobyte: Infobyte;
+
+  let open = false;
+  const toggle = () => (open = !open);
 
   const { form, handleSubmit } = createForm({
     initialValues: selectedInfobyte,
@@ -14,7 +28,7 @@
       let infobyte = values;
       if (infobyte._id === "") delete infobyte._id;
 
-      createOrUpdateInfobyte(infobyte);
+      createOrUpdateInfobyte(infobyte).then(() => (open = true));
     },
   });
 
@@ -55,22 +69,11 @@
       bind:region={$form.region}
       bind:language={$form.language}
       bind:name={$form.name}
-      bind:frontmatter={$form.frontmatter}
       bind:aspect={$form.aspect}
       bind:factor={$form.factor}
       bind:difficulty={$form.difficulty}
       bind:aspectsPromise={aspects}
       bind:factorsPromise={factors}
-    />
-
-    <DebugInfobyteOutput visible={!isProd} {form} />
-
-    <!--
-
-     <QuestionsInput
-      bind:questions={$form.questions}
-      bind:infobits={$form.infobits}
-      bind:errorQuestions={$errors.questions}
     />
 
     <Label for={"published"} style="padding: 5px;">
@@ -82,10 +85,24 @@
       />
       Veröffentlichen
     </Label>
-    <Button primary type="submit">Speichern</Button>
-
-    <DeleteInfobyteButton bind:infobyteId={selectedInfobyte._id} />
-
-    -->
   </form>
+  <Row>
+    <Col sm={{ size: 3, offset: 9 }}>
+      <DeleteInfobyteButton bind:infobyteId={selectedInfobyte._id} />
+    </Col>
+  </Row>
+
+  <DebugInfobyteOutput visible={!isProd} {form} />
 </section>
+
+<Modal isOpen={open} {toggle} transitionOptions>
+  <ModalHeader>Infobyte wurde gespeichert!</ModalHeader>
+  <ModalBody>
+    Das Infobyte konnte erfolgreich gespeichert werden. Aktuell ist es hilfreich
+    die Anwendung neu zu laden um sicher zu gehen dass auch wirklich alles
+    richtig gespeichert wurde.
+  </ModalBody>
+  <ModalFooter>
+    <Button color="danger" on:click={toggle}>Schließen</Button>
+  </ModalFooter>
+</Modal>
