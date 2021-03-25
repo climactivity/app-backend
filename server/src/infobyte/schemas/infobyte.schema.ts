@@ -42,6 +42,13 @@ export class InfoByte {
 
     @Prop()
     published: boolean;
+
+    @Prop()
+    aspect: string; 
+    
+    @Prop() 
+    factor: number;
+
 }
 
 export const InfoByteSchema = SchemaFactory.createForClass(InfoByte)

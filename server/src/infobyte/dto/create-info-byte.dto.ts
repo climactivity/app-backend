@@ -10,5 +10,8 @@ export class CreateInfoByteDto {
     readonly infobits?: [any]
     readonly xp?: number;
     readonly published: boolean; 
+    readonly aspect: string; 
+    readonly factor: number;
+
 
 }
