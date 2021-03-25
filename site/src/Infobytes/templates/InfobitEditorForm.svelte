@@ -47,7 +47,7 @@
         <h2 class="mt-2">Infobit Nr: {selectedInfobitIndex + 1}</h2>
       </Col>
       <Col sm="3">
-        <Button primary type="submit">Speichern</Button>
+        <Button color={"success"} type="submit">Speichern</Button>
       </Col>
     </Row>
     <InfoBitEditor bind:value={$form.infobits[selectedInfobitIndex]} />

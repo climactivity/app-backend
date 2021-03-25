@@ -62,7 +62,7 @@
         <h2 class="mt-2">Infobyte: {$form.name}</h2>
       </Col>
       <Col sm="3">
-        <Button primary type="submit">Speichern</Button>
+        <Button color={"success"} type="submit">Speichern</Button>
       </Col>
     </Row>
     <InfobyteInputFields

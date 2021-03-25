@@ -45,6 +45,7 @@ export const currentInfobyte: Writable<Infobyte> = writable(null)
 export const currentInfobitIndex: Writable<number> = writable(null)
 export const currentInfobit: Writable<Infobit> = writable(null)
 export const currentQuestionName: Writable<string> = writable(null)
+export const currentQuestionIndex: Writable<number> = writable(null)
 export const currentQuestion: Writable<Question> = writable(null)
 export const isProd = __frontend_env.env.isProd
 const apiUrl = (__frontend_env.env.SVELTE_APP_API_HOST_BASE || '')

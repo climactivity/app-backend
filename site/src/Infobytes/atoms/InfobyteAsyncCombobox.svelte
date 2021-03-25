@@ -5,8 +5,6 @@
     export let name: string;
     export let value: string;
     export let optionsPromise: Promise<any[]>;
-
-    optionsPromise.then((data) => data.forEach((d) => console.log(d)));
 </script>
 
 <label for={inputId}>{name}</label>

@@ -1,18 +1,26 @@
 <script lang="ts">
-  import { beforeUpdate } from "svelte";
-
   import { createForm } from "svelte-forms-lib";
-  import { Button, Col, Row } from "sveltestrap";
+  import {
+    Button,
+    Col,
+    Modal,
+    ModalBody,
+    ModalFooter,
+    ModalHeader,
+    Row,
+  } from "sveltestrap";
   import { Infobyte, isProd, Question } from "../../stores";
   import DebugInfobyteOutput from "../atoms/DebugInfobyteOutput.svelte";
+  import DeleteQuestionButton from "../atoms/DeleteQuestionButton.svelte";
   import { createOrUpdateInfobyte } from "../InfobyteService";
   import QuestionInput from "../organisms/QuestionInput.svelte";
 
   export let selectedInfobyte: Infobyte;
   export let selectedInfobitIndex: number;
-  export let selectedQuestionName: string;
-
   export let selectedQuestionIndex: number;
+
+  let open = false;
+  const toggle = () => (open = !open);
 
   const { form, errors, handleSubmit } = createForm({
     initialValues: selectedInfobyte,
@@ -20,13 +28,18 @@
       let infobyte = values;
       if (infobyte._id === "") delete infobyte._id;
 
-      createOrUpdateInfobyte(infobyte);
+      createOrUpdateInfobyte(infobyte).then(() => (open = true));
     },
   });
 
   $: if (selectedInfobyte) {
     $form.questions = selectedInfobyte.questions || [new Question()];
     $errors.questions = selectedInfobyte.questions || [new Question()];
+  }
+
+  $: if (selectedInfobyte.questions[selectedQuestionIndex]) {
+    $form.questions[selectedQuestionIndex] =
+      selectedInfobyte.questions[selectedQuestionIndex];
   }
 </script>
 
@@ -36,14 +49,40 @@
       <Col sm="9">
         <h6 class="mt-2">Infobyte: {$form.name}</h6>
         <h4 class="mt-2">Infobit Nr: {selectedInfobitIndex}</h4>
-        <h2 class="mt-2">Frage: {selectedQuestionName}</h2>
+        <h2 class="mt-2">
+          Frage: {selectedInfobyte.questions[selectedQuestionIndex].question}
+        </h2>
       </Col>
       <Col sm="3">
-        <Button primary type="submit">Speichern</Button>
+        <Button color={"success"} type="submit">Speichern</Button>
       </Col>
     </Row>
 
-    <QuestionInput bind:question={$form.questions[selectedQuestionIndex]} />
-    <DebugInfobyteOutput visible={!isProd} {form} />
+    <QuestionInput
+      bind:question={selectedInfobyte.questions[selectedQuestionIndex]}
+    />
   </form>
+
+  <Row>
+    <Col sm={{ size: 3, offset: 9 }}>
+      <DeleteQuestionButton
+        bind:infobyte={selectedInfobyte}
+        bind:selectedQuestionIndex
+      />
+    </Col>
+  </Row>
+
+  <DebugInfobyteOutput visible={!isProd} {form} />
 </section>
+
+<Modal isOpen={open} {toggle} transitionOptions>
+  <ModalHeader>Frage wurde gespeichert!</ModalHeader>
+  <ModalBody>
+    Das Frage konnte erfolgreich gespeichert werden. Aktuell ist es hilfreich
+    die Anwendung neu zu laden um sicher zu gehen dass auch wirklich alles
+    richtig gespeichert wurde.
+  </ModalBody>
+  <ModalFooter>
+    <Button color="danger" on:click={toggle}>Schließen</Button>
+  </ModalFooter>
+</Modal>

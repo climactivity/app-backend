@@ -8,4 +8,4 @@
 
 <MasterInfobyteHeader title={"Fragen:"} />
 
-<QuestionSelectionList {questions} />
+<QuestionSelectionList bind:questions />

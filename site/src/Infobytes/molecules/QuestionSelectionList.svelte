@@ -1,7 +1,6 @@
 <script lang="ts">
     import { ListGroup } from "sveltestrap";
     import { currentQuestionName, Question } from "../../stores";
-    import CreateInfobyteButton from "../atoms/CreateInfobyteButton.svelte";
     import CreateQuestionButton from "../atoms/CreateQuestionButton.svelte";
     import QuestionSelectionListItem from "../atoms/QuestionSelectionListItem.svelte";
 
