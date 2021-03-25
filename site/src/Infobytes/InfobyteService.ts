@@ -30,7 +30,7 @@ export const fetchAspects = async (region: string, language: string): Promise<an
 
 export const deleteInfobyte = async (id: string): Promise<any> => {
 
-    const response = fetch(`/infobyte/${id}`, {
+    const response = fetch(`${baseUrl}infobyte/${id}`, {
         credentials: "include",
         method: "DELETE",
     }).then(data => data.json());
