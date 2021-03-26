@@ -45,10 +45,12 @@ export class InfoByte {
 
     @Prop()
     aspect: string; 
-    
+
     @Prop() 
     factor: number;
 
+    @Prop()
+    difficulty: number;
 }
 
 export const InfoByteSchema = SchemaFactory.createForClass(InfoByte)
