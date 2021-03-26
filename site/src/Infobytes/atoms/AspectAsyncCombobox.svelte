@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Input } from "sveltestrap";
+    import { Input, Spinner } from "sveltestrap";
 
     export let inputId: string;
     export let name: string;
@@ -9,10 +9,7 @@
 
 <label for={inputId}>{name}</label>
 {#await optionsPromise}
-    <Input id={inputId} name={inputId} type="select" bind:value>
-        <option disabled selected value={null}> -- {name} -- </option>
-        <option disabled value={null}>Lade...</option>
-    </Input>
+<Spinner info />
 {:then data}
     <Input id={inputId} name={inputId} type="select" bind:value>
         <option disabled selected value={null}> -- {name} -- </option>
@@ -20,9 +17,6 @@
             <option value={aspect._id}>{aspect.name}</option>
         {/each}
     </Input>
-{:catch error}
-    <Input id={inputId} name={inputId} type="select" bind:value>
-        <option disabled selected value={null}> -- {name} -- </option>
-        <option disabled value={null}>An error occurred!</option>
-    </Input>
+    {:catch error}
+    <span>An error occurred: {error}!</span>
 {/await}
