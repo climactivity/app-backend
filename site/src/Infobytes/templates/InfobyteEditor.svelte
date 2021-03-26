@@ -54,7 +54,7 @@
   };
 
   let aspects: Promise<any[]> = fetchAspects($form.region, $form.language);
-  let factors: Promise<any[]>;
+  let factors: Promise<any[]> = fetchFactorsForAspect($form.aspect);
 
   $: if ($form.aspect) {
     factors = fetchFactorsForAspect($form.aspect);
