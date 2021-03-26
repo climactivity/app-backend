@@ -1,21 +1,20 @@
 <script lang="ts">
-    import Infobytes from "./Infobytes/Infobytes.svelte";
+    import { onMount } from "svelte";
     import {
-        Nav,
-        NavItem,
-        Container,
-        Row,
-        Col,
         Collapse,
-        NavbarToggler,
-        NavLink,
+        Container,
+        Nav,
         Navbar,
         NavbarBrand,
+        NavbarToggler,
+        NavItem,
+        NavLink,
     } from "sveltestrap";
+    import AspectView from "./Aspects/AspectView.svelte";
+    import InfobytePage from "./Infobytes/InfobytePage.svelte";
     import MyNavLink from "./MyNavLink.svelte";
     import TreeTemplateView from "./TreeTemplates/TreeTemplateView.svelte";
-    import AspectView from "./Aspects/AspectView.svelte";
-	import { onMount } from 'svelte';
+
     let tabs = [
         { target: "health", name: "Health", disabled: true },
         { target: "analytics", name: "Analytics", disabled: true },
@@ -30,10 +29,10 @@
     let activeTab = "infobytes";
 
     function setActiveTab(path) {
-        path = path.split("#").pop()
+        path = path.split("#").pop();
         if (!tabs.some((e) => e.target === path)) {
-            console.log("Path ", path, " not defined!")
-            return; 
+            console.log("Path ", path, " not defined!");
+            return;
         }
         return function () {
             console.log(path);
@@ -49,10 +48,9 @@
     }
 
     onMount(async () => {
-        console.log("Dashboard mounted!")
-        setActiveTab(window.location.hash)()
-    })
-    
+        console.log("Dashboard mounted!");
+        setActiveTab(window.location.hash)();
+    });
 </script>
 
 <main>
@@ -73,6 +71,7 @@
                 {#each tabs as tab}
                     <NavItem>
                         <MyNavLink
+                            name={tab.name}
                             target={tab.target}
                             currentTab={activeTab}
                             callback={setActiveTab}
@@ -86,24 +85,15 @@
             <NavLink>Abmelden</NavLink>
         </NavItem>
     </Navbar>
-    <Row>
-        <Container>
-            <Row>
-                <Col xs="3" />
-                <Col xs="auto">
-                    {#if activeTab === ""}
-                        <h1>start page</h1>
-                    {:else if activeTab === "baeume"}
-                        <TreeTemplateView />
-                    {:else if activeTab === "aspects"}
-                        <AspectView />
-                    {:else if activeTab === "infobytes"}
-                        <Infobytes />
-                    {/if}
-                </Col>
-            </Row>
-        </Container>
-    </Row>
+    {#if activeTab === ""}
+        <h1>start page</h1>
+    {:else if activeTab === "baeume"}
+        <TreeTemplateView />
+    {:else if activeTab === "aspects"}
+        <AspectView />
+    {:else if activeTab === "infobytes"}
+        <InfobytePage />
+    {/if}
 </main>
 
 <style>
