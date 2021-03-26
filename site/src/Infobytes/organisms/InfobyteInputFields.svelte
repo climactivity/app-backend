@@ -2,7 +2,8 @@
     import { Row, Col } from "sveltestrap";
     import InfobyteCombobox from "../atoms/InfobyteCombobox.svelte";
     import InfobyteInput from "../atoms/InfobyteInput.svelte";
-    import InfobyteAsyncCombobox from "../atoms/InfobyteAsyncCombobox.svelte";
+    import AspectAsyncCombobox from "../atoms/AspectAsyncCombobox.svelte";
+    import FactorAsyncCombobox from "../atoms/FactorAsyncCombobox.svelte";
     import InfobyteValueCombobox from "../atoms/InfobyteValueCombobox.svelte";
 
     export let region: string;
@@ -18,7 +19,7 @@
 
 <Row>
     <Col md="6" lg="4">
-        <InfobyteAsyncCombobox
+        <AspectAsyncCombobox
             inputId={"aspect"}
             name={"Aspekt"}
             bind:value={aspect}
@@ -26,7 +27,7 @@
         />
     </Col>
     <Col md="6" lg="4">
-        <InfobyteAsyncCombobox
+        <FactorAsyncCombobox
             inputId={"factor"}
             name={"Gesichtspunkt"}
             bind:value={factor}

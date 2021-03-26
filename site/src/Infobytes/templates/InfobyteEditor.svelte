@@ -37,7 +37,9 @@
       $form.name = selectedInfobyte.name || "";
       $form.frontmatter = selectedInfobyte.frontmatter || "";
       $form._id = selectedInfobyte._id || "";
-      ($form.aspect = ""), ($form.factor = ""), ($form.difficulty = "");
+      $form.aspect = selectedInfobyte.aspect || "";
+      $form.factor = selectedInfobyte.factor || "";
+      $form.difficulty = selectedInfobyte.difficulty || 0;
     }
   }
 
@@ -52,7 +54,11 @@
   };
 
   let aspects: Promise<any[]> = fetchAspects($form.region, $form.language);
-  $: factors = fetchFactorsForAspect($form.aspect);
+  let factors: Promise<any[]>;
+
+  $: if ($form.aspect) {
+    factors = fetchFactorsForAspect($form.aspect);
+  }
 </script>
 
 <section>

@@ -37,6 +37,9 @@ export class Infobyte {
   frontmatter?: string = "";
   questions?: Question[] = [new Question()]
   infobits: any[] = [];
+  aspect: string;
+  factor: string;
+  difficulty: number;
 }
 
 declare const __frontend_env; //
