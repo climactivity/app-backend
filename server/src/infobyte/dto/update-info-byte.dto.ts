@@ -14,5 +14,6 @@ export class UpdateInfoByteDto {
     readonly aspect: string; 
     readonly factor: number;
     readonly difficulty: number;
+    readonly position: number;
 
 }

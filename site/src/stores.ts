@@ -40,6 +40,7 @@ export class Infobyte {
   aspect: string;
   factor: string;
   difficulty: number;
+  position: number;
 }
 
 declare const __frontend_env; //

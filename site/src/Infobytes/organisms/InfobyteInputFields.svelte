@@ -12,6 +12,7 @@
     export let aspect: string;
     export let factor: string;
     export let difficulty: string;
+    export let position: string; 
 
     export let aspectsPromise: Promise<[string, number?][]>;
     export let factorsPromise: Promise<[string, number?][]>;
@@ -33,6 +34,14 @@
             bind:value={factor}
             optionsPromise={factorsPromise}
         />
+    </Col>
+    <Col>
+        <InfobyteInput
+        required={true}
+        inputId={"position"}
+        name={"Position"}
+        bind:value={position}
+    />
     </Col>
 </Row>
 

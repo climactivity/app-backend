@@ -13,4 +13,5 @@ export class CreateInfoByteDto {
     readonly aspect: string; 
     readonly factor: number;
     readonly difficulty: number;
+    readonly position: number;
 }
