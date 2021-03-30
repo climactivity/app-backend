@@ -51,6 +51,9 @@ export class InfoByte {
 
     @Prop()
     difficulty: number;
+
+    @Prop()
+    position: number;
 }
 
 export const InfoByteSchema = SchemaFactory.createForClass(InfoByte)

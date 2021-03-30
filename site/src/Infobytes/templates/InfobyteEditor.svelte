@@ -40,6 +40,8 @@
       $form.aspect = selectedInfobyte.aspect || "";
       $form.factor = selectedInfobyte.factor || "";
       $form.difficulty = selectedInfobyte.difficulty || 0;
+      $form.position = selectedInfobyte.position || 0;
+
     }
   }
 
@@ -80,6 +82,7 @@
       bind:difficulty={$form.difficulty}
       bind:aspectsPromise={aspects}
       bind:factorsPromise={factors}
+      bind:position={$form.position}
     />
 
     <Label for={"published"} style="padding: 5px;">
