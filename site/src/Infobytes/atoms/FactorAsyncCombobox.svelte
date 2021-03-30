@@ -10,9 +10,9 @@
 
 <label for={inputId}>{name}</label>
 {#await optionsPromise}
-    <Input id={inputId} name={inputId} type="select" bind:value>
-        <option disabled selected value={null}> -- {name} -- </option>
-        <option disabled value={null}>Lade...</option>
+    <Input id={inputId} name={inputId} type="select" >
+        <option disabled selected > -- {name} -- </option>
+        <option disabled >Lade...</option>
     </Input>
 {:then data}
     {#if Array.isArray(data)}
@@ -24,17 +24,17 @@
                 {/each}
             </Input>
         {:else}
-            <Input id={inputId} name={inputId} type="select" bind:value>
-                <option disabled selected value={null}> -- {name} -- </option>
-                <option disabled value={null}
+            <Input id={inputId} name={inputId} type="select" >
+                <option disabled> -- {name} -- </option>
+                <option disabled 
                     >Wähle zu erst einen Aspekt!</option
                 >
             </Input>
         {/if}
     {:else}
-        <Input id={inputId} name={inputId} type="select" bind:value>
-            <option disabled selected value={null}> -- {name} -- </option>
-            <option disabled value={null}
+        <Input id={inputId} name={inputId} type="select">
+            <option disabled > -- {name} -- </option>
+            <option disabled
                 >Es gibt noch keine Gesichtspunkte!</option
             >
         </Input>
