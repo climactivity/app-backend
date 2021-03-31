@@ -29,5 +29,5 @@ export class LocalizedAspectDto {
         name: string,
         intro: string
     }[]; 
-    published: boolean;
+    readonly published: boolean;
 }

@@ -7,7 +7,8 @@ import { InfoByte } from 'src/infobyte/schemas/infobyte.schema';
 export type AspectDocument = Aspect & Document
 
 export class TrackingData {
-    options: {locale_id: string, reward: Reward, level: number, co2value?: number}[]
+    options: {locale_id: string, reward: Reward, level: number, co2value?: number, waterFactor?: number,
+    }[]
     localized_strings: TrackingDataLocalization;
 }
 

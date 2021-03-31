@@ -48,10 +48,10 @@ export class AspectService {
       var value = option.option;
       var reward = option.reward;
       var level = option.level;
-      var co2value = option.co2value ?? -1.0;
-
+      var co2value = option.co2value ?? 0.0;
+      var waterFactor = option.waterFactor ?? 0.0;
       var locale_id = `option-${index}-${createAspectForLocaleDto.forLanguage}`
-      return { locale_id, value, reward, level }
+      return { locale_id, value, reward, level, co2value, waterFactor }
     })
     return {
       bigpoint: createAspectForLocaleDto.bigpoint,
@@ -73,14 +73,14 @@ export class AspectService {
           strings: {
             question: createAspectForLocaleDto.localizedTrackingData == null ? null : createAspectForLocaleDto.localizedTrackingData.question,
             options:localizedOptions == null ? null : localizedOptions.map(localizedOption => {
-              let { locale_id, value, level } = localizedOption
-              return { locale_id, value, level }
+              let { locale_id, value, level, co2value, waterFactor } = localizedOption
+              return { locale_id, value, level, co2value, waterFactor }
             })
           }
         },
         options: localizedOptions == null ? null : localizedOptions.map(localizedOption => {
-          let { locale_id, reward, level } = localizedOption
-          return { locale_id, reward, level }
+          let { locale_id, reward, level, co2value, waterFactor  } = localizedOption
+          return { locale_id, reward, level, co2value, waterFactor}
         })
       },
       factors: createAspectForLocaleDto.localizedFactors,
@@ -147,7 +147,8 @@ export class AspectService {
               reward: option.reward,
               option: localizedTrackingData == null ? "MISSING LOCALE"  : localizedTrackingData.strings.options.find(locale => locale.locale_id == option.locale_id).value,
               level: option.level,
-              co2value: option.co2value ?? -1.0
+              co2value: option.co2value ?? 0,
+              waterFactor: option.waterFactor ?? 0
             }
           }
           )
@@ -172,7 +173,8 @@ export class AspectService {
               reward: option.reward,
               option: localizedTrackingData.strings.options.find(locale => locale.locale_id == option.locale_id).value,
               level: option.level,
-              co2value: option.co2value ?? -1.0
+              co2value: option.co2value ?? 0,
+              waterFactor: option.waterFactor ?? 0
             }
           }
           )
