@@ -31,7 +31,7 @@ export class InfoByte {
     @Prop()
     frontmatter: string;
 
-    @Prop([raw] )
+    @Prop(Array)
     infobits: Object[]
 
     @Prop([Question])

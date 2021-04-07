@@ -8,7 +8,7 @@ export class PlayerInstalls {
     @Prop()
     installs: string[]; 
 
-    @Prop()
+    @Prop({type: Object})
     cyNetworkAccount: any;
 }
 export const PlayerInstallsSchema = SchemaFactory.createForClass(PlayerInstalls)
