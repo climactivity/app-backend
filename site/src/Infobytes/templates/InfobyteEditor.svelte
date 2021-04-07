@@ -38,10 +38,13 @@
       $form.frontmatter = selectedInfobyte.frontmatter || "";
       $form._id = selectedInfobyte._id || "";
       $form.aspect = selectedInfobyte.aspect || "";
-      $form.factor = selectedInfobyte.factor || "";
+      $form.factor =
+        selectedInfobyte.factor !== null &&
+        selectedInfobyte.factor !== undefined
+          ? selectedInfobyte.factor
+          : "";
       $form.difficulty = selectedInfobyte.difficulty || 0;
       $form.position = selectedInfobyte.position || 0;
-
     }
   }
 
