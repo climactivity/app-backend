@@ -30,12 +30,12 @@
     "@nestjs/platform-ws": "^7.6.5",
     "@nestjs/schedule": "^0.4.1",
     "@nestjs/websockets": "^7.6.5",
-    "mongoose": "^5.10.15",
+    "mongoose": "^5.12.3",
+    "mquery": ">=3.2.3",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.3",
-    "uuid": "^8.3.2",
-    "mquery": ">=3.2.3"
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@nestjs/cli": "^7.5.1",
