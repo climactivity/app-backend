@@ -206,7 +206,7 @@
                         <Input
                             id="gesichtspunkt_intro"
                             type="text"
-                            placeholder="Intor"
+                            placeholder="Intro"
                             bind:value={newFactor.intro}
                         />
                         <Button
