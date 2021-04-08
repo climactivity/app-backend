@@ -27,8 +27,10 @@ export class ClientCacheService {
 
     async getDeltaUpdate(currentCacheManifestDto: CacheManifestDto) {
         let currentAspects = await this.aspectSerice.findAllLocalized(currentCacheManifestDto.lang, currentCacheManifestDto.region)
+        currentAspects = currentAspects.filter(a => a.published)
         let currentTreeTemplates = await this.treeTemplateSerice.findAll();
         let currentInfoBytes = await this.infoByteSerice.findEverything(); 
+        currentInfoBytes = currentInfoBytes.filter(i => i.published)
         return {
             "update_at": new Date().getTime(),
             "current_tree_templates": currentTreeTemplates,
