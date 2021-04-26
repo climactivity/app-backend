@@ -16,6 +16,7 @@ import { AspectModule } from './aspect/aspect.module';
 import { RewardsModule } from './rewards/rewards.module';
 import { ClientCacheModule } from './client-cache/client-cache.module';
 import { AppController } from './app.controller';
+import { QuestModule } from './quest/quest.module';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { AppController } from './app.controller';
     AspectModule,
     RewardsModule,
     ClientCacheModule,
+    QuestModule,
     ],
   controllers: [],
   providers: [],
