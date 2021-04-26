@@ -6,4 +6,5 @@ export class CreateQuestDto {
     readonly region: string; 
     readonly questLocalization?: {language: string, title: string, text: string}[]
     readonly reward: CreateRewardDto;
+    readonly published: boolean;
 }

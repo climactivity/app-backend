@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { AspectService } from 'src/aspect/aspect.service';
 import { LocalizedAspectDto } from 'src/aspect/dto/localized-aspect.dto';
 import { InfobyteService } from 'src/infobyte/infobyte.service';
+import { QuestService } from 'src/quest/quest.service';
 import { TreeTemplateService } from 'src/tree-template/tree-template.service';
 import { CacheManifestDto } from './dto/cache-manifest.dto';
 import { ChachePreflightDto } from './dto/cache-preflight.dto';
@@ -14,7 +15,7 @@ export class ClientCacheService {
         private readonly aspectSerice: AspectService,
         private readonly treeTemplateSerice: TreeTemplateService,
         private readonly infoByteSerice: InfobyteService,
-                
+        private readonly questService: QuestService   
         ) {}
 
     async getLastModification(chachePreflightDto: ChachePreflightDto) {
