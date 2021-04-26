@@ -45,7 +45,7 @@ export class Quest {
     @Prop(String)
     region: string; 
 
-    @Prop([QuestLocalization])
+    @Prop({type: QuestLocalization, default: []})
     questLocalization?: QuestLocalization[]
 
     @Prop(Reward)
@@ -54,10 +54,10 @@ export class Quest {
     @Prop(Boolean)
     published: boolean;
 
-    @Prop([ QuestAspectFilter ])
+    @Prop({type: QuestAspectFilter, default:[]})
     aspectFilter: QuestAspectFilter[]
     
-    @Prop([ QuestQuestFilter ])
+    @Prop({type: QuestQuestFilter, default:[]})
     questQuestFilter: QuestQuestFilter[]
 
 }
