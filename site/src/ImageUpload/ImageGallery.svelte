@@ -21,7 +21,7 @@
     let query = ""
 
     let offset = 0;
-    let pageSize = 10;
+    let pageSize = 20;
     let hasNext = true; 
     let hasPrev = false; 
     const fetchPage = async () => {
@@ -68,19 +68,30 @@
     }
 
     var timeout 
-    $: if (query) {
+    $: if (query !== null) {
         clearInterval(timeout);
         timeout = setTimeout(function() {
+            offset = 0;
             refetch();
          }, 300);
     };
 </script>
 
+<style>
+    .grid {
+        display: grid;
+        padding: 10px;
+        grid-template-columns: repeat( auto-fit, minmax(250px, 1fr) );
+        max-width: 100%;
+    }
+
+
+</style>
 <Row>
     <Card>
-        <CardHeader style="display: flex; align-items: center; justify-content: center;, flex-direction: row;">
-            Bilder
-            <InputGroup>
+        <CardHeader style="display: flex; align-items: center; justify-content: space-around; flex-direction: row; ">
+            Bilder Gallerie
+            <InputGroup style="max-width:300px">
                 <InputGroupAddon addonType="prepend">
                     <InputGroupText>🔎</InputGroupText>
                 </InputGroupAddon>
@@ -93,11 +104,13 @@
         
             {#await page then data}
                 {#if Array.isArray(data.data)}
-                <CardBody>
+                <CardBody >
+                    <div class="grid grid-cols">
                     {#each data.data as image}
                     
                         <ImageThumbnail {image} />
                     {/each}
+                    </div>
                 </CardBody>
                 <CardFooter>
                     <ButtonToolbar style="width: 100%;">

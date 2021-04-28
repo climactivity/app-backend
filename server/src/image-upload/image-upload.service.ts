@@ -19,8 +19,8 @@ export class ImageUploadService {
         return imageMetadata.save();   
     }
 
-    async getImages(offset, pageSize) { 
-        return this.imageModel.find({})
+    async getImages(offset, pageSize, query) { 
+        return this.imageModel.find({"title": new RegExp( query, 'i')})
             .sort({"updatedAt": -1})
             .skip(+offset)
             .limit(+pageSize)

@@ -51,7 +51,8 @@ let gallery
     </ToastBody>
     </Toast>
 </div>
-<Button on:click={toggleModal}>
+
+<Button success on:click={toggleModal} style="width: 100%">
     Bild hochladen
 </Button>
 <ImageGallery bind:this={gallery}/> 

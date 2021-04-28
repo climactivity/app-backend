@@ -36,17 +36,17 @@ import { baseUrl } from "../stores";
 
 <style>
     .thumb {
-        width: 100px;
-        height: 100px;
+        width: 200px;
+        height: 200px;
         object-fit: contain;
     }
     .row {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: space-between;
         align-items: center;
-        margin: 10px;
         padding: 10px;
+        margin-bottom: 10px;
         border: 1px;
         border-radius: 5px;
         border-color: lightgray;

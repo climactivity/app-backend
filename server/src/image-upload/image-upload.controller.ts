@@ -35,8 +35,9 @@ export class ImageUploadController {
     }
 
     @Get()
-    async getPage(@Query("offset") offset: number, @Query("pageSize") pageSize: number) {
-        const data = await this.imageUploadService.getImages(offset ?? 0, pageSize ?? 10);
+    async getPage(@Query("offset") offset: number, @Query("pageSize") pageSize: number, @Query("query") query) {
+        console.log(query)
+        const data = await this.imageUploadService.getImages(offset ?? 0, pageSize ?? 10, query);
         const count = await this.imageUploadService.countImages();
         return  {
             data, count
