@@ -12,11 +12,15 @@ export class ImageUploadService {
         @InjectModel(Image.name) private imageModel : Model<ImageDocument>
         ) {}; 
 
-    async onImageUploaded (imageFile) {
-        let imageMetadata = new this.imageModel(imageFile)
-
-        return imageMetadata.save(); 
+    async onImageUploaded (imageFile, meta) {
+        let relativeUrl = `/img/${imageFile.filename}`
+        let imageMetadata = new this.imageModel({...imageFile, ...meta, relativeUrl})
         
+        return imageMetadata.save();   
+    }
+
+    async getImages(offset, pageSize) { 
+        return this.imageModel.find({}, {},{skip: +offset, limit: +pageSize, sort: "updatedAt"}).exec();
     }
 
 }

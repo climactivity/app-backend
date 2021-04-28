@@ -1,16 +1,26 @@
 <script lang="ts">
-import {Row, Col, Card, CardBody, CardFooter, CardTitle, CardHeader, Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'sveltestrap' 
+import {Row, Col, Card, CardBody, CardFooter, CardTitle, CardHeader, Button, Modal, ModalBody, ModalFooter, ModalHeader, Input } from 'sveltestrap' 
 import { baseUrl } from '../stores';
 export let images; 
 
 let modalOpen = false;
 
+class ImageMetadata {
+    title: string = "";
+    license: string = "";
+    credit: string = "";
+
+}
+
+let imageMetadata = new ImageMetadata();
+
 const toggleModal = () => {
-    modalOpen = !modalOpen
+    modalOpen = !modalOpen;
 }
 function uploadImage() {
     const formData = new FormData();
     formData.append('file', images[0]);
+    formData.append('meta', JSON.stringify(imageMetadata)); 
     fetch(`${baseUrl}image-upload/upload`, {
         method: 'POST',
         body: formData
@@ -23,7 +33,8 @@ function uploadImage() {
 } 
 
 function reset() {
-    images = null
+    images = null;
+    imageMetadata = new ImageMetadata();
 }
 </script>
 
@@ -34,7 +45,18 @@ function reset() {
         Bild hinzufügen
     </CardHeader>
     <CardBody>
-        <input id="fileUpload" type="file" bind:files={images}>
+        <label for="fileUpload">Bild</label>
+        <input required id="fileUpload" type="file" bind:files={images}>
+       
+        <label for="titleInput">Title</label>
+        <Input required id="titleInput" name="titleInput" bind:value={imageMetadata.title} />
+       
+        <label for="licenseInput">Lizenz</label>
+        <Input required id="licenseInput" name="licenseInput" bind:value={imageMetadata.license} />
+       
+        <label for="creditInput">Urheber</label>
+        <Input required id="creditInput" name="creditInput" bind:value={imageMetadata.credit} />
+
     </CardBody>
     <CardFooter>
         <Button on:click={uploadImage}>Hochladen</Button>

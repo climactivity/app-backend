@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 
 export type ImageDocument = Image & Document
 
-@Schema({timestamps: { createdAt: 'createdAt' }})
+@Schema({timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' }})
 export class Image {
 
     @Prop()
@@ -13,22 +13,34 @@ export class Image {
     encoding: string;
 
     @Prop()
-    originalname: string 
+    originalname: string;
     
     @Prop()
-    mimetype: string
+    mimetype: string;
     
     @Prop()
-    destination: '/Users/vovin/Documents/GitHub/app-backend/site/public/img'
+    destination: string; 
     
     @Prop()
     filename: string;
 
     @Prop()
-    path: string;    
+    path: string; 
+
     @Prop()
     size: number
 
+    @Prop()
+    title: string;
+
+    @Prop()
+    license: string;
+
+    @Prop()
+    credit: string;
+
+    @Prop()
+    relativeUrl: string;
 }
 
 export const ImageSchema = SchemaFactory.createForClass(Image)

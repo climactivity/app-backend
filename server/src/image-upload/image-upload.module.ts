@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ImageUploadController } from './image-upload.controller';
 import { ImageUploadService } from './image-upload.service';
-import { join } from 'path';
+import { join, extname } from 'path';
 import { MulterModule } from "@nestjs/platform-express";
+import { diskStorage } from 'multer';
 import { Image, ImageSchema } from './schemas/image.schema';
 import { MongooseModule } from '@nestjs/mongoose';
+
 
 @Module({
   imports: [
