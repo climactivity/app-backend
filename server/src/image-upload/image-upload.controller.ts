@@ -5,16 +5,6 @@ import { ImageUploadService } from './image-upload.service';
 import { diskStorage } from 'multer';
 
 
-export const editFileName = (rq, file, callback) => {
-    const fileExtName = extname(file.originalname);
-    const salt = Array(11).fill(0).map(() => Math.round(Math.random() * 16).toString(16)).join('');
-    const name = `${salt}${fileExtName}`;
-    callback(null, name);
-};
-
-export const fileDestination = (rq, file, callback) => {
-    callback(null, join(__dirname, '../../..', 'site/public/img'))
-}
 
 @Controller('admin/image-upload')
 export class ImageUploadController {
@@ -23,12 +13,7 @@ export class ImageUploadController {
 
 
     @Post('upload')
-    @UseInterceptors(FileInterceptor('file', {
-        storage: diskStorage({
-            filename: editFileName,
-            destination: fileDestination
-        })
-    }))
+    @UseInterceptors(FileInterceptor('file'))
     async uploadFile(@UploadedFile() file, @Body("meta") meta) {
         const savedMetaData = await this.imageUploadService.onImageUploaded(file, JSON.parse(meta))
         return savedMetaData;
