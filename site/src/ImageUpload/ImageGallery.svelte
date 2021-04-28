@@ -12,19 +12,24 @@
         ModalBody,
         ModalFooter,
         ModalHeader,
-        Input,
+        Input, InputGroup, InputGroupAddon, InputGroupText,
+        ButtonGroup,
+        ButtonToolbar,
     } from "sveltestrap";
     import { baseUrl } from "../stores";
     import ImageThumbnail from "./ImageThumbnail.svelte";
+    let query = ""
 
     let offset = 0;
     let pageSize = 10;
-
+    let hasNext = true; 
+    let hasPrev = false; 
     const fetchPage = async () => {
         const response = await fetch(
             `${baseUrl}image-upload?${new URLSearchParams({
                 offset: offset + "",
                 pageSize: pageSize + "",
+                query: query
             })}`,
             {
                 credentials: "include",
@@ -33,23 +38,84 @@
         return await response.json();
     };
 
-    let page: Promise<any> = fetchPage()
+
+    export const refetch = () => {
+        page = fetchPage()
+    }
+
+    let page: Promise<any> = fetchPage();
+    const nextPage = async () => {
+        const {count} = await page
+        offset = Math.min(count, offset +pageSize);
+        refetch()
+    };
+    const prevPage = () => {
+        offset = Math.max(0, offset - pageSize);
+        refetch()
+    };
+    const firstPage = () => {
+        offset = 0;
+        refetch()
+    };
+    const lastPage = () => {
+        offset = 0;
+        refetch()
+    };
+
+    const setPage = (pageNum) => {
+        offset = pageNum * pageSize
+        refetch()
+    }
+
+    var timeout 
+    $: if (query) {
+        clearInterval(timeout);
+        timeout = setTimeout(function() {
+            refetch();
+         }, 300);
+    };
 </script>
 
 <Row>
     <Card>
-        <CardHeader>Bilder</CardHeader>
-        <CardBody>
+        <CardHeader style="display: flex; align-items: center; justify-content: center;, flex-direction: row;">
+            Bilder
+            <InputGroup>
+                <InputGroupAddon addonType="prepend">
+                    <InputGroupText>🔎</InputGroupText>
+                </InputGroupAddon>
+                <Input
+                    placeholder="Suchbegriff"
+                    bind:value={query}
+                />
+            </InputGroup>
+    </CardHeader>
+        
             {#await page then data}
-                {#if Array.isArray(data)}
-                    {#each data as image}
+                {#if Array.isArray(data.data)}
+                <CardBody>
+                    {#each data.data as image}
+                    
                         <ImageThumbnail {image} />
                     {/each}
+                </CardBody>
+                <CardFooter>
+                    <ButtonToolbar style="width: 100%;">
+                        <Button on:click={firstPage} disabled={offset == 0}>&lt;&lt;</Button>
+                        <Button on:click={prevPage} disabled={offset == 0}>&lt;</Button>
+                        {#each Array(Math.ceil(data.count / pageSize)) as _, pageNum }
+                            <Button outline on:click={() => setPage(pageNum)}> {pageNum+1} </Button>
+                        {/each}
+                        <Button on:click={nextPage} disabled={offset + pageSize >= data.count}>&gt;</Button>
+                        <Button on:click={lastPage} disabled={offset + pageSize >= data.count}>&gt;&gt;</Button>
+                    </ButtonToolbar>
+                    {offset +1} bis {Math.min(offset + pageSize, data.count)} von {data.count} Bilder(n) insgesammt
+                </CardFooter>
+    
                 {:else}
-                    <div>Ein Fehler ist Aufgetreten: {data}!</div>
+                    <CardBody>Ein Fehler ist Aufgetreten: {data}!</CardBody>
                 {/if}
+    
             {/await}
-        </CardBody>
-        <CardFooter />
     </Card>
 </Row>

@@ -20,7 +20,16 @@ export class ImageUploadService {
     }
 
     async getImages(offset, pageSize) { 
-        return this.imageModel.find({}, {},{skip: +offset, limit: +pageSize, sort: "updatedAt"}).exec();
+        return this.imageModel.find({})
+            .sort({"updatedAt": -1})
+            .skip(+offset)
+            .limit(+pageSize)
+            .exec();
     }
+
+    async countImages() {
+        return this.imageModel.count().exec()
+    }
+
 
 }

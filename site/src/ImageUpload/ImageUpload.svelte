@@ -1,8 +1,8 @@
 <script lang="ts">
-import {Row, Col, Card, CardBody, CardFooter, CardTitle, CardHeader, Button, Modal, ModalBody, ModalFooter, ModalHeader, Input } from 'sveltestrap' 
+import {Row, Col, Card, CardBody, CardFooter, CardTitle, CardHeader, Button, Modal, ModalBody, ModalFooter, ModalHeader, Input, ButtonGroup } from 'sveltestrap' 
 import { baseUrl } from '../stores';
 export let images; 
-
+export let imageUploadedCallback
 let modalOpen = false;
 
 class ImageMetadata {
@@ -27,7 +27,10 @@ function uploadImage() {
     }).then(res => {
         console.log(res);
         if (+status <= 400) {
-            toggleModal()
+            //toggleModal()
+            if (imageUploadedCallback !== null) {
+                imageUploadedCallback()
+            }
         } 
     })
 } 
@@ -39,40 +42,21 @@ function reset() {
 </script>
 
 
-<Row>
-<Card>
-    <CardHeader>
-        Bild hinzufügen
-    </CardHeader>
-    <CardBody>
-        <label for="fileUpload">Bild</label>
-        <input required id="fileUpload" type="file" bind:files={images}>
-       
-        <label for="titleInput">Title</label>
-        <Input required id="titleInput" name="titleInput" bind:value={imageMetadata.title} />
-       
-        <label for="licenseInput">Lizenz</label>
-        <Input required id="licenseInput" name="licenseInput" bind:value={imageMetadata.license} />
-       
-        <label for="creditInput">Urheber</label>
-        <Input required id="creditInput" name="creditInput" bind:value={imageMetadata.credit} />
 
-    </CardBody>
-    <CardFooter>
-        <Button on:click={uploadImage}>Hochladen</Button>
-        <Button on:click={reset}>Zurücksetzen</Button>
-    </CardFooter>
-</Card>
-</Row>
+<label for="fileUpload">Bild</label>
+<input required id="fileUpload" type="file" bind:files={images}>
 
-<Modal isOpen={modalOpen} {toggleModal} transitionOptions>
-    <ModalHeader>Das Bild wurde gespeichert!</ModalHeader>
-    <!-- <ModalBody>
-      Das Frage konnte erfolgreich gelöscht werden. Aktuell ist es hilfreich die
-      Anwendung neu zu laden um sicher zu gehen dass auch wirklich alles richtig
-      gespeichert wurde.
-    </ModalBody> -->
-    <ModalFooter>
-      <Button color="danger" on:click={toggleModal}>Schließen</Button>
-    </ModalFooter>
-  </Modal>
+<label for="titleInput">Title</label>
+<Input required id="titleInput" name="titleInput" bind:value={imageMetadata.title} />
+
+<label for="licenseInput">Lizenz</label>
+<Input required id="licenseInput" name="licenseInput" bind:value={imageMetadata.license} />
+
+<label for="creditInput">Urheber</label>
+<Input required id="creditInput" name="creditInput" bind:value={imageMetadata.credit} />
+<Col xs="6">
+<Button on:click={uploadImage}>Hochladen</Button>
+</Col>
+<!-- <Col xs="6">
+<Button on:click={reset}>Zurücksetzen</Button>
+</Col> -->
