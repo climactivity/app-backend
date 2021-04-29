@@ -18,6 +18,13 @@ const imageUploadedCallback = () => {
     }
 }
 
+const imageModifiedCallback = () => {
+    if (gallery) {
+        gallery.refetch()
+    }
+}
+
+
 let showToast = false
 
 const flashToast = (duration) => {
@@ -55,7 +62,7 @@ let gallery
 <Button success on:click={toggleModal} style="width: 100%">
     Bild hochladen
 </Button>
-<ImageGallery bind:this={gallery}/> 
+<ImageGallery bind:this={gallery} imageModifiedCallback={imageModifiedCallback}/> 
 
 
 <Modal isOpen={modalOpen} {toggleModal} transitionOptions>

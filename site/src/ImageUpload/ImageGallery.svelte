@@ -38,7 +38,7 @@
         return await response.json();
     };
 
-
+    export let imageModifiedCallback : Function
     export const refetch = () => {
         page = fetchPage()
     }
@@ -108,7 +108,7 @@
                     <div class="grid grid-cols">
                     {#each data.data as image}
                     
-                        <ImageThumbnail {image} />
+                        <ImageThumbnail {image} imageModifiedCallback={imageModifiedCallback}/>
                     {/each}
                     </div>
                 </CardBody>

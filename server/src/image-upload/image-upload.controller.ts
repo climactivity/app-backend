@@ -1,15 +1,17 @@
-import { Controller, UploadedFile, Post, UseInterceptors, Get, Query, Body } from '@nestjs/common';
+import { Controller, UploadedFile, Post, UseInterceptors, Get, Query, Body, Delete, Param, Logger } from '@nestjs/common';
 import { FileInterceptor } from "@nestjs/platform-express"
-import { extname, join } from 'path';
 import { ImageUploadService } from './image-upload.service';
-import { diskStorage } from 'multer';
 
 
 
 @Controller('admin/image-upload')
 export class ImageUploadController {
 
-    constructor(private readonly imageUploadService: ImageUploadService) { }
+
+
+    constructor(
+        private readonly imageUploadService: ImageUploadService
+        ) { }
 
 
     @Post('upload')
@@ -27,5 +29,10 @@ export class ImageUploadController {
         return  {
             data, count
         }
+    }
+
+    @Delete('delete/:id')
+    async deleteImage(@Param('id') id: string) {
+        return this.imageUploadService.deleteImage(id); 
     }
 }
