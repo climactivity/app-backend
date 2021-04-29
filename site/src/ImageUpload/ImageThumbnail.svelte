@@ -5,6 +5,9 @@ import { baseUrl } from "../stores";
 </script>
 
 <div class="container">
+    <div>
+        <button>X</button>
+    </div>
     <div class="row">
         <div class="row-item">
             <a href={image.relativeUrl} target="_blank">
@@ -18,7 +21,7 @@ import { baseUrl } from "../stores";
         <div class="row-item">
             <button
                 on:click={(e) => {
-                    navigator.clipboard.writeText(`${baseUrl.slice(0, -1)}${image.relativeUrl}`).then(
+                    navigator.clipboard.writeText(`${window.location.protocol}//${window.location.host}${image.relativeUrl}`).then(
                         function () {
                             console.log(
                                 `${baseUrl.slice(0, -1)}${image.relativeUrl}`
