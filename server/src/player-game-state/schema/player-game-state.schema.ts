@@ -21,8 +21,14 @@ export class PlayerGameState {
     @Prop()
     inventory: PlayerInventory;
 
-    @Prop()
-    boardState: BoardState;
+    @Prop({type: Object})
+    board_entites: any;
+   
+    @Prop({type: Object}) 
+    tracking_states: any; 
+
+    @Prop({type: Object})
+    tracking_updates: any[];
 }
 
 export const PlayerGameStateSchema = SchemaFactory.createForClass(PlayerGameState)

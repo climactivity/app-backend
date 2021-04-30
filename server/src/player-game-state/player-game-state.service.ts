@@ -41,7 +41,6 @@ export class PlayerGameStateService {
                 xp: 0,
                 level: 1,
             }).save(),
-            boardState: {entities: []}
         }).save())
         
     }
@@ -71,23 +70,6 @@ export class PlayerGameStateService {
 
         throw new Error('Method not implemented.');
     }
-    async createBoardEntityForDevice(install_id: any, createBoardEntityDto: CreateBoardEntityDto) {
-        const playerGameState = await this.getPlayerStateForInstallId(install_id);
-        if(playerGameState == null) return "NO_PLAYER_RECORD"
-        let boardEntity = await new this.BoardEntityModel({...createBoardEntityDto}).save()
-        playerGameState.boardState.entities.push(boardEntity)
-        return this.playerGameStateToBoardStateDto((await playerGameState.save()).boardState)
-    }
-    async findInventoryForDevice(install_id: any): Promise<InventoryStateDto|string> {
-        const playerGameState = await this.getPlayerStateForInstallId(install_id);
-        if(playerGameState == null) return "NO_PLAYER_RECORD"
-        return this.inventoryToDto(playerGameState.inventory) 
-    }
-    async findBoardStateForDevice(install_id: any): Promise<PlayerBoardStateDto|string> {
-        const playerGameState = await this.getPlayerStateForInstallId(install_id);
-        if(playerGameState == null) return "NO_PLAYER_RECORD"
-        return this.playerGameStateToBoardStateDto(playerGameState.boardState) 
-    }
 
     async findPlayerStateByInstallId(install_id: string): Promise<PlayerGameStateDto|string> {
         const playerGameState = await this.getPlayerStateForInstallId(install_id);
@@ -103,6 +85,14 @@ export class PlayerGameStateService {
         const playerId : PlayerInstalls = await this.getPlayerForInstallId(install_id); 
         if(!playerId) return null
         return this.PlayerGameStateModel.findOne({playerInstalls: playerId}).exec();
+
+    }
+
+    async syncPlayerState(install_id, player_state) {
+        const playerStaterRecord = await this.getPlayerStateForInstallId(install_id); 
+        if(!playerStaterRecord) return null
+        console.log(playerStaterRecord)
+        return playerStaterRecord.update(player_state).exec()
 
     }
 
