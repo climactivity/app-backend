@@ -17,6 +17,11 @@ services:
       - backend
     ports:
       - 8080:80
+    environment: 
+      LOCALIZATION_LINK: ${LOCALIZATION_LINK}
+     env_file:
+       - .env
+    
 
   backend:
     build: ./server
