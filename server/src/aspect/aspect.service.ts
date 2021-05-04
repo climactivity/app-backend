@@ -121,8 +121,6 @@ export class AspectService {
   }
 
   localizeAspect(aspect, lang: string, region: string): LocalizedAspectDto {
-    console.log(aspect.localizedStrings)
-
     let aspectLocalizedStrings = aspect.localizedStrings.find(ls => ls.language == lang);
     let localizedTrackingData = aspect.trackingData.localized_strings
     let error = (!aspectLocalizedStrings || !aspectLocalizedStrings.strings || !localizedTrackingData) ? `Aspect not localized to ${lang} in ${region}!` : ""
