@@ -8,8 +8,6 @@ import { Quest, QuestDocument } from './schema/quest.schema';
 @Injectable()
 export class QuestService {
 
-
-  private readonly logger = new Logger(QuestService.name);
   constructor(
     @InjectModel(Quest.name) private questModel : Model<QuestDocument>
     ) {}

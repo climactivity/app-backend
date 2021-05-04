@@ -42,6 +42,9 @@ export class Quest {
     @Prop(Date)
     maxDuration: Date;
 
+    @Prop(Date)
+    startDate: Date;
+
     @Prop(String)
     region: string; 
 
@@ -49,7 +52,7 @@ export class Quest {
     questLocalization?: QuestLocalization[]
 
     @Prop(Reward)
-    reward: Reward;
+    baseReward: Reward;
 
     @Prop(Boolean)
     published: boolean;
@@ -60,6 +63,11 @@ export class Quest {
     @Prop({type: QuestQuestFilter, default:[]})
     questQuestFilter: QuestQuestFilter[]
 
+    @Prop()
+    alertTrackedApect: string; 
+
+    @Prop()
+    linkToAfter: string; 
 }
 
 
