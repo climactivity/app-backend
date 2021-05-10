@@ -11,8 +11,8 @@
     } from "sveltestrap";
 import RewardDisplayer from "../Rewards/RewardDisplayer.svelte";
     import { baseUrl } from "../stores";
-    export let image;
-
+    export let image: any;
+    export let select; 
     export let imageModifiedCallback: Function;
     let modalOpen = false;
 
@@ -59,6 +59,11 @@ import RewardDisplayer from "../Rewards/RewardDisplayer.svelte";
         <div class="row-item">
             <button
                 on:click={(e) => {
+                    if (select) {
+                        console.log(select)
+                        select(image); 
+                        return
+                    }
                     navigator.clipboard
                         .writeText(
                             `${window.location.protocol}//${window.location.host}${image.relativeUrl}`

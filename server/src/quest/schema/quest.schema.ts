@@ -5,19 +5,6 @@ import { Reward } from 'src/rewards/schemas/reward.schema';
 
 export type QuestDocument = Quest & Document;
 
-export class QuestLocalization {
-
-    @Prop(String)
-    language: string 
-
-    @Prop(String)
-    title: string
-
-    @Prop(String)
-    text: string
-
-}
-
 export const enum FillterType {
     "REQURIED", "EXCLUDED", "PREFERED" 
 }
@@ -40,7 +27,7 @@ export class Quest {
     deadline: Date;
 
     @Prop(Date)
-    maxDuration: Date;
+    maxDuration: number;
 
     @Prop(Date)
     startDate: Date;
@@ -48,9 +35,18 @@ export class Quest {
     @Prop(String)
     region: string; 
 
-    @Prop({type: QuestLocalization, default: []})
-    questLocalization?: QuestLocalization[]
+    @Prop()
+    language: string;
 
+    @Prop(String)
+    title: string; 
+
+    @Prop({type: Object})
+    text: any; 
+
+    @Prop()
+    altIcon: string; 
+    
     @Prop(Reward)
     baseReward: Reward;
 
@@ -68,6 +64,7 @@ export class Quest {
 
     @Prop()
     linkToAfter: string; 
+
 }
 
 

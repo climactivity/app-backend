@@ -14,24 +14,23 @@ export class QuestQuestFilter {
     filterType: FillterType
     questId: String
 }
-export class QuestLocalization {
-    language: string
-    title: string
-     text: string
-}
-export class QuestDto {
 
+export class QuestDto {
+    _id?: string;
     deadline: string;
     maxDuration: string;
     startDate: string;
     region: string; 
-    questLocalization: QuestLocalization[] = []
+    language: string
+    title: string
+    text: any;
     baseReward: Reward;
     published: boolean;
     questAspectFilter: QuestAspectFilter[] = []; 
     questQuestFilter: QuestQuestFilter[] = [];
+    questFollowup: string; // immediately following quest
     alertTrackedAspect: string; // affected aspect _id field
     linkToAfter: string; 
-    
-    }
+    altIcon: string;
+}
     

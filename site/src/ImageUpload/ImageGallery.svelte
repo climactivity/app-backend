@@ -21,7 +21,7 @@
     let query = ""
 
     let offset = 0;
-    let pageSize = 20;
+    export let pageSize = 20;
     let hasNext = true; 
     let hasPrev = false; 
     const fetchPage = async () => {
@@ -37,7 +37,7 @@
         );
         return await response.json();
     };
-
+    export let select;
     export let imageModifiedCallback : Function
     export const refetch = () => {
         page = fetchPage()
@@ -108,7 +108,7 @@
                     <div class="grid grid-cols">
                     {#each data.data as image}
                     
-                        <ImageThumbnail {image} imageModifiedCallback={imageModifiedCallback}/>
+                        <ImageThumbnail {image} imageModifiedCallback={imageModifiedCallback} select={select}/>
                     {/each}
                     </div>
                 </CardBody>
