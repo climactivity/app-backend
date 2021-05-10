@@ -9,12 +9,12 @@
 
 <label for={inputId}>{name}</label>
 {#await optionsPromise}
-<Spinner info />
+<Spinner />
 {:then data}
     <Input id={inputId} name={inputId} type="select" bind:value>
         <option disabled selected value={null}> -- {name} -- </option>
         {#each data as aspect}
-            <option value={aspect._id}>{aspect.name}</option>
+            <option value={aspect._id}>{aspect.name ?? aspect.title ?? aspect._id}</option>
         {/each}
     </Input>
     {:catch error}

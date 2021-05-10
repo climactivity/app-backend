@@ -20,7 +20,12 @@ const questModifiedCallback = () => {
     }
 }
 
-
+const questSelected = (quest) => {
+    currentQuest = {...currentQuest, ...quest};
+    if (currentQuest) {
+        modalOpen = true
+    }
+} 
 
 let showToast = false
 
@@ -36,11 +41,8 @@ const flashToast = (duration) => {
 <div class={showToast ? "p-3 mb-3 absolute" : "hidden absolute"} >
     <Toast class="mr-1" success isOpen={showToast}>
       <ToastHeader>
-        📸 Bild hochgeladen!
+        Aufgabe hochgeladen!
         </ToastHeader>
-      <ToastBody>
-        Dein Bild ist jetzt hochgeladen! Kopier den Permalink mit dem Button in der Gallery!
-    </ToastBody>
     </Toast>
 </div>
 
@@ -51,11 +53,11 @@ const flashToast = (duration) => {
             Aufgabe erstellen
         </Button>
             
-        <QuestList bind:this={questList} questModifiedCallback/>
+        <QuestList bind:this={questList} questModifiedCallback={questModifiedCallback} questSelectedCallback={questSelected}/>
     </Col>
     {#if modalOpen}
     <Col xs="12" md="9">
-        <QuestEdit questModifiedCallback quest={currentQuest}/>
+        <QuestEdit questModifiedCallback={questModifiedCallback} quest={currentQuest}/>
     </Col>
     {/if}    
 </Row>

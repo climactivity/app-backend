@@ -1,18 +1,18 @@
 import type { Reward } from "../Rewards/RewardTypes";
 
-export const enum FillterType {
+export const enum FilterType {
     "REQURIED", "EXCLUDED", "PREFERED" 
 }
 
 export class QuestAspectFilter {
-    filterType: FillterType
-    aspectId: String
+    filterType: FilterType = FilterType.EXCLUDED
+    aspectId: string
     trackingLevel: Number
 }
 
 export class QuestQuestFilter {
-    filterType: FillterType
-    questId: String
+    filterType: FilterType = FilterType.EXCLUDED
+    questId: string
 }
 
 export class QuestDto {

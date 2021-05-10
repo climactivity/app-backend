@@ -35,7 +35,7 @@ export class Quest {
     @Prop(String)
     region: string; 
 
-    @Prop()
+    @Prop(String)
     language: string;
 
     @Prop(String)
@@ -44,7 +44,7 @@ export class Quest {
     @Prop({type: Object})
     text: any; 
 
-    @Prop()
+    @Prop(String)
     altIcon: string; 
     
     @Prop(Reward)
@@ -59,10 +59,10 @@ export class Quest {
     @Prop({type: QuestQuestFilter, default:[]})
     questQuestFilter: QuestQuestFilter[]
 
-    @Prop()
+    @Prop(String)
     alertTrackedApect: string; 
 
-    @Prop()
+    @Prop(String)
     linkToAfter: string; 
 
 }

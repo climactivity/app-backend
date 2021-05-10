@@ -4,10 +4,11 @@ import { Model } from 'mongoose';
 import { CreateQuestDto } from './dto/create-quest.dto';
 import { UpdateQuestDto } from './dto/update-quest.dto';
 import { Quest, QuestDocument } from './schema/quest.schema';
-
+import * as mongoose from 'mongoose';
 @Injectable()
 export class QuestService {
 
+  logger = new Logger(QuestService.name)
   constructor(
     @InjectModel(Quest.name) private questModel : Model<QuestDocument>
     ) {}
