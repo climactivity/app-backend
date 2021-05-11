@@ -25,12 +25,14 @@ export class QuestDto {
     title: string
     text: any;
     baseReward: Reward;
-    published: boolean;
+    published: boolean = false;
     questAspectFilter: QuestAspectFilter[] = []; 
     questQuestFilter: QuestQuestFilter[] = [];
     questFollowup: string; // immediately following quest
     alertTrackedAspect: string; // affected aspect _id field
     linkToAfter: string; 
     altIcon: string;
+    userSelectable: boolean = true;
+
 }
     
