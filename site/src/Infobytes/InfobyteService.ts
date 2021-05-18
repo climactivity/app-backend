@@ -1,4 +1,5 @@
 import { baseUrl, Infobyte } from "../stores";
+import type { infobyteIdentifier } from "./particles/Infobyte";
 
 export const getInfobyte = async (id: string): Promise<Infobyte> => {
     if (!id) return;
@@ -10,11 +11,11 @@ export const getInfobyte = async (id: string): Promise<Infobyte> => {
     return infobyte;
 };
 
-export const getInfobytes = async (): Promise<Infobyte[]> => {
+export const getInfobytes = async (): Promise<infobyteIdentifier[]> => {
 
     const response = fetch(`${baseUrl}infobyte`, { credentials: "include", })
         .then(data => data.json())
-        .then(json => json as Infobyte[])
+        .then(json => json as infobyteIdentifier[])
 
     return response;
 };
