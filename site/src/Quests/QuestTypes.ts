@@ -1,4 +1,4 @@
-import type { Reward } from "../Rewards/RewardTypes";
+import { Reward } from "../Rewards/RewardTypes";
 
 export const enum FilterType {
     "REQURIED", "EXCLUDED", "PREFERED" 
@@ -33,6 +33,6 @@ export class QuestDto {
     linkToAfter: string; 
     altIcon: string;
     userSelectable: boolean = true;
-
+    reward: Reward = new Reward();
 }
     
