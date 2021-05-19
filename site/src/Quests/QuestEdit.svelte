@@ -21,6 +21,7 @@
     } from "./QuestTypes";
     import RichtTextEditor from "../RichtTextEditor.svelte";
     import ImagePicker from "../ImageUpload/ImagePicker.svelte";
+import RewardForm from "../Rewards/RewardForm.svelte";
     export let questModifiedCallback;
 
     export let quest: QuestDto;
@@ -357,6 +358,18 @@
                 </Button>
             </CardFooter>
         </Card>
+
+        <RewardForm reward={quest.reward}/>
+
+        <Label for={"userSelectable"} style="padding: 5px;">
+            <Input
+                class="checkbox"
+                type="checkbox"
+                name={"userSelectable"}
+                bind:checked={quest.userSelectable}
+            />
+            Kann ausgewählt werden
+        </Label>
 
         <Label for={"published"} style="padding: 5px;">
             <Input

@@ -1,4 +1,5 @@
 import { CreateRewardDto } from "src/rewards/dto/create-reward.dto";
+import { Reward } from "src/rewards/schemas/reward.schema";
 import { QuestAspectFilter, QuestQuestFilter } from "../schema/quest.schema";
  
 export class CreateQuestDto {
@@ -17,4 +18,7 @@ export class CreateQuestDto {
     readonly alertTrackedAspect: string; // affected aspect _id field
     readonly linkToAfter: string; 
     readonly altIcon: string;
+    readonly userSelectable: boolean;
+    readonly reward: Reward;
+
 }

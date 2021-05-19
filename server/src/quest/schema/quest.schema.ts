@@ -60,10 +60,16 @@ export class Quest {
     questQuestFilter: QuestQuestFilter[]
 
     @Prop(String)
-    alertTrackedApect: string; 
+    alertTrackedAspect: string; 
 
     @Prop(String)
     linkToAfter: string; 
+
+    @Prop()
+    userSelectable: boolean;
+
+    @Prop(Reward)
+    reward: Reward;
 
 }
 

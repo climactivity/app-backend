@@ -91,7 +91,7 @@ export class PlayerGameStateService {
     async syncPlayerState(install_id, player_state) {
         const playerStaterRecord = await this.getPlayerStateForInstallId(install_id); 
         if(!playerStaterRecord) return null
-        console.log(playerStaterRecord)
+        // console.log(playerStaterRecord)
         return playerStaterRecord.update(player_state).exec()
 
     }

@@ -32,11 +32,16 @@ export class ClientCacheService {
         let currentTreeTemplates = await this.treeTemplateSerice.findAll();
         let currentInfoBytes = await this.infoByteSerice.findEverything(); 
         currentInfoBytes = currentInfoBytes.filter(i => i.published)
+        let current_quests = await this.questService.findAll();
+        current_quests = current_quests.filter(i => i.published); 
+        console.log(current_quests)
+
         return {
             "update_at": new Date().getTime(),
             "current_tree_templates": currentTreeTemplates,
             "current_aspects": currentAspects,
-            "current_infobytes": currentInfoBytes
+            "current_infobytes": currentInfoBytes,
+            "current_user_selecable_quests": current_quests
         }
     }
 
