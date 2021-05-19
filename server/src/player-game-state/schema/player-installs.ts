@@ -5,6 +5,9 @@ export type PlayerInstallsDocument = PlayerInstalls & Document
 
 @Schema()
 export class PlayerInstalls {
+
+    _id: string; 
+    
     @Prop()
     installs: string[]; 
 

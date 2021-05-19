@@ -12,8 +12,10 @@
     } from "sveltestrap";
     import AspectView from "./Aspects/AspectView.svelte";
     import InfobytePage from "./Infobytes/InfobytePage.svelte";
+    import MediaPage from './ImageUpload/MediaPage.svelte';
     import MyNavLink from "./MyNavLink.svelte";
     import TreeTemplateView from "./TreeTemplates/TreeTemplateView.svelte";
+import QuestsPage from "./Quests/QuestsPage.svelte";
 
     let tabs = [
         { target: "health", name: "Health", disabled: true },
@@ -22,7 +24,8 @@
         { target: "baeume", name: "Bäume" },
         { target: "aspects", name: "Aspekte" },
         { target: "infobytes", name: "Infobytes" },
-        { target: "tasks", name: "Aufgaben", disabled: true },
+        { target: "media", name: "Medien" },
+        { target: "quests", name: "Aufgaben", disabled: false },
         { target: "danger-zone", name: "Danger Zone", disabled: true },
     ];
 
@@ -81,6 +84,7 @@
                 {/each}
             </Nav>
         </Collapse>
+
         <NavItem>
             <NavLink>Abmelden</NavLink>
         </NavItem>
@@ -93,6 +97,11 @@
         <AspectView />
     {:else if activeTab === "infobytes"}
         <InfobytePage />
+    {:else if activeTab === "media"}
+        <MediaPage />
+    {:else if activeTab === "quests"}
+        <QuestsPage />
+
     {/if}
 </main>
 

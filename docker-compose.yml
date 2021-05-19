@@ -10,12 +10,18 @@ services:
     restart: always
     volumes:
       - ./log_frontend:/var/log/nginx
+      - ./img:/var/img
     networks:
       - main
     depends_on:
       - backend
     ports:
       - 8080:80
+    environment: 
+      LOCALIZATION_LINK: ${LOCALIZATION_LINK}
+     env_file:
+       - .env
+    
 
   backend:
     build: ./server
@@ -23,6 +29,7 @@ services:
     restart: always
     volumes:
       - ./log_backend:/var/log
+      - ./img:/var/img
     links:
       - db
     networks:
@@ -33,12 +40,13 @@ services:
       SERVE_STATIC: "false"
       DB_HOST: db
       DB_PORT: 27017
+      IMG_DIR: /var/img
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
       MONGODB_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
       MONGODB_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
       MONGODB_DATABASE: ${MONGO_INITDB_DATABASE}
-#    env_file:
+#    env_file: 
 #      - .env
 
   db: 
@@ -61,10 +69,11 @@ services:
       - ./mongoshell:/home/mongodb/
     networks:
       - main
+
 volumes:
   mongoconfig: {}
   mongoshell: {}
-
+  
 networks:
   main:
     driver: bridge

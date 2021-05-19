@@ -3,16 +3,44 @@ import { Document } from 'mongoose';
 
 export type ImageDocument = Image & Document
 
-@Schema()
+@Schema({timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' }})
 export class Image {
-    @Prop()
-    filePath: string;
 
     @Prop()
     url: string;
+
+    @Prop()
+    encoding: string;
+
+    @Prop()
+    originalname: string;
     
     @Prop()
-    createdAt: Date;
+    mimetype: string;
+    
+    @Prop()
+    destination: string; 
+    
+    @Prop()
+    filename: string;
+
+    @Prop()
+    path: string; 
+
+    @Prop()
+    size: number
+
+    @Prop()
+    title: string;
+
+    @Prop()
+    license: string;
+
+    @Prop()
+    credit: string;
+
+    @Prop()
+    relativeUrl: string;
 }
 
 export const ImageSchema = SchemaFactory.createForClass(Image)

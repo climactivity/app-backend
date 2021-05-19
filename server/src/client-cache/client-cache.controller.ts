@@ -10,13 +10,13 @@ export class ClientCacheController {
     private logger = new  Logger(ClientCacheController.name)
     @Post()
     checkIsCurrent(@Body() chachePreflightDto: ChachePreflightDto) {
-        this.logger.verbose(chachePreflightDto)
+        //this.logger.verbose(chachePreflightDto)
         return this.clientCacheService.getLastModification(chachePreflightDto)
     }
 
     @Post('/update')
     checkForContentUpdate(@Body() currentCacheManifestDto: CacheManifestDto) {
-        this.logger.verbose(currentCacheManifestDto)
+        //this.logger.verbose(currentCacheManifestDto)
         return this.clientCacheService.getDeltaUpdate(currentCacheManifestDto)
     }
 

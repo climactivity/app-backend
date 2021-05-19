@@ -1,5 +1,8 @@
 /node_modules/
 /public/build/
+/public/img/*
+!/public/img/404.png
+!/public/img/logo.png
 
 .DS_Store
 .vscode
