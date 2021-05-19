@@ -5,6 +5,12 @@
   const newInfobyte = () => {
     currentInfobyte.set(new Infobyte());
   };
+
+  export let small = false;
+
+  let title = small ? "+" : "Infobyte erstellen";
 </script>
 
-<Button color="success" on:click={newInfobyte}>Infobyte erstellen</Button>
+<Button style={"min-width: 20px"} color="success" on:click={newInfobyte}
+  >{title}
+</Button>

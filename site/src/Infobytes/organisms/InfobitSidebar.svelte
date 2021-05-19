@@ -1,11 +1,11 @@
 <script lang="ts">
   import type { Infobit } from "../../stores";
   import InfobitSelectionList from "../molecules/InfobitSelectionList.svelte";
-  import MasterInfobyteHeader from "../molecules/MasterInfobyteHeader.svelte";
+  import SidebarTitleHeader from "../molecules/SidebarTitleHeader.svelte";
 
   export let infobits: Infobit[];
 </script>
 
-<MasterInfobyteHeader title={"Infobits:"} />
+<SidebarTitleHeader title={"Infobits:"} />
 
 <InfobitSelectionList {infobits} />

@@ -14,9 +14,13 @@
         Card,
         Form,
         ButtonGroup,
-        Table,Spinner 
+        Table,
+        Spinner,
     } from "sveltestrap";
-    import { NotificationDisplay, notifier } from '@beyonk/svelte-notifications'
+    import {
+        NotificationDisplay,
+        notifier,
+    } from "@beyonk/svelte-notifications";
     import { Confirm } from "svelte-confirm";
     import type Aspect from "./AspectTypes";
     import { createEventDispatcher } from "svelte";
@@ -33,7 +37,7 @@
         intro: "",
     };
     const dispatch = createEventDispatcher();
-    let waiting = false
+    let waiting = false;
     function handleDelete() {
         dispatch("deleteAspect", {
             aspect: aspect,
@@ -54,7 +58,6 @@
         waterFactor: 0.0,
     };
 </script>
-
 
 <Row>
     <Col xs="auto">
@@ -159,82 +162,105 @@
                 <Col>
                     <h5 class="mt-3">Gesichtspunkte</h5>
 
-                <Card body>
-                    <Label>Gesichtspunkte</Label>
-                    <Table>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Intro</th>
-                            <th>-</th>
-                        </tr>
-                        {#each aspect.localizedFactors == null ? [] : aspect.localizedFactors as factor}
-                            <tr>
-                                <th>{factor.id}</th>
-                                <td>{factor.name}</td>
-                                <td>{factor.intro}</td>
-                                <td
-                                    ><Button
-                                        danger
-                                        on:click={(e) => {
-                                            e.preventDefault();
-                                            aspect.localizedFactors = aspect.localizedFactors.filter(
-                                                (f) => f.id !== factor.id
-                                            );
-                                            aspect.localizedFactors = aspect.localizedFactors.map(
-                                                (f, i) => {
-                                                    f.id = i;
-                                                    return f;
-                                                }
-                                            );
-                                        }}>-</Button
-                                    ></td
-                                >
-                            </tr>
-                        {/each}
-                    </Table>
-                    <Label>Gesichtspunkt hinzufügen</Label>
                     <Card body>
-                        <Label for="gesichtspunkt_name">Name</Label>
-                        <Input
-                            id="gesichtspunkt_name"
-                            type="text"
-                            placeholder="Name"
-                            bind:value={newFactor.name}
-                        />
-                        <Label for="gesichtspunkt_name">Intro</Label>
-                        <Input
-                            id="gesichtspunkt_intro"
-                            type="text"
-                            placeholder="Intro"
-                            bind:value={newFactor.intro}
-                        />
-                        <Button
-                            disabled={newFactor.name === "" ||
-                                newFactor.intro === ""}
-                            on:click={(e) => {
-                                e.preventDefault();
-                                if (aspect.localizedFactors == null) {
-                                    aspect.localizedFactors = [];
-                                }
-                                let addedFactor = {
-                                    id: aspect.localizedFactors.length,
-                                    name: newFactor.name,
-                                    intro: newFactor.intro,
-                                };
-                                aspect.localizedFactors = [
-                                    ...aspect.localizedFactors,
-                                    addedFactor,
-                                ];
-                                newFactor = {
-                                    name: "",
-                                    intro: "",
-                                };
-                            }}>+</Button
-                        >
+                        <Label>Gesichtspunkte</Label>
+                        <Table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Intro</th>
+                                    <th>-</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {#each aspect.localizedFactors == null ? [] : aspect.localizedFactors as factor}
+                                    <tr>
+                                        <th>{factor.id}</th>
+                                        <td>
+                                            <Input
+                                                id="factor_name"
+                                                type="text"
+                                                placeholder="Factor name"
+                                                bind:value={factor.name}
+                                            />
+                                        </td>
+                                        <td>
+                                            <Input
+                                                id="factor_intro"
+                                                type="text"
+                                                placeholder="Factor intro"
+                                                bind:value={factor.intro}
+                                            />
+                                        </td>
+                                        <td>
+                                            <div />
+                                            <Button
+                                                on:click={(e) => {
+                                                    e.preventDefault();
+                                                    aspect.localizedFactors =
+                                                        aspect.localizedFactors.filter(
+                                                            (f) =>
+                                                                f.id !==
+                                                                factor.id
+                                                        );
+                                                    aspect.localizedFactors =
+                                                        aspect.localizedFactors.map(
+                                                            (f, i) => {
+                                                                f.id = i;
+                                                                return f;
+                                                            }
+                                                        );
+                                                }}
+                                                >-
+                                            </Button>
+                                        </td>
+                                    </tr>
+                                {/each}
+                            </tbody>
+                        </Table>
+                        <Label>Gesichtspunkt hinzufügen</Label>
+                        <Card body>
+                            <Label for="gesichtspunkt_name">Name</Label>
+                            <Input
+                                id="gesichtspunkt_name"
+                                type="text"
+                                placeholder="Name"
+                                bind:value={newFactor.name}
+                            />
+                            <Label for="gesichtspunkt_name">Intro</Label>
+                            <Input
+                                id="gesichtspunkt_intro"
+                                type="text"
+                                placeholder="Intro"
+                                bind:value={newFactor.intro}
+                            />
+                            <Button
+                                disabled={newFactor.name === "" ||
+                                    newFactor.intro === ""}
+                                on:click={(e) => {
+                                    e.preventDefault();
+                                    if (aspect.localizedFactors == null) {
+                                        aspect.localizedFactors = [];
+                                    }
+                                    let addedFactor = {
+                                        id: aspect.localizedFactors.length,
+                                        name: newFactor.name,
+                                        intro: newFactor.intro,
+                                    };
+                                    aspect.localizedFactors = [
+                                        ...aspect.localizedFactors,
+                                        addedFactor,
+                                    ];
+                                    newFactor = {
+                                        name: "",
+                                        intro: "",
+                                    };
+                                }}>+</Button
+                            >
+                        </Card>
                     </Card>
-                </Card>
-            </Col>
+                </Col>
             </Col>
         </Row>
 
@@ -258,7 +284,9 @@
                                         <th>Option</th>
                                         <th>wachstumsfaktor</th>
                                         <th>Eingespartes CO<sub>2</sub></th>
-                                        <th>Reward</th>
+                                        <th>Reward XP</th>
+                                        <th>Reward Coins</th>
+                                        <th>Reward Water</th>
                                         <th>-</th>
                                     </tr>
                                 </thead>
@@ -266,33 +294,73 @@
                                     {#each aspect.localizedTrackingData.options as option}
                                         <tr>
                                             <th>{option.level}</th>
-                                            <td>{option.option}</td>
-                                            <td>{option.waterFactor}</td>
+                                            <td>
+                                                <Input
+                                                    id="option"
+                                                    placeholder="Option"
+                                                    bind:value={option.option}
+                                                />
+                                            </td>
                                             <td
-                                                >{option.co2value > 0.0
-                                                    ? option.co2value
-                                                    : "N/A"}</td
-                                            >
+                                                ><Input
+                                                    id="waterFactor"
+                                                    placeholder="-1 für N/A"
+                                                    number
+                                                    bind:value={option.waterFactor}
+                                                />
+                                            </td>
                                             <td
-                                                ><RewardDisplayer
-                                                    reward={option.reward}
-                                                /></td
-                                            >
+                                                ><Input
+                                                    id="co2value"
+                                                    placeholder="-1 für N/A"
+                                                    number
+                                                    bind:value={option.co2value}
+                                                />
+                                            </td>
+                                            <td>
+                                                <Input
+                                                    id="option reward xp"
+                                                    placeholder="reward xp"
+                                                    number
+                                                    bind:value={option.reward
+                                                        .xp}
+                                                />
+                                            </td>
+                                            <td>
+                                                <Input
+                                                    id="option reward coins"
+                                                    placeholder="reward coins"
+                                                    number
+                                                    bind:value={option.reward
+                                                        .coins}
+                                                />
+                                            </td>
+                                            <td>
+                                                <Input
+                                                    id="option reward water"
+                                                    placeholder="reward water"
+                                                    number
+                                                    bind:value={option.reward
+                                                        .water}
+                                                />
+                                            </td>
                                             <td
                                                 ><Button
                                                     on:click={(e) => {
                                                         e.preventDefault();
-                                                        aspect.localizedTrackingData.options = aspect.localizedTrackingData.options.filter(
-                                                            (o) =>
-                                                                o.level !==
-                                                                option.level
-                                                        );
-                                                        aspect.localizedTrackingData.options = aspect.localizedTrackingData.options.map(
-                                                            (o, i) => {
-                                                                o.level = i;
-                                                                return o;
-                                                            }
-                                                        );
+                                                        aspect.localizedTrackingData.options =
+                                                            aspect.localizedTrackingData.options.filter(
+                                                                (o) =>
+                                                                    o.level !==
+                                                                    option.level
+                                                            );
+                                                        aspect.localizedTrackingData.options =
+                                                            aspect.localizedTrackingData.options.map(
+                                                                (o, i) => {
+                                                                    o.level = i;
+                                                                    return o;
+                                                                }
+                                                            );
                                                     }}>-</Button
                                                 ></td
                                             >
@@ -401,19 +469,19 @@
                     form="form"
                     on:click={(e) => {
                         e.preventDefault();
-                        waiting = true
+                        waiting = true;
                         postAspect(aspect).then((res) => {
                             handleAdd();
-                           // notifier.success("Änderungen gespeichert!", 2000)
-                            waiting = false
+                            // notifier.success("Änderungen gespeichert!", 2000)
+                            waiting = false;
                         });
-                    }}>{#if waiting}  
-                    <Spinner info type="grow" />
+                    }}
+                    >{#if waiting}
+                        <Spinner info type="grow" />
                     {:else}
-                     Speichern
-                     {/if}
-                    </Button
-                >
+                        Speichern
+                    {/if}
+                </Button>
             </ButtonGroup>
         </Row>
     </Form>

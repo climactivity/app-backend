@@ -14,6 +14,7 @@
   import DeleteInfobitButton from "../atoms/DeleteInfobitButton.svelte";
   import { createOrUpdateInfobyte } from "../InfobyteService";
   import InfoBitEditor from "./InfoBitEditor.svelte";
+  import { currentInfobit, Infobit } from "../../stores";
 
   export let selectedInfobyte: Infobyte;
   export let selectedInfobitIndex: number;
@@ -33,6 +34,10 @@
     },
   });
 
+  const handleSaveAndCreate = () => {
+    currentInfobit.set(new Infobit());
+  };
+
   $: if (selectedInfobyte && selectedInfobitIndex) {
     $form.infobits = selectedInfobyte.infobits || [];
     $errors.infobits = selectedInfobyte.infobits || [];
@@ -42,12 +47,17 @@
 <section>
   <form on:submit={handleSubmit}>
     <Row>
-      <Col sm="9">
+      <Col sm="6">
         <h4 class="mt-2">Infobyte: {$form.name}</h4>
         <h2 class="mt-2">Infobit Nr: {selectedInfobitIndex + 1}</h2>
       </Col>
       <Col sm="3">
         <Button color={"success"} type="submit">Speichern</Button>
+      </Col>
+      <Col sm="3">
+        <Button color={"success"} on:click={handleSaveAndCreate}
+          >Speichern und neues Infobit</Button
+        >
       </Col>
     </Row>
     <InfoBitEditor bind:value={$form.infobits[selectedInfobitIndex]} />

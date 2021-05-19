@@ -6,7 +6,7 @@ import { CreateInfoByteDto } from './dto/create-info-byte.dto';
 
 @Injectable()
 export class InfobyteService {
-    constructor(@InjectModel(InfoByte.name) private infoByteModel: Model<InfoByteDocument>) {}
+    constructor(@InjectModel(InfoByte.name) private infoByteModel: Model<InfoByteDocument>) { }
 
     async create(createInfoByteDto: CreateInfoByteDto): Promise<InfoByte> {
         const createdInfoByte = new this.infoByteModel(createInfoByteDto);
@@ -14,7 +14,7 @@ export class InfobyteService {
     }
 
     async findAll(): Promise<InfoByte[]> {
-        return this.infoByteModel.find().select('name _id').exec();
+        return this.infoByteModel.find().select('name _id aspect').exec();
     }
 
     async findEverything(): Promise<InfoByte[]> {

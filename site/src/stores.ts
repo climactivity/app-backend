@@ -43,6 +43,11 @@ export class Infobyte {
   position: number;
 }
 
+export class Aspect {
+  _id: string = "";
+  name: string = "";
+}
+
 declare const __frontend_env; //
 
 export const currentInfobyte: Writable<Infobyte> = writable(null)
