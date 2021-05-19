@@ -165,39 +165,59 @@
                     <Card body>
                         <Label>Gesichtspunkte</Label>
                         <Table>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Intro</th>
-                                <th>-</th>
-                            </tr>
-                            {#each aspect.localizedFactors == null ? [] : aspect.localizedFactors as factor}
+                            <thead>
                                 <tr>
-                                    <th>{factor.id}</th>
-                                    <td>{factor.name}</td>
-                                    <td>{factor.intro}</td>
-                                    <td
-                                        ><Button
-                                            danger
-                                            on:click={(e) => {
-                                                e.preventDefault();
-                                                aspect.localizedFactors =
-                                                    aspect.localizedFactors.filter(
-                                                        (f) =>
-                                                            f.id !== factor.id
-                                                    );
-                                                aspect.localizedFactors =
-                                                    aspect.localizedFactors.map(
-                                                        (f, i) => {
-                                                            f.id = i;
-                                                            return f;
-                                                        }
-                                                    );
-                                            }}>-</Button
-                                        ></td
-                                    >
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Intro</th>
+                                    <th>-</th>
                                 </tr>
-                            {/each}
+                            </thead>
+                            <tbody>
+                                {#each aspect.localizedFactors == null ? [] : aspect.localizedFactors as factor}
+                                    <tr>
+                                        <th>{factor.id}</th>
+                                        <td>
+                                            <Input
+                                                id="factor_name"
+                                                type="text"
+                                                placeholder="Factor name"
+                                                bind:value={factor.name}
+                                            />
+                                        </td>
+                                        <td>
+                                            <Input
+                                                id="factor_intro"
+                                                type="text"
+                                                placeholder="Factor intro"
+                                                bind:value={factor.intro}
+                                            />
+                                        </td>
+                                        <td>
+                                            <div />
+                                            <Button
+                                                on:click={(e) => {
+                                                    e.preventDefault();
+                                                    aspect.localizedFactors =
+                                                        aspect.localizedFactors.filter(
+                                                            (f) =>
+                                                                f.id !==
+                                                                factor.id
+                                                        );
+                                                    aspect.localizedFactors =
+                                                        aspect.localizedFactors.map(
+                                                            (f, i) => {
+                                                                f.id = i;
+                                                                return f;
+                                                            }
+                                                        );
+                                                }}
+                                                >-
+                                            </Button>
+                                        </td>
+                                    </tr>
+                                {/each}
+                            </tbody>
                         </Table>
                         <Label>Gesichtspunkt hinzufügen</Label>
                         <Card body>
