@@ -19,7 +19,7 @@
         QuestDto,
         QuestQuestFilter,
     } from "./QuestTypes";
-    import RichtTextEditor from "../RichtTextEditor.svelte";
+    import RichTextEditor from "../RichTextEditor.svelte";
     import ImagePicker from "../ImageUpload/ImagePicker.svelte";
 import RewardForm from "../Rewards/RewardForm.svelte";
     export let questModifiedCallback;
@@ -58,7 +58,7 @@ import RewardForm from "../Rewards/RewardForm.svelte";
     };
 
     let questPromise: Promise<any[]> = fetchQuests();
-    const refetchAspects = async () => {
+    const refetchAspects = async (l, r) => {
         aspectsPromise = fetchAspects();
     };
 
@@ -66,14 +66,12 @@ import RewardForm from "../Rewards/RewardForm.svelte";
         quest.altIcon = iconImg.relativeUrl;
     }
 
-    $: if (quest.language && quest.region) {
-        refetchAspects();
+    var language, region = "DE"
+    $: {
+        refetchAspects(language, region);
     }
     const save = async () => {
-        let doc = quest;
-        doc.text = quest.text?.doc;
-        //doc.altIcon = iconImg.relativeUrl
-        console.log(JSON.stringify(doc));
+        console.log(quest)
         const response = await fetch(
             `${baseUrl}quest-management${quest._id ? "/" + quest._id : ""}`,
             {
@@ -83,7 +81,7 @@ import RewardForm from "../Rewards/RewardForm.svelte";
                     "Content-Type": "application/json",
                     // 'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: JSON.stringify(doc),
+                body: JSON.stringify(quest),
             }
         );
 
@@ -119,13 +117,29 @@ import RewardForm from "../Rewards/RewardForm.svelte";
         questModifiedCallback()
     };
 
-    const getTrackingLevel = async (aspectId, trackingLevel) => {
+    const getTrackingLevel = async (aspectId, trackingLevel, inclueName = false) => {
         let aspect = (await aspectsPromise).find((a) => a._id == aspectId);
+
+        if (trackingLevel < 0) {
+            if (inclueName)
+                return {aspect: aspect.name, option:"Nicht getrackt"}
+            return "Nicht getrackt"
+        }
         let option = aspect?.localizedTrackingData?.options?.find(
             (opt) => opt.level >= trackingLevel
         )?.option;
+        if (!option) {
+            return aspect?.localizedTrackingData?.options?.slice(-1)[0]?.option
+        }
+        if (inclueName)
+            return {aspect: aspect.name, option}
         return option;
     };
+
+    const getNumTrackingLevels = async (aspectId) => {
+        let aspect = (await aspectsPromise).find((a) => a._id == aspectId);
+        return aspect?.localizedTrackingData?.options?.length()
+    }
 </script>
 
 <Card>
@@ -138,6 +152,7 @@ import RewardForm from "../Rewards/RewardForm.svelte";
                 name="region"
                 type="select"
                 bind:value={quest.region}
+                on:change={() => region = quest.region}
             >
                 <option value={null}> -- Region -- </option>
                 <option>DE</option>
@@ -149,6 +164,7 @@ import RewardForm from "../Rewards/RewardForm.svelte";
                     name="language"
                     type="select"
                     bind:value={quest.language}
+                    on:change={() => language = quest.language}
                 >
                     <option value={null}> -- Sprache -- </option>
                     <option>DE</option>
@@ -163,7 +179,7 @@ import RewardForm from "../Rewards/RewardForm.svelte";
                     bind:value={quest.title}
                 />
 
-                <RichtTextEditor bind:value={quest.text} />
+                <RichTextEditor bind:value={quest.text} />
 
                 <div id="meta-input">
                     <label for="linkToAfterInput"> Link nachdem fertig </label>
@@ -174,12 +190,25 @@ import RewardForm from "../Rewards/RewardForm.svelte";
                         type="string"
                         bind:value={quest.linkToAfter}
                     />
+
                     <AspectAsyncCombobox
                         inputId={"alertTrackedAspectInput"}
-                        name={"Aspekt Tracking abfragen?"}
+                        name={"Gehört zu Aspekt?"}
                         bind:value={quest.alertTrackedAspect}
                         optionsPromise={aspectsPromise}
                     />
+
+                    <Label for={"published"} style="padding: 5px;">
+                        <Input
+                            class="checkbox"
+                            type="checkbox"
+                            name={"published"}
+                            bind:checked={quest.triggerTrackingUpdate}
+                        />
+                        Tracking abfragen nachdem Aufgabe bearbeit?
+                    </Label>
+            
+
                 </div>
             </div>
         </div>
@@ -210,6 +239,15 @@ import RewardForm from "../Rewards/RewardForm.svelte";
                 type="number"
                 bind:value={quest.maxDuration}
             />
+            <label for="numRepeatsInput"> Wiederholen </label>
+            <input
+                required
+                id="numRepeatsInput"
+                name="numRepeatsInput"
+                type="number"
+                bind:value={quest.numRepeat}
+            />
+
         </div>
         Alternatives Icon
         <ImagePicker bind:img={iconImg} />
@@ -217,16 +255,15 @@ import RewardForm from "../Rewards/RewardForm.svelte";
         <Card id="aspect-filters">
             <CardHeader>Aspekt Filter</CardHeader>
             <CardBody>
-                {#if quest.questAspectFilter === []}
+                {#if !quest.questAspectFilter}
                     Noch keine Aspektfilter
                 {/if}
                 {#each quest.questAspectFilter as aspectFilter, i}
                     <div>
-                        {aspectFilter.aspectId} -
-                        {#await getTrackingLevel(aspectFilter.aspectId, aspectFilter.trackingLevel)}
+                        {#await getTrackingLevel(aspectFilter.aspectId, aspectFilter.trackingLevel, true)}
                             ...
                         {:then option}
-                            {option}
+                            {option.aspect} - {option.option}
                         {/await}
                         - {FilterType[aspectFilter.filterType]}
                         <!--die warnung ist einfach mal falsch, cool https://www.typescriptlang.org/docs/handbook/enums.html -->
@@ -259,14 +296,13 @@ import RewardForm from "../Rewards/RewardForm.svelte";
                 >
                     <option value={FilterType.REQURIED}> REQURIED </option>
                     <option value={FilterType.EXCLUDED}> EXCLUDED </option>
-                    <option value={FilterType.PREFERED}> PREFERED </option>
                 </Input>
                 <div>
                     <Input
                         id="trackingLevel"
                         name="trackingLevel"
                         type="range"
-                        min="0"
+                        min="-1"
                         max="4"
                         step="1"
                         bind:value={newAspectFilter.trackingLevel}
@@ -293,7 +329,7 @@ import RewardForm from "../Rewards/RewardForm.svelte";
                         }
                     }}
                 >
-                    Aspektfilter hinzufügen
+                    Aspektfilter speichern
                 </Button>
             </CardFooter>
         </Card>
@@ -301,7 +337,7 @@ import RewardForm from "../Rewards/RewardForm.svelte";
         <Card id="quest-filters">
             <CardHeader>Aufgabenfilter</CardHeader>
             <CardBody>
-                {#if quest.questQuestFilter === []}
+                {#if !quest.questQuestFilter}
                     Noch keine Aufgabenfilter
                 {/if}
                 {#each quest.questQuestFilter as questFilter, i}
@@ -339,7 +375,6 @@ import RewardForm from "../Rewards/RewardForm.svelte";
                 >
                     <option value={FilterType.REQURIED}> REQURIED </option>
                     <option value={FilterType.EXCLUDED}> EXCLUDED </option>
-                    <option value={FilterType.PREFERED}> PREFERED </option>
                 </Input>
             </CardBody>
             <CardFooter>
@@ -354,7 +389,7 @@ import RewardForm from "../Rewards/RewardForm.svelte";
                         }
                     }}
                 >
-                    Aufgabenfilter hinzufügen
+                    Aufgabenfilter speichern
                 </Button>
             </CardFooter>
         </Card>

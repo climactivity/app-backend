@@ -34,5 +34,9 @@ export class QuestDto {
     altIcon: string;
     userSelectable: boolean = true;
     reward: Reward = new Reward();
+    triggerTrackingUpdate: boolean = false;
+    numRepeat: string = "1";
+
+
 }
     

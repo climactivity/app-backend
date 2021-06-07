@@ -21,6 +21,8 @@
 
   // create the initial editor state
   let editorState = createRichTextEditor("", plugins);
+  editorState = fromJSON(value, richTextSchema, plugins);
+
   let focusEditor;
 
   function handleTransaction(event) {
@@ -35,13 +37,6 @@
     event.preventDefault();
   }
   onMount(() => focusEditor());
-
-  const unsubscribe = currentInfobit.subscribe((infobit) => {
-    if (!infobit) return;
-    editorState = fromJSON(infobit, richTextSchema, plugins);
-  });
-
-  onDestroy(unsubscribe);
 </script>
 
 <div class="pm-editor justify-content-between">

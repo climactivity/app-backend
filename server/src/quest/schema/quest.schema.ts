@@ -54,7 +54,7 @@ export class Quest {
     published: boolean;
 
     @Prop({type: QuestAspectFilter, default:[]})
-    aspectFilter: QuestAspectFilter[]
+    questAspectFilter: QuestAspectFilter[]
     
     @Prop({type: QuestQuestFilter, default:[]})
     questQuestFilter: QuestQuestFilter[]
@@ -71,6 +71,11 @@ export class Quest {
     @Prop(Reward)
     reward: Reward;
 
+    @Prop()
+    numRepeat: number;
+    
+    @Prop()
+    triggerTrackingUpdate: boolean;
 }
 
 

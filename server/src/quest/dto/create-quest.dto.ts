@@ -20,5 +20,6 @@ export class CreateQuestDto {
     readonly altIcon: string;
     readonly userSelectable: boolean;
     readonly reward: Reward;
-
+    readonly triggerTrackingUpdate: boolean;
+    readonly numRepeat: number;
 }
