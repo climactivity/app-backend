@@ -44,7 +44,7 @@ import { Card } from 'sveltestrap'
             selectedQuest = quest
         }
     }}>
-        {quest._id} - {quest.title}
+        {quest.title}
 </div>
     {/each}
 {/await}
