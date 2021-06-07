@@ -179,7 +179,7 @@ import RewardForm from "../Rewards/RewardForm.svelte";
                     bind:value={quest.title}
                 />
 
-                <RichTextEditor bind:value={quest.text} />
+                <RichTextEditor bind:value={quest.text} bind:key={quest._id} />
 
                 <div id="meta-input">
                     <label for="linkToAfterInput"> Link nachdem fertig </label>

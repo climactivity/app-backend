@@ -12,7 +12,7 @@
   import { currentInfobit, currentInfobitIndex } from "./stores";
 
   export let value;
-
+  export let key; 
   const plugins = exampleSetup({
     schema: richTextSchema,
     history: false,
@@ -21,8 +21,14 @@
 
   // create the initial editor state
   let editorState = createRichTextEditor("", plugins);
-  editorState = fromJSON(value, richTextSchema, plugins);
-
+  const updateEditorState = (key) => {
+    console.log(key,value)
+    try {
+      editorState = fromJSON(value, richTextSchema, plugins);
+    } catch (e) {
+      editorState = createRichTextEditor("", plugins);
+    }
+  };
   let focusEditor;
 
   function handleTransaction(event) {
@@ -37,36 +43,37 @@
     event.preventDefault();
   }
   onMount(() => focusEditor());
+
+  $: updateEditorState(key)
 </script>
 
 <div class="pm-editor justify-content-between">
-    <div class="editor">
-      <ProsemirrorEditor
-        placeholder="Go ahead and type something"
-        {editorState}
-        bind:focus={focusEditor}
-        on:transaction={handleTransaction}
-      />
-    </div>
+  <div class="editor">
+    <ProsemirrorEditor
+      placeholder="Go ahead and type something"
+      {editorState}
+      bind:focus={focusEditor}
+      on:transaction={handleTransaction}
+    />
   </div>
-  
-  <style>
-    .pm-editor {
-      background-color: var(--grey);
-      border: 1px solid var(--grey);
-      border-radius: 4px;
-    }
-    .editor {
-      background-color: white;
-      height: 50vh;
-      overflow: auto;
-    }
-  
-    :global(.ProseMirror-menubar-wrapper) {
-      height: 46vh;
-    }
-    :global(.ui-editor) {
-      height: 46vh;
-    }
-  </style>
-  
+</div>
+
+<style>
+  .pm-editor {
+    background-color: var(--grey);
+    border: 1px solid var(--grey);
+    border-radius: 4px;
+  }
+  .editor {
+    background-color: white;
+    height: 50vh;
+    overflow: auto;
+  }
+
+  :global(.ProseMirror-menubar-wrapper) {
+    height: 46vh;
+  }
+  :global(.ui-editor) {
+    height: 46vh;
+  }
+</style>
