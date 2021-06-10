@@ -36,7 +36,7 @@ export class QuestDto {
     reward: Reward = new Reward();
     triggerTrackingUpdate: boolean = false;
     numRepeat: string = "1";
-
+    repeatAfter: string = "0";
 
 }
     

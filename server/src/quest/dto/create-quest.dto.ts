@@ -22,4 +22,5 @@ export class CreateQuestDto {
     readonly reward: Reward;
     readonly triggerTrackingUpdate: boolean;
     readonly numRepeat: number;
+    readonly repeatAfter: number; 
 }

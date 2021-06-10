@@ -239,6 +239,16 @@ import RewardForm from "../Rewards/RewardForm.svelte";
                 type="number"
                 bind:value={quest.maxDuration}
             />
+
+            <label for="repeatAfterInput"> Wiederholen nach (in Stunden) </label>
+            <input
+                required
+                id="repeatAfterInput"
+                name="repeatAfterInput"
+                type="number"
+                bind:value={quest.repeatAfter}
+            />
+
             <label for="numRepeatsInput"> Wiederholen </label>
             <input
                 required
@@ -375,6 +385,9 @@ import RewardForm from "../Rewards/RewardForm.svelte";
                 >
                     <option value={FilterType.REQURIED}> REQURIED </option>
                     <option value={FilterType.EXCLUDED}> EXCLUDED </option>
+                    <option value={FilterType.PREFERED}> PREFERED </option>
+
+                
                 </Input>
             </CardBody>
             <CardFooter>

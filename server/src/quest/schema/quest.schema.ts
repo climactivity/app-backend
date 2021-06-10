@@ -76,6 +76,9 @@ export class Quest {
     
     @Prop()
     triggerTrackingUpdate: boolean;
+
+    @Prop()
+    repeatAfter: number;
 }
 
 
