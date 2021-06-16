@@ -54,6 +54,8 @@ export class AspectService {
       return { locale_id, value, reward, level, co2value, waterFactor }
     })
     return {
+      themenmonat: createAspectForLocaleDto.themenmonat,
+      templateType: createAspectForLocaleDto.templateType,  
       bigpoint: createAspectForLocaleDto.bigpoint,
       name: createAspectForLocaleDto.name,
       icon: createAspectForLocaleDto.icon,
@@ -130,6 +132,8 @@ export class AspectService {
       let localizedTrackingData = aspect.trackingData.localized_strings  
 
       return {
+        themenmonat: aspect.themenmonat,
+        templateType: aspect.templateType,    
         _id: aspect._id,
         bigpoint: aspect.bigpoint,
         name: aspect.name,
@@ -157,6 +161,8 @@ export class AspectService {
     } else {
 
       return {
+        themenmonat: aspect.themenmonat,
+        templateType: aspect.templateType,    
         _id: aspect._id,
         bigpoint: aspect.bigpoint,
         name: aspect.name,

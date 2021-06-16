@@ -70,6 +70,12 @@ export class Aspect {
     
     @Prop()
     published: boolean;
+
+    @Prop()
+    themenmonat: string;
+    
+    @Prop()
+    readonly templateType: string;
 }
 
 export const AspectSchema = SchemaFactory.createForClass(Aspect); 

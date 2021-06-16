@@ -2,6 +2,8 @@ import { Reward } from "src/rewards/schemas/reward.schema";
 import { AspectLocalization, Factor, TrackingData } from "../schemas/aspect.schema";
 
 export class LocalizedAspectDto {
+    readonly themenmonat: string;
+    readonly templateType: string;
     readonly _id: string;
     readonly name: string;
     readonly title: string;

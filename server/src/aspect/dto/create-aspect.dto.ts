@@ -1,6 +1,8 @@
 import { AspectLocalization, Factor, TrackingData } from "../schemas/aspect.schema";
 
 export class CreateAspectDto {
+    readonly themenmonat: string;
+    readonly templateType: string;
     readonly name: string;
     readonly icon?: any;
     readonly infoGraph?: any;

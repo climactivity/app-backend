@@ -1,4 +1,6 @@
 export default interface Aspect {
+    themenmonat: string,
+    templateType: string,
     published: boolean;
     _id: string;
     name: string;

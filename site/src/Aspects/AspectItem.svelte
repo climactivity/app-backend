@@ -128,6 +128,40 @@
                         >
                     </Input>
 
+                    <Label for="themenmonat">Themenmonat</Label>
+                    <Input
+                        placeholder="themenmonat"
+                        bind:value={aspect.themenmonat}
+                        type="select"
+                    >
+                        <option value={null}> -- Themenmonat auswählen--</option>
+                        <option value={"bilanzierung"}>Bilanzierung</option> 
+                        <option value={"ernaehrung"}>Ernährung</option> 
+                        <option value={"sich_informieren"}>Sich informieren</option> 
+                        <option value={"mobilitaet_zu_lande"}>Mobilität zu Lande</option> 
+                        <option value={"strom_produzieren_und_sparen"}>Strom produzieren und sparen</option> 
+                        <option value={"klimaschutzengagement_als_privatperson"}>Klimaschutzengagement als Privatperson</option> 
+                        <option value={"indirekte_emission_und_geld"}>Indirekte Emission und Geld</option> 
+                        <option value={"waerme"}>Wärme</option> 
+                        <option value={"institutionen_von_innen_transformieren"}>Institutionen von innen transformieren</option> 
+                        <option value={"bewusst_kaufen"}>Bewusst kaufen</option> 
+                        <option value={"urlaub_und_fliegen"}>Urlaub und fliegen</option> 
+                        <option value={"gemeinsam_fuer_den_klimaschutz"}>Gemeinsam für den Klimaschutz</option> 
+                    </Input>
+
+                    <Label for="template-type">Template type</Label>
+                    <Input
+                        placeholder="template-type"
+                        bind:value={aspect.templateType}
+                        type="select"
+                    >
+                        <option value={null}> -- Entitätenart--</option>
+                        <option value={"tree"}>Baum</option> 
+                        <option value={"bush"}>Busch</option> 
+                        <option value={"small"}>Kleinkram</option>
+
+                    </Input>
+
                     <label for="region">Region</label>
                     <Input
                         id="region"
