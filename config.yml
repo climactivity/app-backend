@@ -1,0 +1,28 @@
+name: nakama-node-1
+data_dir: "./data/"
+
+database:
+    address: ["root@cockroachdb:26257"]
+
+session: 
+    token_expiry_sec: 7200
+
+socket:
+    server_key: "cyserver_BVZ29wCUCJmjh2rcTrECCcDm9WdqsptDpuYyuen8tEC4WBYcYcJdjxwpmycxuxNP"
+
+metrics: 
+    prometheus_port: 9100
+
+runtime: 
+    http_key: "cyserver_khNRaky5aSLYinbTdtunnA2IeEEWf5mE7YPx8l88SnCpmxkgrh7BvXQYYvTWfauJ"
+    js_entrypoint: "ts/index.js"
+
+logger:
+    stdout: true
+    level: "debug"
+    file: "/nakama/data/logs/logfile.log"
+
+console:
+    port: 7351
+    username: "my_user"
+    password: "my_password"

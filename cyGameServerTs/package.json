@@ -1,0 +1,19 @@
+{
+  "name": "ts-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^4.3.2"
+  },
+  "dependencies": {
+    "nakama-runtime": "git+https://github.com/heroiclabs/nakama-common.git",
+    "node-fetch": "^2.6.1"
+  }
+}
