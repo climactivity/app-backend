@@ -118,7 +118,7 @@
                         <option value={"energy"}>Zelt der Energie</option>
                         <option value={"mobility"}>Zelt der Mobilität</option>
                         <option value={"indirect_emissions"}
-                            >Zelt der Emissionen</option
+                            >Zelt des Konsums</option
                         >
                         <option value={"private_engagement"}
                             >Zelt des privaten Engagements</option
@@ -141,14 +141,15 @@
                         <option value={"mobilitaet_zu_lande"}>Mobilität zu Lande</option> 
                         <option value={"strom_produzieren_und_sparen"}>Strom produzieren und sparen</option> 
                         <option value={"klimaschutzengagement_als_privatperson"}>Klimaschutzengagement als Privatperson</option> 
-                        <option value={"indirekte_emission_und_geld"}>Indirekte Emission und Geld</option> 
+                        <option value={"dinge_teilen"}>Dinge Teilen</option> 
+                        <option value={"klimaschutz_und_geld"}>Klimaschutz und Geld</option> 
                         <option value={"waerme"}>Wärme</option> 
-                        <option value={"institutionen_von_innen_transformieren"}>Institutionen von innen transformieren</option> 
-                        <option value={"bewusst_kaufen"}>Bewusst kaufen</option> 
-                        <option value={"urlaub_und_fliegen"}>Urlaub und fliegen</option> 
+                        <option value={"klimaschutz_in_schule_und_betrieb"}>Klimaschutz in Schule und Betrieb</option> 
+                        <option value={"bewusst_einkaufen"}>Bewusst einkaufen</option> 
+                        <option value={"urlaub_und_fliegen"}>Urlaub und Fliegen</option> 
                         <option value={"gemeinsam_fuer_den_klimaschutz"}>Gemeinsam für den Klimaschutz</option> 
                     </Input>
-
+                    
                     <Label for="template-type">Template type</Label>
                     <Input
                         placeholder="template-type"
