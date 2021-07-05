@@ -106,3 +106,40 @@
 {"level":"info","ts":"2021-06-17T11:35:48.565Z","caller":"server/console.go:130","msg":"Starting Console server for gRPC requests","port":7348}
 {"level":"info","ts":"2021-06-17T11:35:48.566Z","caller":"server/console.go:223","msg":"Starting Console server gateway for HTTP requests","port":7351}
 {"level":"info","ts":"2021-06-17T11:35:48.694Z","caller":"main.go:174","msg":"Startup done"}
+{"level":"info","ts":"2021-06-17T11:39:51.764Z","caller":"main.go:190","msg":"Shutdown started"}
+{"level":"info","ts":"2021-06-17T11:39:51.764Z","caller":"main.go:197","msg":"All authoritative matches stopped"}
+{"level":"info","ts":"2021-06-17T11:39:51.854Z","caller":"main.go:226","msg":"Shutdown complete"}
+{"level":"warn","ts":"2021-06-22T15:05:10.254Z","caller":"server/config.go:302","msg":"WARNING: insecure default parameter value, change this for production!","param":"console.signing_key"}
+{"level":"warn","ts":"2021-06-22T15:05:10.256Z","caller":"server/config.go:310","msg":"WARNING: insecure default parameter value, change this for production!","param":"session.encryption_key"}
+{"level":"warn","ts":"2021-06-22T15:05:10.256Z","caller":"server/config.go:314","msg":"WARNING: insecure default parameter value, change this for production!","param":"session.refresh_encryption_key"}
+{"level":"info","ts":"2021-06-22T15:05:10.256Z","caller":"main.go:104","msg":"Nakama starting"}
+{"level":"info","ts":"2021-06-22T15:05:10.256Z","caller":"main.go:105","msg":"Node","name":"nakama-node-1","version":"3.2.1+6790d453","runtime":"go1.16.3","cpu":24,"proc":24}
+{"level":"info","ts":"2021-06-22T15:05:10.256Z","caller":"main.go:106","msg":"Data directory","path":"./data/"}
+{"level":"info","ts":"2021-06-22T15:05:10.256Z","caller":"main.go:117","msg":"Database connections","dsns":["root@cockroachdb:26257"]}
+{"level":"debug","ts":"2021-06-22T15:05:10.256Z","caller":"main.go:250","msg":"Complete database connection URL","raw_url":"postgresql://root@cockroachdb:26257/nakama?sslmode=disable"}
+{"level":"info","ts":"2021-06-22T15:05:10.282Z","caller":"main.go:120","msg":"Database information","version":"CockroachDB CCL v20.2.10 (x86_64-unknown-linux-gnu, built 2021/05/17 17:32:35, go1.13.14)"}
+{"level":"info","ts":"2021-06-22T15:05:10.293Z","caller":"server/metrics.go:132","msg":"Starting Prometheus server for metrics requests","port":9100}
+{"level":"info","ts":"2021-06-22T15:05:10.344Z","caller":"server/leaderboard_rank_cache.go:118","msg":"Initializing leaderboard rank cache"}
+{"level":"info","ts":"2021-06-22T15:05:10.345Z","caller":"server/leaderboard_rank_cache.go:216","msg":"Leaderboard rank cache initialization completed successfully","cached":[],"skipped":[]}
+{"level":"info","ts":"2021-06-22T15:05:10.350Z","caller":"server/runtime.go:568","msg":"Initialising runtime","path":"data/modules"}
+{"level":"info","ts":"2021-06-22T15:05:10.351Z","caller":"server/runtime.go:575","msg":"Initialising runtime event queue processor"}
+{"level":"info","ts":"2021-06-22T15:05:10.351Z","caller":"server/runtime.go:577","msg":"Runtime event queue processor started","size":65536,"workers":8}
+{"level":"info","ts":"2021-06-22T15:05:10.358Z","caller":"server/runtime_go.go:2248","msg":"Initialising Go runtime provider","path":"data/modules"}
+{"level":"info","ts":"2021-06-22T15:05:10.358Z","caller":"server/runtime_go.go:2272","msg":"Go runtime modules loaded"}
+{"level":"info","ts":"2021-06-22T15:05:10.359Z","caller":"server/runtime_lua.go:112","msg":"Initialising Lua runtime provider","path":"data/modules"}
+{"level":"info","ts":"2021-06-22T15:05:10.361Z","caller":"server/runtime_lua.go:1082","msg":"Lua runtime modules loaded"}
+{"level":"info","ts":"2021-06-22T15:05:10.361Z","caller":"server/runtime_lua.go:1085","msg":"Allocating minimum runtime pool","count":16}
+{"level":"info","ts":"2021-06-22T15:05:10.362Z","caller":"server/runtime_lua.go:1093","msg":"Allocated minimum runtime pool"}
+{"level":"info","ts":"2021-06-22T15:05:10.362Z","caller":"server/runtime_javascript.go:524","msg":"Initialising JavaScript runtime provider","path":"data/modules","entrypoint":"ts/index.js"}
+{"level":"info","ts":"2021-06-22T15:05:10.373Z","caller":"server/runtime_javascript_logger.go:68","msg":"Typescript module loaded!"}
+{"level":"info","ts":"2021-06-22T15:05:10.373Z","caller":"server/runtime_javascript.go:1466","msg":"JavaScript runtime modules loaded"}
+{"level":"info","ts":"2021-06-22T15:05:10.373Z","caller":"server/runtime_javascript.go:1469","msg":"Allocating minimum JavaScript runtime pool","count":16}
+{"level":"info","ts":"2021-06-22T15:05:10.387Z","caller":"server/runtime_javascript.go:1477","msg":"Allocated minimum JavaScript runtime pool"}
+{"level":"info","ts":"2021-06-22T15:05:10.387Z","caller":"server/runtime.go:610","msg":"Found runtime modules","count":1,"modules":["index.js"]}
+{"level":"info","ts":"2021-06-22T15:05:10.391Z","caller":"server/leaderboard_scheduler.go:91","msg":"Leaderboard scheduler start"}
+{"level":"info","ts":"2021-06-22T15:05:10.391Z","caller":"server/leaderboard_scheduler.go:278","msg":"Leaderboard scheduler update","end_active":"-1ns","end_active_count":0,"expiry":"-1ns","expiry_count":0}
+{"level":"info","ts":"2021-06-22T15:05:10.391Z","caller":"server/api.go:128","msg":"Starting API server for gRPC requests","port":7349}
+{"level":"info","ts":"2021-06-22T15:05:10.395Z","caller":"server/api.go:262","msg":"Starting API server gateway for HTTP requests","port":7350}
+{"level":"info","ts":"2021-06-22T15:05:10.400Z","caller":"server/console.go:130","msg":"Starting Console server for gRPC requests","port":7348}
+{"level":"info","ts":"2021-06-22T15:05:10.403Z","caller":"server/console.go:223","msg":"Starting Console server gateway for HTTP requests","port":7351}
+{"level":"info","ts":"2021-06-22T15:05:11.232Z","caller":"main.go:174","msg":"Startup done"}
