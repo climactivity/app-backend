@@ -157,10 +157,9 @@
                         type="select"
                     >
                         <option value={null}> -- Entitätenart--</option>
-                        <option value={"tree"}>Baum</option> 
-                        <option value={"bush"}>Busch</option> 
+                        <option value={"tree"}>Baum</option>
+                        <option value={"bush"}>Busch</option>
                         <option value={"small"}>Kleinkram</option>
-
                     </Input>
 
                     <label for="region">Region</label>
@@ -231,6 +230,7 @@
                                         <td>
                                             <div />
                                             <Button
+                                                type="button"
                                                 on:click={(e) => {
                                                     e.preventDefault();
                                                     aspect.localizedFactors =
