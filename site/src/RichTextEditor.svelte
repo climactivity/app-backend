@@ -26,14 +26,26 @@
   });
   console.log(mySchema, richTextSchema);
   // create the initial editor state
-  let editorState = createRichTextEditor("", plugins);
+  let editorState = EditorState.create({
+        schema: mySchema,
+        doc: undefined,
+        selection: undefined,
+        plugins,
+      });
   const updateEditorState = (key) => {
     console.log(key, value);
     try {
       editorState = fromJSON(value, mySchema, plugins);
     } catch (e) {
 
-      editorState = createRichTextEditor(value, plugins);
+      editorState =  EditorState.create({
+        schema: mySchema,
+        doc: undefined,
+        selection: undefined,
+        plugins,
+      });
+
+      //editorState = createRichTextEditor(value, plugins);
       console.log(value)
       console.log(e);
     }
