@@ -1,7 +1,9 @@
 <script lang="ts">
   import ProsemirrorEditor from "prosemirror-svelte";
   import { exampleSetup } from "prosemirror-example-setup";
-
+  import { addListNodes } from "prosemirror-schema-list";
+  import { Schema, DOMParser } from "prosemirror-model";
+  import {EditorState, TextSelection} from 'prosemirror-state';
   import {
     createRichTextEditor,
     fromJSON,
@@ -12,21 +14,28 @@
   import { currentInfobit, currentInfobitIndex } from "./stores";
 
   export let value;
-  export let key; 
+  export let key;
+  const mySchema = new Schema({
+    nodes: addListNodes(richTextSchema.spec.nodes, "paragraph block*", "block"),
+    marks: richTextSchema.spec.marks,
+  });
   const plugins = exampleSetup({
-    schema: richTextSchema,
+    schema: mySchema,
     history: false,
     floatingMenu: false,
   });
-
+  console.log(mySchema, richTextSchema);
   // create the initial editor state
   let editorState = createRichTextEditor("", plugins);
   const updateEditorState = (key) => {
-    console.log(key,value)
+    console.log(key, value);
     try {
-      editorState = fromJSON(value, richTextSchema, plugins);
+      editorState = fromJSON(value, mySchema, plugins);
     } catch (e) {
-      editorState = createRichTextEditor("", plugins);
+
+      editorState = createRichTextEditor(value, plugins);
+      console.log(value)
+      console.log(e);
     }
   };
   let focusEditor;
@@ -44,7 +53,7 @@
   }
   onMount(() => focusEditor());
 
-  $: updateEditorState(key)
+  $: updateEditorState(key);
 </script>
 
 <div class="pm-editor justify-content-between">
