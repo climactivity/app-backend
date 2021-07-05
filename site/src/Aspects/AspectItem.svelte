@@ -141,7 +141,7 @@
                         <option value={"mobilitaet_zu_lande"}>Mobilität zu Lande</option> 
                         <option value={"strom_produzieren_und_sparen"}>Strom produzieren und sparen</option> 
                         <option value={"klimaschutzengagement_als_privatperson"}>Klimaschutzengagement als Privatperson</option> 
-                        <option value={"dinge_teilen"}>Dinge Teilen</option> 
+                        <option value={"dinge_teilen"}>Dinge teilen</option> 
                         <option value={"klimaschutz_und_geld"}>Klimaschutz und Geld</option> 
                         <option value={"waerme"}>Wärme</option> 
                         <option value={"klimaschutz_in_schule_und_betrieb"}>Klimaschutz in Schule und Betrieb</option> 
