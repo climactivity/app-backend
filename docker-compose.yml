@@ -19,7 +19,7 @@ services:
       - 8080:80
     environment: 
       LOCALIZATION_LINK: ${LOCALIZATION_LINK}
-     env_file:
+    env_file:
        - .env
     
 
@@ -60,8 +60,8 @@ services:
       MONGODB_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
       MONGODB_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
       MONGODB_DATABASE: ${MONGO_INITDB_DATABASE}
-#    ports:
-#      - 27017:27017
+    ports:
+      - 27017:27017
     volumes:
       # named volumes
       - mongoconfig:/data/configdb

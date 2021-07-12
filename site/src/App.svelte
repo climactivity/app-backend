@@ -1,63 +1,34 @@
 <script lang="ts">
     import Dashboard from "./Dashboard.svelte";
-    import { NotificationDisplay, notifier } from '@beyonk/svelte-notifications'
-
+    import { Router, Route, Link } from "svelte-navigator";
     import {
-        Col,
-        Container,
-        Row,
-        Collapse,
-        Navbar,
-        NavbarToggler,
-        NavbarBrand,
-        Nav,
-        NavItem,
-        NavLink,
-        UncontrolledDropdown,
-        DropdownToggle,
-        DropdownMenu,
-        DropdownItem
-    } from "sveltestrap";
-    $: path = location.pathname;
-    let isOpen = false;
+        NotificationDisplay,
+        notifier,
+    } from "@beyonk/svelte-notifications";
 
-function handleUpdate(event) {
-  isOpen = event.detail.isOpen;
-}
+    import { Container } from "sveltestrap";
+    import Sharepage from "./sharing/sharepage.svelte";
+import LoggedOutNavbar from "./LoggedOutNavbar.svelte";
+    $: path = location.pathname;
 </script>
 
 <main>
     <NotificationDisplay />
-
-    {#if path === "/admin/"}
-        <Dashboard />
-    {:else}
-    <Navbar color="light" light expand='lg'>
-        <NavbarBrand href="/">
-            <img src="/img/logo.png" height="30" class="d-inline-block align-top" alt="CyLogo">
-        </NavbarBrand>
-        <NavbarToggler on:click={() => (isOpen = !isOpen)} />
-        <Collapse {isOpen} navbar expand="md" on:update={handleUpdate}>
-            <Nav class="ml-auto" navbar pills>
-                <NavItem>
-                    <NavLink href="/admin/">Admin-Bereich</NavLink>
-                </NavItem>
-                <NavItem>
-                    <NavLink
-                        href="https://github.com/climactivity"
-                        >GitHub</NavLink
-                    >
-                </NavItem>
-            </Nav>
-        </Collapse>
-
-    </Navbar>
-    <Container>
- 
-
-        <h1>TODO: Landing page für die App bauen</h1>
-    </Container>
-    {/if}
+    <Router>
+        <Route path="admin">
+            <Dashboard />
+        </Route>
+        <Route path="s/:id/:index" let:params>
+            <LoggedOutNavbar/>
+            <Sharepage infobyte={params.id} index={params.index} />
+        </Route>
+        <Route path="/">
+            <LoggedOutNavbar/>
+            <Container>
+                <h1>TODO: Landing page für die App bauen</h1>
+            </Container>
+        </Route>
+    </Router>
 </main>
 
 <style>

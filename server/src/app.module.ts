@@ -17,6 +17,7 @@ import { RewardsModule } from './rewards/rewards.module';
 import { ClientCacheModule } from './client-cache/client-cache.module';
 import { AppController } from './app.controller';
 import { QuestModule } from './quest/quest.module';
+import { SharingModule } from './sharing/sharing.module';
 
 @Module({
   imports: [
@@ -31,7 +32,7 @@ import { QuestModule } from './quest/quest.module';
         if (configService.get("db_user")) {
           config.uri =  `mongodb://${configService.get("db_user")}:${configService.get("db_pass")}@${configService.get("db_uri")}:${configService.get("db_port")}/${configService.get("db_name")}`
         } else {
-          config.uri =  `mongodb://${configService.get("db_uri")}:${configService.get("db_port")}/${configService.get("db_name")}`
+          config.uri =  `mongodb://mongouser:password@${configService.get("db_uri")}:${configService.get("db_port")}/${configService.get("db_name")}`
         }
         return config;
       },inject: [ConfigService]
@@ -47,8 +48,8 @@ import { QuestModule } from './quest/quest.module';
     RewardsModule,
     ClientCacheModule,
     QuestModule,
+    SharingModule,
     ],
-  controllers: [],
   providers: [],
 })
 export class AppModule {}

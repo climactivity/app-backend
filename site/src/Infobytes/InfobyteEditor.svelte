@@ -78,8 +78,8 @@
     if (form._id !== selectedInfobyte._id) {
       $form.name = selectedInfobyte.name || "";
       $form.frontmatter = selectedInfobyte.frontmatter || "";
-      $form.questions = selectedInfobyte.questions || [new Question()];
-      $errors.questions = selectedInfobyte.questions || [new Question()];
+      $form.questions = selectedInfobyte.questions || [];
+      $errors.questions = selectedInfobyte.questions || [];
       $form._id = selectedInfobyte._id || "";
       $form.infobits = selectedInfobyte.infobits || [];
       $errors.infobits = selectedInfobyte.infobits || [];

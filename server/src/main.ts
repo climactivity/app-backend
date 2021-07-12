@@ -10,6 +10,7 @@ async function bootstrap() {
   if (configuration().use_static_assets) {
     app.useStaticAssets(join(__dirname, '../..', 'site/public'));
     app.useStaticAssets(join(__dirname, '../..', 'site/public'), {prefix: '/admin/'});
+    app.useStaticAssets(join(__dirname, '../..', 'site/public'), {prefix: '/s/*'});
 
   }
   app.enableCors({
