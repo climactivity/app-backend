@@ -62,7 +62,7 @@
         <div class="call-to-action">
             <h1>Die Climacitivity App</h1>
 
-            <img alt="Climacitvity App Icon" src="/img/app-icon.png" />
+            <img class="app-icon" alt="Climacitvity App Icon" src="/img/app-icon.png" />
 
             <p>
                 In unserer App gehst du mit deinem Team ein Jahr lang die Big
@@ -214,6 +214,11 @@
     }
     .socials > li {
         display: inline;
+    }
+    .app-icon {
+        max-height: 150px;
+        max-width: 150px;
+        margin: 1rem;
     }
     .store-buttons {
         display: flex;
