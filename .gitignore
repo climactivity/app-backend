@@ -8,6 +8,9 @@ report*
 img/*
 !/img/404.png
 !/img/logo.png
+!/img/app-store.svg
+!/img/appstore.png
+
 .env
 cyGameServerTs/node_modules/.bin/tsc
 cyGameServerTs/node_modules/.bin/tsserver
