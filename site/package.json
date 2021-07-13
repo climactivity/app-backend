@@ -35,6 +35,7 @@
     "svelte-check": "^1.0.0",
     "svelte-jest": "^0.3.1",
     "svelte-jester": "^1.3.0",
+    "svelte-loading-spinners": "^0.1.6",
     "svelte-preprocess": "^4.7.4",
     "test-jest": "^1.0.1",
     "ts-jest": "^26.4.4",

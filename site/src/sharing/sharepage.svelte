@@ -28,7 +28,7 @@
     } from "fontawesome-svelte";
     library.add(faInstagram, faFacebook, faTwitter, faLinkedin, faYoutube);
 
-    // app store
+    import { Pulse } from "svelte-loading-spinners";
 </script>
 
 <Meta
@@ -41,20 +41,22 @@
 <container class="wrapper">
     <div class="content">
         <div class="infobit">
-            {#await infobyteContent}
-                fatching...
-            {:then data}
-                {#if data.statusCode == 400}
-                    <span>{data.message}</span>
-                {:else}
-                    <article>
+            <article>
+                {#await infobyteContent}
+                <div style="dislplay:flex; alignItems:center; justifyContent:center;">
+                    <Pulse size="60" color="#93C11F" unit="px" duration="1s" />
+                </div>
+                {:then data}
+                    {#if data.statusCode == 400}
+                        <span>{data.message}</span>
+                    {:else}
                         <h1>{data.title}</h1>
                         <InfobitDisplay infobit={data} />
-                    </article>
-                {/if}
-            {:catch errors}
-                <span>{errors.message}</span>
-            {/await}
+                    {/if}
+                {:catch errors}
+                    <span>{errors.message}</span>
+                {/await}
+            </article>
         </div>
 
         <div class="call-to-action">
@@ -85,7 +87,6 @@
                 >
             </div>
         </div>
-
     </div>
     <footer class="footer">
         <div class="footer-container">
@@ -171,10 +172,9 @@
         font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
             "Helvetica Neue", Arial, sans-serif;
         line-height: 1.618;
-        text-rendering: optimizeLegibility;     
+        text-rendering: optimizeLegibility;
         margin: 0;
         padding: 0;
-
     }
     .wrapper {
         display: flex;
