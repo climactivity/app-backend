@@ -10,6 +10,7 @@ img/*
 !/img/logo.png
 !/img/app-store.svg
 !/img/appstore.png
+!/img/app-icon.png
 
 .env
 cyGameServerTs/node_modules/.bin/tsc
