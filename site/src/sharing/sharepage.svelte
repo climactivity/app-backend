@@ -60,7 +60,7 @@
         </div>
 
         <div class="call-to-action">
-            <h1>Die Climacitivity App</h1>
+            <h1>Die Climacitvity App</h1>
 
             <img class="app-icon" alt="Climacitvity App Icon" src="/img/app-icon.png" />
 
@@ -219,6 +219,7 @@
         max-height: 150px;
         max-width: 150px;
         margin: 1rem;
+        filter: drop-shadow(0px 5px 5px #222);
     }
     .store-buttons {
         display: flex;
