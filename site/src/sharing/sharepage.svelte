@@ -60,9 +60,9 @@
         </div>
 
         <div class="call-to-action">
-            <h1>Die Climacitvity App</h1>
+            <h1>Die Climactivity App</h1>
 
-            <img class="app-icon" alt="Climacitvity App Icon" src="/img/app-icon.png" />
+            <img class="app-icon" alt="Climactivity App Icon" src="/img/app-icon.png" />
 
             <p>
                 In unserer App gehst du mit deinem Team ein Jahr lang die Big
