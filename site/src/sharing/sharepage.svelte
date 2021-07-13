@@ -167,7 +167,7 @@
     </footer>
 </container>
 
-<style lang="scss">
+<style lang="css">
     * {
         font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
             "Helvetica Neue", Arial, sans-serif;
@@ -198,9 +198,9 @@
         align-content: center;
         align-items: center;
         background-color: rgb(249, 249, 249);
-        > ul {
-            list-style: none;
-        }
+    }
+    .footer > ul > li {
+        list-style: none;
     }
     .logo {
         width: 150px;
@@ -212,10 +212,8 @@
     .footer-container {
         margin: 0 auto;
     }
-    .socials {
-        > li {
-            display: inline;
-        }
+    .socials > li {
+        display: inline;
     }
     .store-buttons {
         display: flex;
@@ -226,15 +224,15 @@
         align-items: center;
     }
     .store-banner {
-        > img {
-            display: block;
-            object-fit: contain;
-            margin: auto;
-            max-width: 100%;
-            max-height: 100%;
-        }
         width: 150px;
         max-height: 150px;
+    }
+    .store-banner > img {
+        display: block;
+        object-fit: contain;
+        margin: auto;
+        max-width: 100%;
+        max-height: 100%;
     }
     .call-to-action {
         display: flex;
@@ -246,8 +244,6 @@
         padding: 4rem;
         max-width: 1140px;
         background-color: #edf4d9;
-        //margin: 2rem;
-        // border-radius: 64px;
     }
     .content {
         max-width: 1140px;
