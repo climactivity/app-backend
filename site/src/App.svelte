@@ -8,6 +8,7 @@
 
     import { Container } from "sveltestrap";
     import Sharepage from "./sharing/sharepage.svelte";
+    import Landing from "./Landing.svelte";
 import LoggedOutNavbar from "./LoggedOutNavbar.svelte";
     $: path = location.pathname;
 </script>
@@ -24,9 +25,7 @@ import LoggedOutNavbar from "./LoggedOutNavbar.svelte";
         </Route>
         <Route path="/">
             <LoggedOutNavbar/>
-            <Container>
-                <h1>TODO: Landing page für die App bauen</h1>
-            </Container>
+            <Landing/>
         </Route>
     </Router>
 </main>
