@@ -13,6 +13,7 @@ export class TreeTemplateDto {
     readonly ui_name: string;
 	readonly preview_name: number;
 	readonly coin_value: number;
+    readonly unlock_level: number;
 	readonly bigpoint_available: [string];
     readonly initial_state: TreeStateDto
     readonly archetype: string

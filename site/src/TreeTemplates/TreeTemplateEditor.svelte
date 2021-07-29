@@ -29,6 +29,7 @@
                 ui_name: "Test Baum",
                 preview_name: "2",
                 coin_value: 0,
+                unlock_level: 0,
                 bigpoint_available: ["ernährung"],
                 archetype: 'tree',
                 initial_state: {
@@ -165,6 +166,13 @@ select:focus{
                 on:change={handleChange}
                 on:blur={handleChange}
                 bind:value={$form.coin_value} />
+            </FormGroup>
+            <FormGroup>
+            <Label for="unlock_level">unlock_level</Label>
+            <Input  
+                on:change={handleChange}
+                on:blur={handleChange}
+                bind:value={$form.unlock_level} />
             </FormGroup>
             <FormGroup>
             <Label for="bigpoint_available">bigpoint_available</Label>

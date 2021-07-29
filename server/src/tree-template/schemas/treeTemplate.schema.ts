@@ -24,6 +24,8 @@ export class TreeTemplate {
     @Prop()
 	coin_value: number;
     @Prop()
+    unlock_level: number;
+    @Prop()
 	bigpoint_available: [string];
     @Prop()
     initial_state: TreeState;
