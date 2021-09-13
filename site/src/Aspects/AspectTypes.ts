@@ -10,7 +10,7 @@ export default interface Aspect {
     infoGraph?: any;
     localizedTrackingData?: {
         question: string;
-        footnotes: string;
+        footnote: string;
         options:
         {
             option: string,

@@ -145,7 +145,7 @@ export class AspectService {
         localizedFactors: aspectLocalizedStrings.strings == null ? null : aspectLocalizedStrings.strings.factors,
         localizedTrackingData: localizedTrackingData == null ? null : {
           question:  localizedTrackingData.strings.question,
-          footnote: localizedTrackingData.strings.footnotes ?? null,
+          footnote: localizedTrackingData.strings.footnote ?? null,
           options: aspect.trackingData.options == null ? null : aspect.trackingData.options.map(option => {
             return {
               reward: option.reward,
@@ -174,6 +174,7 @@ export class AspectService {
         forRegion: region,
         localizedTrackingData: {
           question: localizedTrackingData.strings.question,
+          footnote: localizedTrackingData.strings.footnote ?? null,
           options: aspect.trackingData.options == null ? null : aspect.trackingData.options.map(option => {
             return {
               reward: option.reward,

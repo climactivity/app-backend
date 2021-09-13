@@ -314,8 +314,9 @@
                     <Input
                         id="footnotes"
                         placeholder="Fußnoten Text"
-                        bind:value={aspect.localizedTrackingData.footnotes}
-                    />
+                        bind:value={aspect.localizedTrackingData.footnote}
+                        on:change={(e) => aspect.localizedTrackingData.footnote = e.target.value}
+                    /> 
 
 
                     {#if aspect.localizedTrackingData.options}
