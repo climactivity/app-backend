@@ -310,6 +310,14 @@
                         bind:value={aspect.localizedTrackingData.question}
                     />
 
+                    <Label for="title">Fußnoten</Label>
+                    <Input
+                        id="footnotes"
+                        placeholder="Fußnoten Text"
+                        bind:value={aspect.localizedTrackingData.footnotes}
+                    />
+
+
                     {#if aspect.localizedTrackingData.options}
                         <div>
                             <Table>

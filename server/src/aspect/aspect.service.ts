@@ -74,6 +74,7 @@ export class AspectService {
           language: createAspectForLocaleDto.forLanguage,
           strings: {
             question: createAspectForLocaleDto.localizedTrackingData == null ? null : createAspectForLocaleDto.localizedTrackingData.question,
+            footnote: createAspectForLocaleDto.localizedTrackingData == null ? null : createAspectForLocaleDto.localizedTrackingData.footnote,
             options:localizedOptions == null ? null : localizedOptions.map(localizedOption => {
               let { locale_id, value, level, co2value, waterFactor } = localizedOption
               return { locale_id, value, level, co2value, waterFactor }
@@ -144,6 +145,7 @@ export class AspectService {
         localizedFactors: aspectLocalizedStrings.strings == null ? null : aspectLocalizedStrings.strings.factors,
         localizedTrackingData: localizedTrackingData == null ? null : {
           question:  localizedTrackingData.strings.question,
+          footnote: localizedTrackingData.strings.footnotes ?? null,
           options: aspect.trackingData.options == null ? null : aspect.trackingData.options.map(option => {
             return {
               reward: option.reward,

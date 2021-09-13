@@ -16,6 +16,7 @@ export class TrackingDataLocalization {
     language: string;
     strings: {
         question: string; 
+        footnote: string;
         options: {locale_id: string, value: string}[]
     }
 }

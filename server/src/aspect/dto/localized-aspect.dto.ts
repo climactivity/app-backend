@@ -12,6 +12,7 @@ export class LocalizedAspectDto {
     readonly infoGraph?: any;
     readonly localizedTrackingData?: {
         question: string; 
+        footnote?: string;
         options: 
             {
                 option: string, 
