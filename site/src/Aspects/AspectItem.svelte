@@ -314,6 +314,7 @@
                     <Input
                         id="footnotes"
                         placeholder="Fußnoten Text"
+                        type="textarea"
                         bind:value={aspect.localizedTrackingData.footnote}
                         on:change={(e) => aspect.localizedTrackingData.footnote = e.target.value}
                     /> 
