@@ -18,6 +18,7 @@ import { ClientCacheModule } from './client-cache/client-cache.module';
 import { AppController } from './app.controller';
 import { QuestModule } from './quest/quest.module';
 import { SharingModule } from './sharing/sharing.module';
+import { AdminconfigModule } from './adminconfig/adminconfig.module';
 
 @Module({
   imports: [
@@ -49,6 +50,7 @@ import { SharingModule } from './sharing/sharing.module';
     ClientCacheModule,
     QuestModule,
     SharingModule,
+    AdminconfigModule,
     ],
   providers: [],
 })

@@ -60,7 +60,4 @@ export const isProd = __frontend_env.env.isProd
 const apiUrl = (__frontend_env.env.SVELTE_APP_API_HOST_BASE || '')
 export var baseUrl = (__frontend_env && isProd ? apiUrl : window.location.href.replace(window.location.hash, ""))
 console.log("base URL set to: ", baseUrl);
-
-export const myFetch = () => {
-
-}
+console.log(JSON.stringify(__frontend_env.env))

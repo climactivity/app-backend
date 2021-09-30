@@ -1,0 +1,30 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "build",
+			"path": "server/",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: build - server",
+			"detail": "nest build"
+		},
+		{
+			"type": "npm",
+			"script": "start:dev",
+			"path": "server/",
+			"problemMatcher": [],
+			"label": "npm: start:dev - server",
+			"detail": "nest start --watch"
+		},
+		{
+			"type": "npm",
+			"script": "dev",
+			"path": "site/",
+			"problemMatcher": [],
+			"label": "npm: dev - site",
+			"detail": "rollup -c -w"
+		}
+	]
+}
