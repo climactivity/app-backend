@@ -126,6 +126,9 @@
                         <option value={"public_engagement"}
                             >Zelt des öffentlichen Engagements</option
                         >
+                        <option value={"accounting"}
+                        >Bilanzierung</option
+                        >
                     </Input>
 
                     <Label for="themenmonat">Themenmonat</Label>
