@@ -15,12 +15,13 @@
     import MediaPage from './ImageUpload/MediaPage.svelte';
     import MyNavLink from "./MyNavLink.svelte";
     import TreeTemplateView from "./TreeTemplates/TreeTemplateView.svelte";
-import QuestsPage from "./Quests/QuestsPage.svelte";
+    import QuestsPage from "./Quests/QuestsPage.svelte";
+    import AnalyticsPage from "./Analytics/AnalyticsPage.svelte"
 
     let tabs = [
-        { target: "health", name: "Health", disabled: true },
-        { target: "analytics", name: "Analytics", disabled: true },
-        { target: "logs", name: "Logs", disabled: true },
+        // { target: "health", name: "Health", disabled: true },
+        { target: "analytics", name: "Analytics", disabled: false },
+        // { target: "logs", name: "Logs", disabled: true },
         { target: "baeume", name: "Bäume" },
         { target: "aspects", name: "Aspekte" },
         { target: "infobytes", name: "Infobytes" },
@@ -101,7 +102,8 @@ import QuestsPage from "./Quests/QuestsPage.svelte";
         <MediaPage />
     {:else if activeTab === "quests"}
         <QuestsPage />
-
+    {:else if activeTab === "analytics"}
+        <AnalyticsPage />
     {/if}
 </main>
 

@@ -126,6 +126,9 @@
                         <option value={"public_engagement"}
                             >Zelt des öffentlichen Engagements</option
                         >
+                        <option value={"accounting"}
+                        >Bilanzierung</option
+                        >
                     </Input>
 
                     <Label for="themenmonat">Themenmonat</Label>
@@ -314,8 +317,10 @@
                     <Input
                         id="footnotes"
                         placeholder="Fußnoten Text"
-                        bind:value={aspect.localizedTrackingData.footnotes}
-                    />
+                        type="textarea"
+                        bind:value={aspect.localizedTrackingData.footnote}
+                        on:change={(e) => aspect.localizedTrackingData.footnote = e.target.value}
+                    /> 
 
 
                     {#if aspect.localizedTrackingData.options}
