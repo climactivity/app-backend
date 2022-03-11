@@ -3,7 +3,7 @@
 
 ### Frontend
 
-Das Frontend liegt in site und kann mit eigenen ```npm``` Befehlen gebaut werden. Zurzeit gibt es nur einen Editor für Infobytes/Fragen. 
+Das Frontend liegt in [site](./site) und kann mit eigenen ```npm``` Befehlen gebaut werden. Zurzeit gibt es nur einen Editor für Infobytes/Fragen. 
 
 Der Editor basiert auf [svelte-forms-lib](https://github.com/tjinauyeung/svelte-forms-lib). Damit können die Form-Felder mit Observables verbunden werden. 
 
@@ -11,7 +11,8 @@ Der Infobit-Editor benutzt [Svelte-Prosemirror](https://github.com/christianhein
 
 ### Backend
 
-Der ServerCode ist jetzt in ./server zuhause. 
+Der ServerCode liegt in [server](./server).
+
 Das Frontend wird im dev Modus mit ```NestExpressApplication.useStaticAssets```angezeigt. Die Production-Konfiguration bringt einen nginx-Container mit, der die statischen Inhalte ausliefert.
 
 Als Persistenz Schicht wird MongoDb mit Mongoose Modul betrieben (die Standard-Lösung von NestJS, TypeORM, ist zwar schick aber auch recht langsam. Ausserdem ist der Schema-Builder von Mongoose besser auf NoSQL ausgerichtet als TypeORM.
@@ -22,40 +23,10 @@ Es gibt auch einen Editor für TreeTemplates. Diese definieren die Eigenschaften
 
 ## Fortschritt
 
-### Content-Editor für Info-Pakete und Quizfragen
-#### Meta-Daten
-- [~] Sprache zuweisen (UI existiert)
-- [~] Region zuweisen (UI existiert)
-- [~] Veröffentlichen (UI existiert)
-- [ ] Revisionen verwalten?
+Aufstellung von aktuellen problemen:[TODO.md](/TODO.md)
 
-#### Inhalt
-- [x] Titel anlegen
-- [x] Frontmatter (aka das, was in der Sprechblase am Anfang des Info-Moduls sthet) anlegen
-- [ ] Icon hochladen
+Wird jetzt unter [cryptpad](https://cryptpad.fr/kanban/#/2/kanban/view/2EzmoZzILWMbaPiQ0xY523P7rTjb1OCtxsBQmcU-2j0/) verwaltet. 
 
-Infobits
-- [x] Infobits anlegen
-- [ ] Rich-Text Formatierung in Infobits
-- [ ] Bullet-Lists in Infobits
-- [ ] Tabellen in Infobits 
-- [ ] Grafiken in Infobits 
-- [ ] Eingaben validierung
-
-Quiz-Fragen
-- [x] Fragen anlegen
-- [x] Antworten anlegen
-- [ ] Eingaben validierung
-
-Tree-Templates
-- [x] CRUD operationen
-- [ ] Vorschau für die ausgewählte Textur
-- [ ] Feste Optionen für die Textur- und Sektorauswahl
-
-#### Editor UI 
-- es gibt kein Feedback ob speichern erfolgreich war
-- man kann sich mit den ```-```-Buttons leicht in den Fuß schießen
-- validierung ist zwar eingeschaltat, ich habe aber noch kein Schema für [yup](https://svelte-forms-lib-sapper-docs.now.sh/yup) angelegt
 
 ## Running the backend
 
@@ -101,8 +72,6 @@ $ npm run validate
 ```
 
 ## Docker:
-#### kommt bald(tm)
-(sobald ich den Configservice aus meinem Test-Projekt hier integriert habe)
 
 1. Konfiguration anlegen:
 ```bash
