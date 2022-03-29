@@ -87,14 +87,14 @@
                     />
                 </InputGroup>
             </Col>
-            <Col>
+            <!-- <Col>
                 <InputGroup>
                     <InputGroupAddon addonType="prepend">
                         <InputGroupText>@</InputGroupText>
                     </InputGroupAddon>
                     <Input placeholder="icon" />
                 </InputGroup>
-            </Col>
+            </Col> -->
         </Row>
         <Row>
             <Col>
