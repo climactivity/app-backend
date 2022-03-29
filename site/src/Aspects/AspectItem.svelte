@@ -490,7 +490,7 @@
             </Col>
         </Row>
 
-        <Row>
+        <!-- <Row>
             <h5 class="mt-3">Quiz Elements</h5>
             <Container>
                 <ListGroup>
@@ -500,7 +500,7 @@
                     <ListGroupItem action>Delta</ListGroupItem>
                 </ListGroup>
             </Container>
-        </Row>
+        </Row> -->
         <Row>
             <Label for={"published"} style="padding: 5px;">
                 <Input
