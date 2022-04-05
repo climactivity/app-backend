@@ -50,7 +50,7 @@ const flashToast = (duration) => {
 <Row>
     <Col>
         <Button success on:click={toggleModal} style="width: 100%">
-            Aufgabe erstellen
+            Aufgabe erstellen 
         </Button>
             
         <QuestList bind:this={questList} questModifiedCallback={questModifiedCallback} questSelectedCallback={questSelected}/>
