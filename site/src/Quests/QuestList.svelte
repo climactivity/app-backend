@@ -44,7 +44,7 @@ import { Card } from 'sveltestrap'
             selectedQuest = quest
         }
     }}>
-        {quest.title}
+        {quest.title} - {quest.alertTrackedAspect}
 </div>
     {/each}
 {/await}
