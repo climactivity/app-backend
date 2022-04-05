@@ -522,7 +522,7 @@
                             handleAdd();
                             // notifier.success("Änderungen gespeichert!", 2000)
                             waiting = false;
-                        });
+                        }); //.catch(err => notifier.error(err, 2000))
                     }}
                     >{#if waiting}
                         <Spinner info type="grow" />
