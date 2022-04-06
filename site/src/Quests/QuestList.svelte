@@ -2,6 +2,7 @@
 import { baseUrl } from "../stores";
 import { QuestDto } from "./QuestTypes";
 import { Card } from 'sveltestrap' 
+import { onMount } from "svelte";
 
     export const refetch = () => {
         console.log("refreshing quest list");
@@ -25,17 +26,37 @@ import { Card } from 'sveltestrap'
         return await response.json();
     };
 
-    
     let questPromise: Promise<any[]> = fetchQuests(); 
-
-
+    
+    // let newData
+    // onMount(async ()=>{
+    //      newData = await questPromise;
+    //      newData.sort((a, b) => {
+    //         if (a.title < b.title) {
+    //             return -1;
+    //         }
+    //         if (a.title > b.title) {
+    //             return 1;
+    //         }
+    //         return 0;
+    //     });
+    //     console.log(newData)
+    // })
 
 </script>
 
 {#await questPromise}
     Lade ... 
 {:then quests} 
-    {#each quests as quest}
+    {#each quests.sort((a, b) => {
+        if (a.title < b.title) {
+            return -1;
+        }
+        if (a.title > b.title) {
+            return 1;
+        }
+        return 0;
+    }) as quest}
     <div class={quest == selectedQuest ? "quest-card active" : "quest-card"} on:click={ () => {
         console.log(quest)
         if(questSelectedCallback) {
