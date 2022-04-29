@@ -35,7 +35,7 @@ import { AdminconfigModule } from './adminconfig/adminconfig.module';
         } else {
           config.uri =  `mongodb://mongouser:password@${configService.get("db_uri")}:${configService.get("db_port")}/${configService.get("db_name")}`
         }
-        config.uri = `mongodb+srv://mongouser:KzjtVchPgc9ygfp@cluster0.p38zb.mongodb.net/nest?retryWrites=true&w=majority`
+        config.uri = `mongodb+srv://mongouser:<passwrod>@cluster0.p38zb.mongodb.net/nest?retryWrites=true&w=majority`
         return config;
       },inject: [ConfigService]
     }),
