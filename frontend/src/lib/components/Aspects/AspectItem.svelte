@@ -4,7 +4,6 @@
         Col,
         Button,
         InputGroup,
-        InputGroupAddon,
         InputGroupText,
         Input,
         ListGroup,
@@ -24,13 +23,10 @@
     import { Confirm } from "svelte-confirm";
     import type Aspect from "./AspectTypes";
     import { createEventDispatcher } from "svelte";
-    import { faVectorSquare } from "@fortawesome/free-solid-svg-icons";
-    import App from "../App.svelte";
     import { postAspect } from "./AspectData";
-    import { isProd } from "../stores";
-    import RewardDisplayer from "../Rewards/RewardDisplayer.svelte";
-    import RewardForm from "../Rewards/RewardForm.svelte";
-    import { Reward } from "../Rewards/RewardTypes";
+    import { isProd } from "../../stores/stores";
+    import RewardForm from "$lib/components/Rewards/RewardForm.svelte";
+    import { Reward } from "$lib/components/Rewards/RewardTypes";
     export let aspect: Aspect;
     let newFactor = {
         name: "",
@@ -78,9 +74,6 @@
         <Row>
             <Col>
                 <InputGroup>
-                    <InputGroupAddon addonType="prepend">
-                        <InputGroupText>@</InputGroupText>
-                    </InputGroupAddon>
                     <Input
                         placeholder="Name des Aspektes"
                         bind:value={aspect.name}

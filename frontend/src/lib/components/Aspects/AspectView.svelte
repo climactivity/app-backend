@@ -1,5 +1,4 @@
 <script lang="ts">
-    import {Col, Row} from 'sveltestrap'
     import AspectList from "./AspectList.svelte";
     import AspectItem from "./AspectItem.svelte";
     import {mockAspects} from "./mockData";
@@ -32,12 +31,12 @@ import { onMount } from 'svelte';
 </script>
 
 <section>
-    <Row>
-        <Col xs="12" sm="3">
+    <div>
+        <div>
             <AspectList bind:aspects={$aspects} bind:selectedAspect={$selectedAspect}/>
-        </Col>
-        <Col sm="9">
-            <AspectItem aspect={$selectedAspect} on:deleteAspect={handleDelete} on:addAspect={handleAdd}/>
-        </Col>
-    </Row>
+        </div>
+        <div>
+            <!-- <AspectItem aspect={$selectedAspect} on:deleteAspect={handleDelete} on:addAspect={handleAdd}/> -->
+        </div>
+    </div>
 </section>

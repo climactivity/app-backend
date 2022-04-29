@@ -1,5 +1,6 @@
-import { baseUrl } from "../stores";
+import { baseUrl } from "$lib/stores/stores";
 import type Aspect from "./AspectTypes";
+import type { getStores } from "$app/stores";
 
 export const getAspects : () => Promise<Aspect[]> = async () => {
     const response = await fetch(`${baseUrl}localized-aspect`, {
