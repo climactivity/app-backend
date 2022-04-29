@@ -15,6 +15,7 @@ import LoggedOutNavbar from "./LoggedOutNavbar.svelte";
 
 <main>
     <NotificationDisplay />
+
     <Router>
         <Route path="admin">
             <Dashboard />

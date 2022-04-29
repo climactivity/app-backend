@@ -11,16 +11,16 @@
         CardHeader,
         CardFooter,
     } from "sveltestrap";
-    import AspectAsyncCombobox from "../Infobytes/atoms/AspectAsyncCombobox.svelte";
-    import { baseUrl } from "../stores";
+    // import AspectAsyncCombobox from "../Infobytes/atoms/AspectAsyncCombobox.svelte";
+    import { baseUrl } from "$lib/stores/stores";
     import {
         FilterType,
         QuestAspectFilter,
         QuestDto,
         QuestQuestFilter,
     } from "./QuestTypes";
-    import RichTextEditor from "../RichTextEditor.svelte";
-    import ImagePicker from "../ImageUpload/ImagePicker.svelte";
+    import RichTextEditor from "$lib/components/RichTextEditor.svelte";
+    import ImagePicker from "$lib/components/ImageUpload/ImagePicker.svelte";
     import RewardForm from "../Rewards/RewardForm.svelte";
 
     

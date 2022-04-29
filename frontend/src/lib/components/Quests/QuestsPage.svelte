@@ -1,12 +1,12 @@
 <script lang="ts">
     import QuestList from './QuestList.svelte'
     import QuestEdit from './QuestEdit.svelte'
-    import {Row, Col, Card, CardBody, CardFooter, CardTitle, CardHeader, Button, Modal, ModalBody, ModalFooter, ModalHeader, Input } from 'sveltestrap' 
+    import {Row, Col, Card, CardBody, CardFooter, CardTitle, CardHeader, Button, Modal, ModalBody, ModalFooter, ModalHeader, Input,Toast, ToastBody, ToastHeader  } from 'sveltestrap' 
     import { QuestDto } from './QuestTypes';
-    import { Toast, ToastBody, ToastHeader } from 'sveltestrap';
-import { currentInfobit, currentQuestion } from '../stores';
 
-let modalOpen:any = false || localStorage.getItem('modelOpen');
+import { currentInfobit, currentQuestion } from '$lib/stores/stores';
+
+let modalOpen:any = false ;
 const toggleModal = () => {
     modalOpen = !modalOpen;
     localStorage.setItem('modelOpen', modalOpen);
@@ -39,27 +39,27 @@ const flashToast = (duration) => {
 
 </script>
 
-<div class={showToast ? "p-3 mb-3 absolute" : "hidden absolute"} >
+<!-- <div class={showToast ? "p-3 mb-3 absolute" : "hidden absolute"} >
     <Toast class="mr-1" success isOpen={showToast}>
       <ToastHeader>
         Aufgabe hochgeladen!
         </ToastHeader>
     </Toast>
-</div>
+</div> -->
 
 
 
-<Row>
-    <Col>
-        <Button success on:click={toggleModal} style="width: 100%">
+<div>
+    <div>
+        <button success on:click={toggleModal} style="width: 100%">
             Aufgabe erstellen
-        </Button>
+        </button>
             
         <QuestList bind:this={questList} questModifiedCallback={questModifiedCallback} questSelectedCallback={questSelected}/>
-    </Col>
+    </div>
     {#if modalOpen}
-    <Col xs="12" md="9">
+    <div xs="12" md="9">
         <QuestEdit questModifiedCallback={questModifiedCallback} quest={currentQuest}/>
-    </Col>
+    </div>
     {/if}    
-</Row>
+</div>

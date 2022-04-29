@@ -1,1 +1,7 @@
-<h1 class='text-3xl bg-red-600'>quests</h1>
+<script>
+import Quests from '$lib/components/Quests/QuestsPage.svelte';
+
+</script>
+<h1 class=''>
+    <Quests/>
+</h1>
