@@ -57,5 +57,5 @@ export const currentQuestionName: Writable<string> = writable(null)
 export const currentQuestionIndex: Writable<number> = writable(null)
 export const currentQuestion: Writable<Question> = writable(null)
 export const isProd = false
-export const baseUrl = '/'
+export const baseUrl = 'http://localhost:3000/admin/';
 const apiUrl = ('')

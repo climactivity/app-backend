@@ -36,7 +36,7 @@ import { onMount } from 'svelte';
             <AspectList bind:aspects={$aspects} bind:selectedAspect={$selectedAspect}/>
         </div>
         <div>
-            <!-- <AspectItem aspect={$selectedAspect} on:deleteAspect={handleDelete} on:addAspect={handleAdd}/> -->
+            <AspectItem aspect={$selectedAspect} on:deleteAspect={handleDelete} on:addAspect={handleAdd}/>
         </div>
     </div>
 </section>
