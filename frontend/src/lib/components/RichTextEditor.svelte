@@ -3,10 +3,9 @@
   import ProsemirrorEditor from "prosemirror-svelte";
   import { exampleSetup } from "prosemirror-example-setup";
   import { addListNodes } from "prosemirror-schema-list";
-  import { Schema, DOMParser } from "prosemirror-model";
-  import { EditorState, TextSelection } from "prosemirror-state";
+  import { Schema } from "prosemirror-model";
+  import { EditorState } from "prosemirror-state";
   import {
-    createRichTextEditor,
     fromJSON,
     richTextSchema,
     toJSON,
