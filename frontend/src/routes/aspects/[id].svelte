@@ -21,62 +21,33 @@
 
 <script lang="ts">
     import ContentDebug from "$lib/components/Editor/content-debug.svelte";
-import ContentEditor from "$lib/components/Editor/content-editor.svelte";   
+    import ContentEditor from "$lib/components/Editor/content-editor.svelte";
     import type { Content } from "$lib/components/Editor/editor-types";
     import StringEdit from "$lib/components/Editor/StringEdit.svelte";
+    import ContentEditorActions from "$lib/components/Editor/content-editor-actions.svelte";
     export let data: Content;
 </script>
 
 <div>
+    {#if data}
+        <ContentEditorActions bind:data />
+        <div>
+            <StringEdit
+                label="Name"
+                type="string"
+                placeholder="Name"
+                value={data.name}
+                name="name"
+            />
+            <StringEdit
+                label="Titel"
+                type="string"
+                placeholder="Titel der in der App angezeigt wird"
+                value={data.title}
+                name="title"
+            />
+        </div>
 
-    {#if data} 
-        <ContentEditor 
-            bind:data={data}
-            extractor={{
-                name: {
-                    component: StringEdit,
-                    type: "string",
-                    label: "Name",
-                    placeholder: "Name",
-                    name: "name"
-                },
-
-                title: {
-                    component: StringEdit,
-                    type: "string",
-                    label: "Titel",
-                    placeholder: "Titel der in der App angezeigt wird",
-                    name: "title"
-                },
-
-            }}
-        />
-
-
-        <ContentEditor 
-        bind:data={data}
-        extractor={{
-            name: {
-                component: StringEdit,
-                type: "string",
-                label: "Name",
-                placeholder: "Name",
-                name: "name"
-            },
-
-            title: {
-                component: StringEdit,
-                type: "string",
-                label: "Titel",
-                placeholder: "Titel der in der App angezeigt wird",
-                name: "title"
-            },
-
-        }}
-    />
-
-
-
-        <ContentDebug data={data}/>
+        <ContentDebug {data} />
     {/if}
 </div>
