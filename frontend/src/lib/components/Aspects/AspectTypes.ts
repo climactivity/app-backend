@@ -1,4 +1,6 @@
-export default interface Aspect {
+import type { Content } from "../Editor/editor-types";
+
+export default interface Aspect extends Content {
     themenmonat: string,
     templateType: string,
     published: boolean;

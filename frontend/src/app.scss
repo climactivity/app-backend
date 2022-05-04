@@ -2,3 +2,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@layer utilities {
+
+    .cta {
+        @apply bg-lime-600 text-white
+    }
+
+    .important {
+        @apply bg-blue-600 text-white
+    }
+
+}
