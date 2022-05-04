@@ -13,6 +13,19 @@ const config = {
     }),
   ],
 
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: '@use "src/variables.scss" as *;',
+        },
+      },
+    },
+    ssr: {
+      noExternal: ['@fortawesome/*'],
+    }
+  },
+  
   kit: {
     adapter: adapter(),
 

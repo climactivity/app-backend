@@ -13,55 +13,61 @@
   export let key;
   let editorState;
   let focusEditor;
-  if (browser) {
-    const mySchema = new Schema({
-      nodes: addListNodes(
-        richTextSchema.spec.nodes,
-        "paragraph block*",
-        "block"
-      ),
-      marks: richTextSchema.spec.marks,
-    });
-    const plugins = pluginSetup({
-      schema: mySchema,
-      history: false,
-      floatingMenu: false,
-    });
-    console.log(mySchema, richTextSchema);
-    // create the initial editor state
-    editorState = EditorState.create({
-      schema: mySchema,
-      doc: undefined,
-      selection: undefined,
-      plugins,
-    });
-    const updateEditorState = (key) => {
-      console.log(key, value);
-      if (value === undefined) {
+  const mySchema = new Schema({
+    nodes: addListNodes(richTextSchema.spec.nodes, "paragraph block*", "block"),
+    marks: richTextSchema.spec.marks,
+  });
+  const plugins = pluginSetup({
+    schema: mySchema,
+    history: false,
+    floatingMenu: false,
+  });
+  console.log(mySchema, richTextSchema);
+  // create the initial editor state
+  editorState = EditorState.create({
+    schema: mySchema,
+    doc: undefined,
+    selection: undefined,
+    plugins,
+  });
+  const updateEditorState = (key) => {
+    console.log(key, value);
+    if (value === undefined) {
+      editorState = EditorState.create({
+        schema: mySchema,
+        doc: undefined,
+        selection: undefined,
+        plugins,
+      });
+    } else {
+      try {
+        editorState = fromJSON(value, mySchema, plugins);
+      } catch (e) {
         editorState = EditorState.create({
           schema: mySchema,
           doc: undefined,
           selection: undefined,
           plugins,
         });
-      } else {
-        try {
-          editorState = fromJSON(value, mySchema, plugins);
-        } catch (e) {
-          editorState = EditorState.create({
-            schema: mySchema,
-            doc: undefined,
-            selection: undefined,
-            plugins,
-          });
 
-          //editorState = createRichTextEditor(value, plugins);
-          console.log(value);
-          console.log(e);
-        }
+        //editorState = createRichTextEditor(value, plugins);
+        console.log(value);
+        console.log(e);
       }
-    };
+    }
+  };
+
+  function preventDefault(event) {
+    event.preventDefault();
   }
+
+  // function handleTransaction(event) {
+  //   preventDefault(event);
+
+  onMount(() => focusEditor());
+
+  $: updateEditorState(key);
+
   function handleTransaction(event) {
     preventDefault(event);
 
@@ -69,17 +75,10 @@
     editorState = event.detail.editorState;
     value = toJSON(editorState);
   }
-
-  function preventDefault(event) {
-    event.preventDefault();
-  }
-  onMount(() => focusEditor());
-
-  //$: updateEditorState(key);
 </script>
 
 <svelte:head>
-	<link rel="stylesheet" href="/styles/pm-menu.css">
+  <link rel="stylesheet" href="/styles/pm-menu.css" />
 </svelte:head>
 
 <div class="pm-editor justify-content-between">
@@ -112,6 +111,11 @@
     height: 46vh;
   }
 
-
-
+  /* fix list styles */
+  :global(.ProseMirror ul) {
+    list-style-type: disc;
+  }
+  :global(.ProseMirror ol) {
+    list-style-type: decimal;
+  }
 </style>

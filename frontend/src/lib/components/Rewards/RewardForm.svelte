@@ -1,35 +1,33 @@
 <script lang="ts">
-    import { Card, Label, Input } from "sveltestrap";
 import type { Reward } from "./RewardTypes";
-
-    export let reward: Reward;
+export let reward: Reward;
 </script>
 
-<Card body>
+<div class="body">
     <h5 class="mt-3">Reward</h5>
 
-    <Label for="xp">xp</Label>
-    <Input
+    <label for="xp">xp</label>
+    <input
         id="xp"
         placeholder="xp"
         bind:value={reward.xp}
     />
-    <Label for="coins">coins</Label>
-    <Input
+    <label for="coins">coins</label>
+    <input
         id="coins"
         placeholder="coins"
-        number
+        type="number"
         bind:value={reward.coins}
     />
-    <Label for="water">water</Label>
-    <Input
+    <label for="water">water</label>
+    <input
         id="water"
         placeholder="water"
-        number
+        type="number"
         bind:value={reward.water}
     />
 
-</Card>
+</div>
 <style>
     .reward {
         border: 1px;
