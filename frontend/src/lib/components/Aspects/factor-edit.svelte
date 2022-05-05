@@ -2,6 +2,7 @@
     import type { LocalizedFactor } from "./AspectTypes";
     import { flip } from "svelte/animate";
 import StringEdit from "../Editor/string-edit.svelte";
+import YesNoDialog from "../YesNoDialog.svelte";
 
     export let value: LocalizedFactor[];
     let hovering: boolean | number = false;
@@ -29,6 +30,10 @@ import StringEdit from "../Editor/string-edit.svelte";
         const start = i;
         event.dataTransfer.setData("text/plain", start);
     };
+
+    const addFactor = (event) => {
+        value = [...value, {id: value.length, intro: "", name: "", editing: true}]
+    }
 </script>
 
 <div class="shadow-md rounded-sm bg-white">
@@ -52,6 +57,14 @@ import StringEdit from "../Editor/string-edit.svelte";
             </div>
             <div>
                 <StringEdit bind:value={f.intro} id="intro" placeholder="intro" type="textarea" rows="5" class="w-full"/>
+            </div>
+
+            <div class="grid place-content-center">
+                <YesNoDialog let:confirm="{confirm}" onConfirm={() => value = value.filter((e) => e.id!==f.id)}>
+                    <button class="" on:click|preventDefault={(event) => {
+                        confirm();
+                    }}>💣</button>
+                </YesNoDialog>
             </div>
 
             <div class="grid place-content-center">
@@ -83,6 +96,7 @@ import StringEdit from "../Editor/string-edit.svelte";
 
         </div>
     {/each}
+    <button on:click={addFactor}>+</button>
 </div>
 
 <style lang="scss">
