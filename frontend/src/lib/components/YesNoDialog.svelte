@@ -1,21 +1,25 @@
 <script lang="ts">
-export let text = "Sicher?", confirmAction = "Ja", cancelAction = "Nein";
+export let caption="Sicher?", text = "", confirmAction = "Ja", cancelAction = "Nein";
 export let onConfirm: Function;
 export let confirm = () => {
     console.log("hi")
     visible = !visible
 }
 
-let visible = false
+let visible = true
 </script>
 
 <div >
 
-<main class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" class:visible={visible}>
+<main class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-2xl z-[10000]" class:visible={visible}>
+    
+    <div class="bg-red-300 p-2">
+        <span>{caption}</span>
+    </div>
     {text}
-    <div class="actions">
-        <button>{confirmAction}</button>
-        <button>{cancelAction}</button>
+    <div class="actions p-2">
+        <button on:click={confirm}>{cancelAction}</button>
+        <button on:click={onConfirm}>{confirmAction}</button>
     </div>
 </main>
 
