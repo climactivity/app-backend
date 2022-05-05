@@ -14,4 +14,12 @@
         @apply bg-blue-600 text-white
     }
 
+    .danger {
+        @apply bg-red-600 text-white
+    }
+
+    .button {
+        @apply rounded-md shadow-md p-1
+    }
+
 }

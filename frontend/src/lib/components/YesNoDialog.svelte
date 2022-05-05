@@ -11,15 +11,15 @@ let visible = true
 
 <div >
 
-<main class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-2xl z-[10000]" class:visible={visible}>
+<main class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-2xl z-[10000] bg-white" class:visible={visible}>
     
     <div class="bg-red-300 p-2">
         <span>{caption}</span>
     </div>
     {text}
     <div class="actions p-2">
-        <button on:click={confirm}>{cancelAction}</button>
-        <button on:click={onConfirm}>{confirmAction}</button>
+        <button on:click={confirm} class="button mr-8">{cancelAction}</button>
+        <button on:click={onConfirm} class="danger button">{confirmAction}</button>
     </div>
 </main>
 
@@ -28,6 +28,6 @@ let visible = true
 
 <style lang="scss">
     .visible {
-        @apply hidden
+        @apply hidden transition-all
     }
 </style>
