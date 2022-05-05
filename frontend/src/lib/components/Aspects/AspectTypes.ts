@@ -27,15 +27,18 @@ export default interface Aspect extends Content {
     forLanguage: string;
     message?: string;
     bigpoint?: string;
-    localizedFactors?: {
-        id: number,
-        name: string,
-        intro: string
-    }[]
+    localizedFactors?: LocalizedFactor[]
 
 }
 
-interface TrackingOption {
+
+export interface LocalizedFactor {
+        editing?: boolean;
+        id: number,
+        name: string,
+        intro: string
+}
+export interface TrackingOption {
     id: string,
     answer: string,
     xp: number,
