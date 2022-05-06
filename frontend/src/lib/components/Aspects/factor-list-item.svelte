@@ -1,10 +1,9 @@
 <script lang="ts">
-import StringEdit from "../Editor/string-edit.svelte";
-import YesNoDialog from "../YesNoDialog.svelte";
+    import StringEdit from "../Editor/string-edit.svelte";
+    import YesNoDialog from "../YesNoDialog.svelte";
 
-
-    export let values,value;
-    export let index
+    export let values, value;
+    export let index;
 </script>
 
 <div>
@@ -36,7 +35,7 @@ import YesNoDialog from "../YesNoDialog.svelte";
         <YesNoDialog
             let:confirm
             onConfirm={() => {
-                values = values.filter((e) => e.id !== value.id)
+                values = values.filter((e) => e.id !== value.id);
             }}
         >
             <button
