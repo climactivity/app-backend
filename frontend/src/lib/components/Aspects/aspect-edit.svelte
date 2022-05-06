@@ -7,9 +7,11 @@ import ContentDebug from "../Editor/content-debug.svelte";
     import SelectEdit from "../Editor/select-edit.svelte";
 
     import StringEdit from "../Editor/string-edit.svelte";
+import type Aspect from "./AspectTypes";
 import FactorEdit from "./factor-edit.svelte";
+import TrackingEdit from "./tracking-edit.svelte";
 
-    export let data;
+    export let data: Aspect;
 </script>
 
 <ContentEditorActions bind:data />
@@ -145,8 +147,9 @@ import FactorEdit from "./factor-edit.svelte";
 
 <ContentEditorSection label="Gesichtspunkte">
 <FactorEdit bind:value={data.localizedFactors}/>
-
 </ContentEditorSection>
 
-<ContentEditorSection label="Tracking" />
+<ContentEditorSection label="Tracking" >
+<TrackingEdit bind:value={data.localizedTrackingData}/>
+</ContentEditorSection>
 <ContentDebug {data} />

@@ -10,19 +10,7 @@ export default interface Aspect extends Content {
     frontmatter: string;
     icon?: any;
     infoGraph?: any;
-    localizedTrackingData?: {
-        question: string;
-        footnote: string;
-        options:
-        {
-            option: string,
-            reward: any,
-            level: number,
-            co2value?: number,
-            waterFactor: number
-        }[]
-
-    };
+    localizedTrackingData?: LocalizedTrackingData;
     forRegion: string;
     forLanguage: string;
     message?: string;
@@ -31,6 +19,19 @@ export default interface Aspect extends Content {
 
 }
 
+export interface LocalizedTrackingData {
+    question: string;
+    footnote: string;
+    options: LocalizedTrackingOption[]
+}
+
+export interface LocalizedTrackingOption {
+    option: string,
+    reward: any,
+    level: number,
+    co2value?: number,
+    waterFactor: number
+}
 
 export interface LocalizedFactor {
         editing?: boolean;
