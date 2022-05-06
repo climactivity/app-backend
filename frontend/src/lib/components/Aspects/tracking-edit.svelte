@@ -9,10 +9,8 @@ import FactorListItem from "./factor-list-item.svelte";
 import ReorderableList from "../ReorderableList.svelte";
 import TrackingOptionItem from "./tracking-option-item.svelte";
 
-console.log(value)
-const addTrackingOption = (event) => {
-    let options: LocalizedTrackingOption[] = [...value.options, {
-        level: value.options.length,
+let emptyTrackingOption = (level) => ({
+        level: level,
         option: "",
         waterFactor: 0,
         co2value: 0,
@@ -21,8 +19,15 @@ const addTrackingOption = (event) => {
             water: 0,
             xp: 0,
         }
-    }];
-    value = {...value, options};
+    })
+    
+const addTrackingOption = (event) => {
+    if (!value.options) {
+        value = {...value, options: [emptyTrackingOption(0)]}
+    } else {
+        let options: LocalizedTrackingOption[] = [...value.options, emptyTrackingOption(value.options.length)];
+        value = {...value, options};
+    }
 };
 
 </script>

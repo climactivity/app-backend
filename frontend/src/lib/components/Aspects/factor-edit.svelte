@@ -3,7 +3,7 @@
     import FactorListItem from "./factor-list-item.svelte";
     import ReorderableList from "../ReorderableList.svelte";
 
-    export let value: LocalizedFactor[];
+    export let value: LocalizedFactor[] = [];
 
     const addFactor = (event) => {
         value = [

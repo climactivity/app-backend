@@ -4,9 +4,9 @@
 
 <!--navigation here-->
 
-<main class="grid grid-flow-col grid-cols-12">
-<nav class="col-span-2">
-  <ul class="grid grid-flow-row">
+<main class="grid grid-flow-col grid-cols-12 ">
+<nav class="col-span-2 bg-zinc-200 relative">
+  <ul class="grid grid-flow-row fixed">
     <a href="/quests" class="navlink">Aufgaben</a>
     <a href="/infobytes" class="navlink">Infobytes</a>
     <a href="/media" class="navlink">Medien</a>

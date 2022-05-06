@@ -42,6 +42,7 @@
             <div>{colHeader}</div>
         {/each}
     </div>
+    {#if value}
     {#each value as f, index (f[indexField])}
         <div
             class="list-item" style="--list-cols: {listCols}"
@@ -57,6 +58,7 @@
         </div>
 
     {/each}
+    {/if}
 </div>
 
 <style lang="scss">

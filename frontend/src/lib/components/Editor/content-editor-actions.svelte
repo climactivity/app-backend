@@ -10,8 +10,8 @@ import { goto } from "$app/navigation";
     }
 </script>
 
-<div>
-    <nav class="grid grid-flow-col place-content-between">
+<div class="bg-gradient-to-br  from-indigo-400 to-indigo-300 w-full">
+    <nav class="grid grid-flow-col place-content-between fixed">
         <div class="flex flex-row">
             <button on:click|preventDefault={goBack}>🔙</button>
             <h1>Content Editor</h1>    
