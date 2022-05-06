@@ -33,7 +33,7 @@ const newElement = (event: Event) => {
     console.log(`new`);
 }
 
-const search = (element) => element[searchTarget] as String && element[searchTarget].includes(searchQuery);
+const search = (element) => element[searchTarget] as String && element[searchTarget].toLowerCase().includes(searchQuery.toLowerCase());
 
 $: selectedData = searchQuery.length > 3 ? data ? data.filter(search) : [] : data; 
 

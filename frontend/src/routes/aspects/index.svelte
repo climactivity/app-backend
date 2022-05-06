@@ -24,7 +24,7 @@ const fetchAspectList = async(offset, limit) => {
 
 </script>
 
-<content >
+<content class="p-2">
     <nav >
     {#if browser}
         <ContentTypeList
