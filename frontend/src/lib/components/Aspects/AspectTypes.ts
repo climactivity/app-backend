@@ -27,10 +27,11 @@ export interface LocalizedTrackingData {
 
 export interface LocalizedTrackingOption {
     option: string,
-    reward: any,
+    reward: {xp: number, coins: number, water:number},
     level: number,
     co2value?: number,
-    waterFactor: number
+    waterFactor: number,
+    editing?: boolean
 }
 
 export interface LocalizedFactor {

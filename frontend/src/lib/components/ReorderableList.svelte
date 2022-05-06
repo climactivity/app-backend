@@ -5,7 +5,7 @@
     export let listItem;
     export let listCols = "1fr 3fr 7fr 1fr"
     export let headers : string[] = ["ID", "Name", "Einleitung"]
-    
+    export let indexField = "name"
     let hovering: boolean | number = false;
 
     //stolen from https://svelte.dev/repl/cd4d1bc127834d11812b1d156a60cdd7?version=3.20.1
@@ -21,7 +21,7 @@
             newTracklist.splice(target, 0, newTracklist[start]);
             newTracklist.splice(start + 1, 1);
         }
-        newTracklist.forEach((f, i) => (f.id = i));
+        newTracklist.forEach((f, i) => (f[indexField] = i));
         value = newTracklist;
         hovering = null;
     };
@@ -42,7 +42,7 @@
             <div>{colHeader}</div>
         {/each}
     </div>
-    {#each value as f, index (f.name)}
+    {#each value as f, index (f[indexField])}
         <div
             class="list-item" style="--list-cols: {listCols}"
             animate:flip
