@@ -5,7 +5,7 @@
     export let listItem;
     export let listCols = "1fr 3fr 7fr 1fr"
     export let headers : string[] = ["ID", "Name", "Einleitung"]
-    export let indexField = "name"
+    export let indexField = "id"
     let hovering: boolean | number = false;
 
     //stolen from https://svelte.dev/repl/cd4d1bc127834d11812b1d156a60cdd7?version=3.20.1
