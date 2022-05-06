@@ -23,6 +23,16 @@ const fetchAspectList = async(offset, limit) => {
 }
 
 </script>
-<h1 class=''>
-    noch nichts ausgewählt
-</h1>
+
+<content >
+    <nav >
+    {#if browser}
+        <ContentTypeList
+            ListElementComponent={AspectListCard}
+            fetchContentMetaData={fetchAspectList}
+            offset={0}
+            limit={10}
+        />
+    {/if}
+    </nav>
+</content>

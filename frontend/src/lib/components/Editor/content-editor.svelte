@@ -19,6 +19,7 @@ let fields = extractFields(data, extractor);
 
 <content class="grid grid-flow-row justify-start">
     <nav class="grid grid-flow-col">
+        <button>🔙</button>
         <h1>Content Editor</h1>
         <button>Speichern</button>
     </nav>
