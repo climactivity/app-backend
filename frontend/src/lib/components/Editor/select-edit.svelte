@@ -9,7 +9,7 @@
 
 <div>
     <label for={id}>{label}</label>
-    <select id={id} bind:value={value}>
+    <select id={id} bind:value={value} class="w-full rounded-md shadow-sm px-4 py-2">
     {#if placeholder}
         <option value={null}>{placeholder}</option>
     {/if}
