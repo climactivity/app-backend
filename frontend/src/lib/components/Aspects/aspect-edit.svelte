@@ -10,10 +10,25 @@
     import FactorEdit from "./factor-edit.svelte";
     import TrackingEdit from "./tracking-edit.svelte";
 
-    export let data: Aspect;
+    export let data: Aspect = {
+        themenmonat: null,
+        templateType: 'tree',
+        published: false,
+        name: "",
+        title: "",
+        frontmatter: "",
+        localizedTrackingData: {
+            question: "",
+            footnote: "",
+            options: []
+        },
+        forRegion: "DE",
+        forLanguage: "DE",
+        localizedFactors: []
+    };
 </script>
 
-<ContentEditor bind:data bind:title={data.title}>
+<ContentEditor bind:data bind:title={data.title} saveTarget="localized-aspect">
     <ContentEditorSection label="Metadata">
         <!-- Name -->
         <StringEdit

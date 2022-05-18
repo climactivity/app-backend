@@ -16,8 +16,11 @@ export const getAspects : () => Promise<Aspect[]> = async () => {
 
 
 const fetchAspectList = async(offset, limit) => {
-
-    return getAspects()
+    let aspects = await getAspects();
+    return {
+        data: aspects,
+        count: aspects.length
+    }
 
 
 }
@@ -30,6 +33,7 @@ const fetchAspectList = async(offset, limit) => {
         <ContentTypeList
             ListElementComponent={AspectListCard}
             fetchContentMetaData={fetchAspectList}
+            newPath='new'
             offset={0}
             limit={10}
         />

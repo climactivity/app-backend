@@ -4,7 +4,7 @@ export default interface Aspect extends Content {
     themenmonat: string,
     templateType: string,
     published: boolean;
-    _id: string;
+    _id?: string;
     name: string;
     title: string;
     frontmatter: string;

@@ -1,7 +1,12 @@
 import type { SvelteComponent } from "svelte"
 
+export type ContentMetadata = {
+    data: Content[],
+    count: number
+}
+
 export type Content = {
-    _id: string, 
+    _id?: string, 
     published: boolean,
     [key:string]: any
 }

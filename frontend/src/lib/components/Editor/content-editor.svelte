@@ -3,10 +3,11 @@ import ContentEditorActions from "./content-editor-actions.svelte";
 
 
     export let data, title;
+    export let saveTarget
 </script>
 
 <div class="layout ">
-    <ContentEditorActions bind:data title={title} class="header" />
+    <ContentEditorActions bind:data title={title} class="header" bind:saveTarget/>
     <div class="content w-full ">
         <slot />
     </div>
