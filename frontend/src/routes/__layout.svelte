@@ -6,7 +6,7 @@
 
 <!--navigation here-->
 
-<main class=" flex h-screen bg-gray-100 font-sans">
+<main class=" flex h-screen font-sans">
   <nav class="fixed">
     <Header />
   </nav>
