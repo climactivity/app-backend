@@ -1,40 +1,41 @@
 <script lang="ts">
-  import QuestList from "./QuestList.svelte";
-  import QuestEdit from "./QuestEdit.svelte";
-  import { QuestDto } from "./QuestTypes";
+    import QuestList from './QuestList.svelte'
+    import QuestEdit from './QuestEdit.svelte'
+    import { QuestDto } from './QuestTypes';
 
-  import { currentInfobit, currentQuestion } from "$lib/stores/stores";
+import { currentInfobit, currentQuestion } from '$lib/stores/stores';
 
-  let modalOpen: any = false;
-  const toggleModal = () => {
+let modalOpen:any = false ;
+const toggleModal = () => {
     modalOpen = !modalOpen;
-    localStorage.setItem("modelOpen", modalOpen);
-  };
+    localStorage.setItem('modelOpen', modalOpen);
+}
 
-  let questList = null;
-  let currentQuest = new QuestDto();
-  const questModifiedCallback = () => {
-    flashToast(2500);
+let questList = null; 
+let currentQuest = new QuestDto()
+const questModifiedCallback = () => {
+    flashToast(2500)
     if (questList) {
-      questList.refetch();
+        questList.refetch()
     }
-  };
+}
 
-  const questSelected = (quest) => {
-    currentQuest = { ...currentQuest, ...quest };
+const questSelected = (quest) => {
+    currentQuest = {...currentQuest, ...quest};
     if (currentQuest) {
-      modalOpen = true;
+        modalOpen = true
     }
-  };
+} 
 
-  let showToast = false;
+let showToast = false
 
-  const flashToast = (duration) => {
-    showToast = true;
+const flashToast = (duration) => {
+    showToast = true
     setTimeout(() => {
-      showToast = false;
-    }, duration);
-  };
+        showToast = false;
+    }, duration)
+}
+
 </script>
 
 <!-- <div class={showToast ? "p-3 mb-3 absolute" : "hidden absolute"} >
@@ -45,21 +46,19 @@
     </Toast>
 </div> -->
 
-<div>
-  <div>
-    <button on:click={toggleModal} style="width: 100%">
-      Aufgabe erstellen
-    </button>
 
-    <QuestList
-      bind:this={questList}
-      {questModifiedCallback}
-      questSelectedCallback={questSelected}
-    />
-  </div>
-  {#if modalOpen}
+
+<div>
     <div>
-      <QuestEdit {questModifiedCallback} quest={currentQuest} />
+        <button  on:click={toggleModal} style="width: 100%">
+            Aufgabe erstellen
+        </button>
+            
+        <QuestList bind:this={questList} questModifiedCallback={questModifiedCallback} questSelectedCallback={questSelected}/>
     </div>
-  {/if}
+    {#if modalOpen}
+    <div >
+        <QuestEdit questModifiedCallback={questModifiedCallback} quest={currentQuest}/>
+    </div>
+    {/if}    
 </div>
