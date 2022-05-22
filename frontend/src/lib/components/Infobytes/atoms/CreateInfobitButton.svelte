@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { Button } from "sveltestrap";
+
   import { currentInfobit, Infobit } from '$lib/stores/stores'
   const newInfobit = () => {
     currentInfobit.set(new Infobit());
   };
 </script>
 
-<Button color="success" on:click={() => newInfobit()}>Infobit erstellen</Button>
+<button color="success" on:click={() => newInfobit()}>Infobit erstellen</button>

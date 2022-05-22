@@ -14,7 +14,7 @@
 
 <div>
     <label for="question">Frage</label>
-    <Input
+    <input
         required
         type="textarea"
         name="question"
@@ -23,7 +23,7 @@
     />
 </div>
 
-<Table responsive>
+<table >
     <thead>
         <tr>
             <th width={"2%"}>#</th>
@@ -37,7 +37,7 @@
             <tr>
                 <th scope="row">{index + 1}</th>
                 <td>
-                    <Input
+                    <input
                         required
                         name={`question.answers[${index}].value`}
                         placeholder="Antwort"
@@ -45,7 +45,7 @@
                     />
                 </td>
                 <td>
-                    <Input
+                    <input
                         class="checkbox"
                         type="checkbox"
                         name={`question.answers[${index}].correct`}
@@ -53,25 +53,24 @@
                     />
                 </td>
                 <td>
-                    <Button
-                        color="danger"
-                        size="sm"
+                    <button
+                       
                         type="button"
                         name={`question.answers[${index}].delete`}
                         on:click={() => removeAnswer(index)}
                     >
                         Entfernen
-                    </Button>
+                    </button>
                 </td>
             </tr>
         {/each}
     </tbody>
-</Table>
-<Button
+</table>
+<button
     color="success"
     type="button"
     name="Neue Antwort hinzufügen"
     on:click={addAnswer}
 >
     Neue Antwort Hinzufügen
-</Button>
+</button>

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { Button } from "sveltestrap";
   import { currentQuestion, Question } from '$lib/stores/stores'
 
   const newQuestion = () => {
@@ -7,4 +6,4 @@
   };
 </script>
 
-<Button color="success" on:click={() => newQuestion()}>Frage erstellen</Button>
+<button color="success" on:click={() => newQuestion()}>Frage erstellen</button>

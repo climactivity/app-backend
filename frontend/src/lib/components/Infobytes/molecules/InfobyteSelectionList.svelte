@@ -1,17 +1,17 @@
 <script lang="ts">
-    import { ListGroup } from "sveltestrap";
+
     import CreateInfobyteButton from "../atoms/CreateInfobyteButton.svelte";
     import type {
         aspectIdentifier,
         infobyteIdentifier,
     } from "../particles/Infobyte";
-    import AspectGroupListItems from "./AspectGroupListItems.svelte";
+    import AspectGroupListItems from "$lib/components/Infobytes/molecules/AspectGroupListItems.svelte";
 
     export let infobytes: infobyteIdentifier[];
     export let aspects: aspectIdentifier[];
 </script>
 
-<ListGroup vertical>
+<ul >
     {#each aspects as aspect}
         <AspectGroupListItems
             {aspect}
@@ -19,4 +19,4 @@
         />
     {/each}
     <CreateInfobyteButton />
-</ListGroup>
+</ul>

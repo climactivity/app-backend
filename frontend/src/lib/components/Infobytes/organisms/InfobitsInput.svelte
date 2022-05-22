@@ -37,13 +37,13 @@
         </div>
     {/each}
 {:else}
-    <Card body
-        >Klicke auf 'Infobit hinzufügen +' um ein Infobit hinzu zufügen!</Card
+    <div 
+        >Klicke auf 'Infobit hinzufügen +' um ein Infobit hinzu zufügen!</div
     >
 {/if}
 {#if infobits.length === 0}
-    <Button type="button" class="form-control-button" on:click={addInfobit}
-        >Infobit hinzufügen +</Button
+    <button type="button" class="form-control-button" on:click={addInfobit}
+        >Infobit hinzufügen +</button
     >
 {/if}
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { ListGroup } from "sveltestrap";
+
     import { currentInfobitIndex, Infobit } from '$lib/stores/stores';
     import CreateInfobitButton from "../atoms/CreateInfobitButton.svelte";
     import CreateInfobyteButton from "../atoms/CreateInfobyteButton.svelte";
@@ -12,7 +12,7 @@
     currentInfobitIndex.subscribe((index) => (selectedInfobitIndex = index));
 </script>
 
-<ListGroup vertical>
+<ul >
     {#each infobits as infobit, i}
         <InfobitSelectionListItem
             {infobit}
@@ -21,4 +21,4 @@
         />
     {/each}
     <CreateInfobitButton />
-</ListGroup>
+</ul>

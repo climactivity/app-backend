@@ -1,30 +1,22 @@
 <script lang="ts">
+  import InfobyteSelectionListItem from "../atoms/InfobyteSelectionListItem.svelte";
+  import type {
+    aspectIdentifier,
+    infobyteIdentifier,
+  } from "../particles/Infobyte";
 
-    import InfobyteSelectionListItem from "../atoms/InfobyteSelectionListItem.svelte";
-    import type {
-        aspectIdentifier,
-        infobyteIdentifier,
-    } from "../particles/Infobyte";
+  export let aspect: aspectIdentifier;
+  export let infobytes: infobyteIdentifier[];
 
-    export let aspect: aspectIdentifier;
-    export let infobytes: infobyteIdentifier[];
-
-    let isOpen = false;
+  let isOpen = false;
 </script>
 
-<ListGroupItem
-    tag="button"
-    action
-    on:click={() => (isOpen = !isOpen)}
-    active={isOpen}
->
-    {aspect.name}
-</ListGroupItem>
+<button on:click={() => (isOpen = !isOpen)}>
+  {aspect.name}
+</button>
 
-<Collapse bind:isOpen>
-    <Container>
-        {#each infobytes.filter((i) => i.aspect == aspect._id) as infobyte}
-            <InfobyteSelectionListItem {infobyte} />
-        {/each}
-    </Container>
-</Collapse>
+<div>
+  {#each infobytes.filter((i) => i.aspect == aspect._id) as infobyte}
+    <InfobyteSelectionListItem {infobyte} />
+  {/each}
+</div>

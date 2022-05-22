@@ -1,12 +1,6 @@
 <script lang="ts">
   import { Confirm } from "svelte-confirm";
-  import {
-    Button,
-    Modal,
-    ModalBody,
-    ModalFooter,
-    ModalHeader,
-  } from "sveltestrap";
+
   import { currentInfobitIndex, Infobyte } from '$lib/stores/stores'
   import { createOrUpdateInfobyte } from '../InfobyteEditor.svelte';
 

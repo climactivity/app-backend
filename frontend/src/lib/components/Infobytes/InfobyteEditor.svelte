@@ -10,21 +10,21 @@
     baseUrl,
     isProd,
   } from '$lib/stores/stores';
-  import InfoBitEditor from "./InfoBitEditor.svelte";
   import { Confirm } from "svelte-confirm";
-  export let selectedInfobyte;
-  export let unsavedChanges;
-  const initialQuestions = [new Question()];
-  import Carousel from "@beyonk/svelte-carousel";
+
   import Fa from "svelte-fa";
   import {
     faCaretLeft,
     faCaretRight,
     faLaptopCode,
   } from "@fortawesome/free-solid-svg-icons";
-  import App from "../App.svelte";
-  import Aside from "./Aside.svelte";
+  // import App from "./App.svelte";
+  // import Aside from "./Aside.svelte";
   import AspectItem from "../Aspects/AspectItem.svelte";
+
+  export let selectedInfobyte;
+  export let unsavedChanges;
+  const initialQuestions = [new Question()];
   const {
     form,
     errors,
@@ -166,7 +166,7 @@
     <h1>Infobyte hinzufügen</h1>
 
     <label for="region">Region</label>
-    <Input
+    <select
       id="region"
       name="region"
       type="select"
@@ -175,10 +175,10 @@
       bind:value={$form.region}
     >
       <option>DE</option>
-    </Input>
+    </select>
 
     <label for="language">Sprache</label>
-    <Input
+    <select
       id="language"
       name="language"
       type="select"
@@ -188,10 +188,10 @@
     >
       <option>DE</option>
       <option>EN</option>
-    </Input>
+    </select>
 
     <label for="name">name</label>
-    <Input
+    <input
       id="name"
       name="name"
       on:change={handleChange}
@@ -199,7 +199,7 @@
     />
 
     <label for="frontmatter">Klappentext</label>
-    <Input
+    <input
       id="frontmatter"
       name="frontmatter"
       on:change={handleChange}
@@ -207,10 +207,11 @@
     />
 
     {#await aspects}
-      <Label>Lade...</Label>
+      <!-- svelte-ignore a11y-label-has-associated-control -->
+      <label>Lade...</label>
     {:then data}
       <label for="aspect">Aspekt</label>
-      <Input
+      <select
         id="aspect"
         name="aspect"
         type="select"
@@ -221,11 +222,11 @@
         {#each data as aspect}
           <option value={aspect._id}>{aspect.name}</option>
         {/each}
-      </Input>
+      </select>
 
       <label for="factor">Gesichtspunkt</label>
 
-      <Input
+      <select
         id="factor"
         name="factor"
         type="select"
@@ -236,13 +237,13 @@
         {#each  fetchFactorsForAspect($form.aspect, data) as factor}
           <option value={factor.id}> {factor.id}. {factor.name}</option>
         {/each}
-      </Input>
+      </select>
     {:catch error}
-      <Label>An error occurred! {error}</Label>
+      <p>An error occurred! {error}</p>
     {/await}
 
     <label for="difficulty">Schwierigkeit</label>
-    <Input
+    <select
       id="difficulty"
       name="difficulty"
       type="select"
@@ -252,7 +253,7 @@
       <option value={1}>Leicht</option>
       <option value={2}>Mittel</option>
       <option value={3}>Schwer</option>
-    </Input>
+    </select>
 
     <!--<InfoBitEditor bind:value={editorTest}/>-->
 
@@ -281,8 +282,8 @@
         </div>
       {/each}
     {:else}
-      <Card body
-        >Klicke auf 'Infobit hinzufügen +' um ein Infobit hinzu zufügen!</Card
+      <div 
+        >Klicke auf 'Infobit hinzufügen +' um ein Infobit hinzu zufügen!</div
       >
     {/if}
     <!-- <span class="control" slot="right-control">
@@ -290,8 +291,8 @@
       </span> -->
     <!-- </Carousel> -->
     {#if $form.infobits.length === 0}
-      <Button type="button" class="form-control-button" on:click={addInfobit}
-        >Infobit hinzufügen +</Button
+      <button type="button" class="form-control-button" on:click={addInfobit}
+        >Infobit hinzufügen +</button
       >
     {/if}
     {#each $form.questions as question, j}
@@ -300,7 +301,7 @@
 
         <div>
           <label for={`questions[${j}].question`}>Frage</label>
-          <Input
+          <input
             type="textarea"
             name={`questions[${j}].question`}
             placeholder="question"
@@ -324,7 +325,7 @@
             <div>
               <label for={`questions[${j}].answers[${k}].value`}>Antwort</label>
               <div class="form-control-row">
-                <Input
+                <input
                   name={`questions[${j}].answers[${k}].value`}
                   placeholder="Antwort"
                   on:change={handleChange}
@@ -337,7 +338,7 @@
                   style="padding: 5px;"
                 >
                   <span class="label-text">Richtig</span>
-                  <Input
+                  <input
                     class="checkbox"
                     type="checkbox"
                     name={`questions[${j}].answers[${k}].correct`}
@@ -371,7 +372,7 @@
           </div>
         {/each}
 
-        <Input
+        <select
           type="select"
           name="select"
           id="exampleSelect"
@@ -381,42 +382,42 @@
           {#each $form.infobits as infobit, i}
             <option>{i + 1}</option>
           {/each}
-        </Input>
+        </select>
 
         <div class="form-control-row">
           {#if j === $form.questions.length - 1}
-            <Button
+            <button
               type="button"
               class="form-control-button"
-              on:click={addQuestion}>+</Button
+              on:click={addQuestion}>+</button
             >
           {/if}
           {#if $form.questions.length !== 1}
-            <Button
+            <button
               type="button"
               class="form-control-button"
-              on:click={removeQuestion(j)}>-</Button
+              on:click={removeQuestion(j)}>-</button
             >
           {/if}
         </div>
       </div>
     {/each}
 
-    <Label for={"published"} style="padding: 5px;">
-      <Input
+    <label for={"published"} style="padding: 5px;">
+      <input
         class="checkbox"
         type="checkbox"
         name={"published"}
         bind:checked={$form.published}
       />
       Veröffentlichen
-    </Label>
-    <Button primary type="submit">Speichern</Button>
-    <Confirm let:confirm={confirmThis}>
-      <Button type="reset" on:click={() => confirmThis(deleteInfoByte)}>
+    </label>
+    <button  type="submit">Speichern</button>
+    <button let:confirm={confirmThis}>
+      <button type="reset" on:click={() => confirmThis(deleteInfoByte)}>
         Löschen
-      </Button>
-    </Confirm>
+      </button>
+    </button>
   </form>
   {#if !isProd}
     <div>

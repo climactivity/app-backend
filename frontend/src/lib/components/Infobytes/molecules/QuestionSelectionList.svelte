@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { ListGroup } from "sveltestrap";
+
     import { currentQuestionName, Question } from '$lib/stores/stores';
     import CreateQuestionButton from "../atoms/CreateQuestionButton.svelte";
     import QuestionSelectionListItem from "../atoms/QuestionSelectionListItem.svelte";
@@ -11,7 +11,7 @@
     currentQuestionName.subscribe((name) => (selectedQuestionName = name));
 </script>
 
-<ListGroup vertical>
+<ul >
     {#each questions as question}
         <QuestionSelectionListItem
             {question}
@@ -19,4 +19,4 @@
         />
     {/each}
     <CreateQuestionButton />
-</ListGroup>
+</ul>

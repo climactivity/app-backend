@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { ListGroupItem } from "sveltestrap";
+
     import { currentQuestionName, Question } from '$lib/stores/stores';
 
     export let question: Question;
@@ -14,6 +14,6 @@
     };
 </script>
 
-<ListGroupItem tag="button" action on:click={onInfobitSelected} {active}>
+<button  on:click={onInfobitSelected} {active}>
     {question.question}
-</ListGroupItem>
+</button>

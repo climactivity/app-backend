@@ -94,18 +94,18 @@
 </script>
 
 <div>
-  <Col sm="3">
-    <Button
-      outline
+  <div >
+    <button
+      
       color={"link"}
       disabled={!selectedInfobyte}
-      on:click={handleBack}>Zurück</Button
+      on:click={handleBack}>Zurück</button
     >
-  </Col>
+  </div>
 </div>
 <div>
-  <Col xs="12" sm="3">
-    <Container>
+  <div >
+    <container>
       {#if !selectedInfobyte}
         <InfobyteSidebar />
       {:else if selectedInfobitIndex === null || selectedInfobitIndex === undefined}
@@ -113,8 +113,8 @@
       {:else}
         <QuestionSidebar questions={selectedQuestions} />
       {/if}
-    </Container>
-  </Col>
+    </container>
+  </div>
   <!-- <Col sm="9">
     {#if selectedQuestionName}
       <QuestionEditorForm

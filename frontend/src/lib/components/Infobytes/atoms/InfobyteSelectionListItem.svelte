@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { ListGroupItem } from "sveltestrap";
     import {
         currentInfobitIndex,
         currentInfobyte,
@@ -34,11 +33,9 @@
     });
 </script>
 
-<ListGroupItem
-    tag="button"
-    action
+<button
     on:click={() => onInfobyteSelected(infobyte)}
     active={isInfobyteActive}
 >
     {infobyte.name}
-</ListGroupItem>
+</button>

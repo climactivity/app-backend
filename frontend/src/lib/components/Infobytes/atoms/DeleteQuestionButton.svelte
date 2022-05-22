@@ -1,12 +1,5 @@
 <script lang="ts">
   import { Confirm } from "svelte-confirm";
-  import {
-    Button,
-    Modal,
-    ModalBody,
-    ModalFooter,
-    ModalHeader,
-  } from "sveltestrap";
   import { currentQuestionName, Infobyte } from '$lib/stores/stores'
   import { createOrUpdateInfobyte } from "../InfobyteService";
 
@@ -32,7 +25,7 @@
   confirmTitle="Frage Löschen"
   cancelTitle="Abbrechen"
 >
-  <Button color="danger" on:click={confirmThis(handleDelete)}>Löschen</Button>
+  <button color="danger" on:click={confirmThis(handleDelete)}>Löschen</button>
   <span slot="title">
     Bist du dir sicher dass du diese Frage löschen möchtest?
   </span>
@@ -41,14 +34,14 @@
   </span>
 </Confirm>
 
-<Modal isOpen={open} {toggle} transitionOptions>
-  <ModalHeader>Frage wurde erfolgreich gelöscht!</ModalHeader>
-  <ModalBody>
+<button on:click={toggle}  >
+  <h1>Frage wurde erfolgreich gelöscht!</h1>
+  <h3>
     Das Frage konnte erfolgreich gelöscht werden. Aktuell ist es hilfreich die
     Anwendung neu zu laden um sicher zu gehen dass auch wirklich alles richtig
     gespeichert wurde.
-  </ModalBody>
-  <ModalFooter>
-    <Button color="danger" on:click={toggle}>Schließen</Button>
-  </ModalFooter>
-</Modal>
+  </h3>
+  <div>
+    <button color="danger" on:click={toggle}>Schließen</button>
+  </div>
+</button>

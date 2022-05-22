@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { ListGroupItem } from "sveltestrap";
+
     import { currentInfobit, currentInfobitIndex, Infobit } from '$lib/stores/stores';
 
     export let infobit: Infobit;
@@ -17,11 +17,8 @@
     };
 </script>
 
-<ListGroupItem
-    tag="button"
-    action
+<button
     on:click={() => onInfobitSelected()}
-    {active}
 >
     Infobit Nr: {index + 1}
-</ListGroupItem>
+</button>
