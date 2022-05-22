@@ -1,5 +1,4 @@
 <script lang="ts">
-    import {Alert, ListGroup, ListGroupItem, Button, Col, Row} from 'sveltestrap';
     import type Aspect from "./AspectTypes";
     import {createEventDispatcher} from 'svelte';
 
@@ -34,21 +33,21 @@
 </script>
 
 <div>
-    <div xs="auto">
+    <div >
         <h4 class="mt-3">All Aspects</h4>
     </div>
 
-    <div xs="auto">
-        <button divor="success" on:click={() => addAspect()}>Add</button>
+    <div  >
+        <button   on:click={() => addAspect()}>Add</button>
     </div>
 </div>
 
 {#if aspects.length === 0}
-    <Alert divor="warning" fade={false}>No aspects exist yet.</Alert>
+    <alert divor="warning" fade={false}>No aspects exist yet.</alert>
 {:else}
     <ul>
         {#each aspects as aspect}
-            <li tag="button" action
+            <li   
                            active={aspect === selectedAspect}
                            on:click={(event) => handleAspectSelected(event, aspect)}>
                 {aspect.name}

@@ -1,1 +1,5 @@
-<h1 class='text-3xl bg-red-600'>treetemplates</h1>
+<script>
+  import TreeTemplateView from "$lib/components/TreeTemplates/TreeTemplateView.svelte";
+</script>
+
+<TreeTemplateView />

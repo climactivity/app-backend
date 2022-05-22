@@ -1,5 +1,4 @@
 <script>
-import AspectList from '$lib/components/Aspects/AspectList.svelte';
 import AspectView from '$lib/components/Aspects/AspectView.svelte';
 
 </script>

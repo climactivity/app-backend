@@ -1,33 +1,28 @@
 <script>
   import "../app.scss";
+  import Header from "$lib/components/header/Header.svelte";
+  import Searchbar from "$lib/components/header/Searchbar.svelte";
 </script>
 
 <!--navigation here-->
 
-<main class="grid grid-flow-col grid-cols-12">
-<nav class="col-span-2">
-  <ul class="grid grid-flow-row">
-    <a href="/quests" class="navlink">Aufgaben</a>
-    <a href="/infobytes" class="navlink">Infobytes</a>
-    <a href="/media" class="navlink">Medien</a>
-    <a href="/aspects" class="navlink">Aspekte</a>
-    <a href="/treetemplates" class="navlink">B&#xE4;ume</a>
-    <a href="/analytics" class="navlink">Analytics</a>
+<main class=" flex h-screen bg-gray-100 font-sans">
+  <nav class="fixed">
+    <Header />
+  </nav>
+  <content class=" flex-grow  content-start pl-40 pr-3 mt-10">
+    <Searchbar />
+    <slot />
+  </content>
+	
+	<footer class="flex-col">
+		<!-- TODO footer content-->
 
-    <a href="#" class="navlink">Abmelden</a>
-  </ul>
-</nav>
-<content class="col-span-10">
-  <slot />
-</content>
-
-<footer>
-  <!-- TODO footer content-->
-</footer>
+	</footer>
 </main>
-<style lang="scss">
-    .navlink {
-      @apply text-base;
-    }
 
+<style>
+  .navlink {
+    @apply text-base;
+  }
 </style>

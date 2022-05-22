@@ -1,30 +1,33 @@
 <script lang="ts">
-  import ProsemirrorEditor from "prosemirror-svelte";
   import { exampleSetup } from "prosemirror-example-setup";
+  import ProsemirrorEditor from "prosemirror-svelte";
   import { addListNodes } from "prosemirror-schema-list";
-  import { Schema, DOMParser } from "prosemirror-model";
-  import {EditorState, TextSelection} from 'prosemirror-state';
+  import { Schema } from "prosemirror-model";
+  import {EditorState} from 'prosemirror-state';
+
   import {
     createRichTextEditor,
     fromJSON,
     richTextSchema,
-    toJSON,
+    toJSON, 
   } from "prosemirror-svelte/state";
   import { beforeUpdate, onDestroy, onMount } from "svelte";
-  import { currentInfobitIndex } from "$lib/stores/stores";
+  import { currentInfobit, currentInfobitIndex } from '$lib/stores/stores';
 
   export let value;
-  export let key;
+
   const mySchema = new Schema({
     nodes: addListNodes(richTextSchema.spec.nodes, "paragraph block*", "block"),
     marks: richTextSchema.spec.marks,
   });
+
+
   const plugins = exampleSetup({
     schema: mySchema,
     history: false,
     floatingMenu: false,
   });
-  console.log(mySchema, richTextSchema);
+
   // create the initial editor state
   let editorState = EditorState.create({
         schema: mySchema,
@@ -32,24 +35,6 @@
         selection: undefined,
         plugins,
       });
-  const updateEditorState = (key) => {
-    console.log(key, value);
-    try {
-      editorState = fromJSON(value, mySchema, plugins);
-    } catch (e) {
-
-      editorState =  EditorState.create({
-        schema: mySchema,
-        doc: undefined,
-        selection: undefined,
-        plugins,
-      });
-
-      //editorState = createRichTextEditor(value, plugins);
-      console.log(value)
-      console.log(e);
-    }
-  };
   let focusEditor;
 
   function handleTransaction(event) {
@@ -65,10 +50,15 @@
   }
   onMount(() => focusEditor());
 
-  $: updateEditorState(key);
+  const unsubscribe = currentInfobit.subscribe((infobit) => {
+    if (!infobit) return;
+    editorState = fromJSON(infobit, mySchema, plugins);
+  });
+
+  onDestroy(unsubscribe);
 </script>
 
-<div class="pm-editor justify-content-between">
+<div class="infobit-editor justify-content-between">
   <div class="editor">
     <ProsemirrorEditor
       placeholder="Go ahead and type something"
@@ -80,7 +70,7 @@
 </div>
 
 <style>
-  .pm-editor {
+  .infobit-editor {
     background-color: var(--grey);
     border: 1px solid var(--grey);
     border-radius: 4px;

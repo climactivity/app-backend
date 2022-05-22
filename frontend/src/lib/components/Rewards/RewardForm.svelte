@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { Card, Label, Input } from "sveltestrap";
 import type { Reward } from "./RewardTypes";
 
     export let reward: Reward;

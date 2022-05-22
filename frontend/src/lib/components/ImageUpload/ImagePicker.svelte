@@ -1,10 +1,5 @@
 <script lang="ts">
-    import {
-        Modal,
-        ModalBody,
-        ModalHeader,
-        Button
-    } from "sveltestrap";
+
     import ImageGallery from "./ImageGallery.svelte";
     let modalOpen = false;
     export let img
@@ -35,15 +30,15 @@
 
 {/if}
 
-<Button on:click={showModal}>Bild auswählen</Button>
+<button on:click={showModal}>Bild auswählen</button>
 </div>
 
-<Modal isOpen={modalOpen} {toggleModal} transitionOptions>
-    <ModalHeader toggle={toggleModal}>Bild auswählen</ModalHeader>
-    <ModalBody>
+<div isOpen={modalOpen} {toggleModal} transitionOptions>
+    <h1 toggle={toggleModal}>Bild auswählen</h1>
+    <h3>
         <ImageGallery select={select} />
-    </ModalBody>
-</Modal>
+    </h3>
+</div>
 
 
 <style>

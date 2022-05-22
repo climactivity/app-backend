@@ -1,8 +1,6 @@
 <script lang="ts">
 import { baseUrl } from "$lib/stores/stores";
 import { QuestDto } from "./QuestTypes";
-import { Card, CardTitle } from 'sveltestrap' 
- import {Input } from 'sveltestrap' 
 import { faToiletPaper } from "@fortawesome/free-solid-svg-icons";
 
     export const refetch = () => {

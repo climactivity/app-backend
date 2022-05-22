@@ -1,1 +1,7 @@
-<h1 class='text-3xl bg-red-600'>infobytes</h1>
+<script>
+// @ts-nocheck
+
+  // import InfobytePage from '$lib/components/Infobytes/InfobytePage.svelte';
+</script>
+<h1>InfobytePage will be soon here!</h1>
+<!-- <InfobytePage /> -->

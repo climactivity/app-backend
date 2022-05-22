@@ -1,1 +1,5 @@
-<h1 class='text-3xl bg-red-600'>media</h1>
+<script>
+import MediaPage from "$lib/components/ImageUpload/MediaPage.svelte";
+</script>
+
+<MediaPage />

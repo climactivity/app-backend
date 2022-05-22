@@ -1,75 +1,69 @@
 <script lang="ts">
-import ImageUpload from "./ImageUpload.svelte";
-import ImageGallery from "./ImageGallery.svelte"; 
-import {Row, Col, Card, CardBody, CardFooter, CardTitle, CardHeader, Button, Modal, ModalBody, ModalFooter, ModalHeader, Input } from 'sveltestrap' 
+  import ImageUpload from "./ImageUpload.svelte";
+  import ImageGallery from "./ImageGallery.svelte";
+  import { Toast, ToastBody, ToastHeader } from "sveltestrap";
 
-import { Toast, ToastBody, ToastHeader } from 'sveltestrap';
-let modalOpen = false;
-const toggleModal = () => {
+  let modalOpen = false;
+  const toggleModal = () => {
     modalOpen = !modalOpen;
-}
+  };
 
-const imageUploadedCallback = () => {
-    console.log("imageUploadedCallback")
+  const imageUploadedCallback = () => {
+    console.log("imageUploadedCallback");
     toggleModal();
-    flashToast(2500)
+    flashToast(2500);
     if (gallery) {
-        gallery.refetch()
+      gallery.refetch();
     }
-}
+  };
 
-const imageModifiedCallback = () => {
+  const imageModifiedCallback = () => {
     if (gallery) {
-        gallery.refetch()
+      gallery.refetch();
     }
-}
+  };
 
+  let showToast = false;
 
-let showToast = false
-
-const flashToast = (duration) => {
-    showToast = true
+  const flashToast = (duration) => {
+    showToast = true;
     setTimeout(() => {
-        showToast = false;
-    }, duration)
-}
+      showToast = false;
+    }, duration);
+  };
 
-let gallery
+  let gallery;
 </script>
 
-<style>
-    .hidden {
-        display: none
-    }
-    .absolute {
-        position: absolute;
-        right: 1rem;
-        top: 1rem;
-    }
-</style>
-
-<div class={showToast ? "p-3 mb-3 absolute" : "hidden absolute"} >
-    <Toast class="mr-1" success isOpen={showToast}>
-      <ToastHeader>
-        📸 Bild hochgeladen!
-        </ToastHeader>
-      <ToastBody>
-        Dein Bild ist jetzt hochgeladen! Kopier den Permalink mit dem Button in der Gallery!
-    </ToastBody>
-    </Toast>
+<div class={showToast ? "p-3 mb-3 absolute" : "hidden absolute"}>
+  <div class="mr-1" success isOpen={showToast}>
+    <div>📸 Bild hochgeladen!</div>
+    <div>
+      Dein Bild ist jetzt hochgeladen! Kopier den Permalink mit dem Button in
+      der Gallery!
+    </div>
+  </div>
 </div>
 
-<Button success on:click={toggleModal} style="width: 100%">
-    Bild hochladen
-</Button>
-<ImageGallery bind:this={gallery} imageModifiedCallback={imageModifiedCallback}/> 
+<button success on:click={toggleModal} style="width: 100%">
+  Bild hochladen
+</button>
+<ImageGallery bind:this={gallery} {imageModifiedCallback} />
 
+<div isOpen={modalOpen} {toggleModal} transitionOptions>
+  <h1 toggle={toggleModal}>Bild hochladen</h1>
+  <h3>
+    <ImageUpload {imageUploadedCallback} />
+  </h3>
+</div>
 
-<Modal isOpen={modalOpen} {toggleModal} transitionOptions>
-    <ModalHeader  toggle={toggleModal} >
-        Bild hochladen
-    </ModalHeader>
-    <ModalBody>
-        <ImageUpload imageUploadedCallback={imageUploadedCallback}/>
-    </ModalBody>
-  </Modal>
+<style>
+  .hidden {
+    display: none;
+  }
+  .absolute {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+  }
+</style>
