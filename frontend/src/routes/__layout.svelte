@@ -22,7 +22,5 @@
 </main>
 
 <style>
-  .navlink {
-    @apply text-base;
-  }
+
 </style>
