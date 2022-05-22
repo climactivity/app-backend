@@ -1,6 +1,6 @@
 <script lang="ts">
-
     import ImageGallery from "./ImageGallery.svelte";
+    
     let modalOpen = false;
     export let img
     let input

@@ -1,5 +1,4 @@
 <script lang="ts">
-
   import { baseUrl } from "$lib/stores/stores";
   export let images;
   export let imageUploadedCallback;

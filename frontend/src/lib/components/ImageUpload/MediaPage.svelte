@@ -1,7 +1,6 @@
 <script lang="ts">
   import ImageUpload from "./ImageUpload.svelte";
   import ImageGallery from "./ImageGallery.svelte";
-  import { Toast, ToastBody, ToastHeader } from "sveltestrap";
 
   let modalOpen = false;
   const toggleModal = () => {

@@ -42,7 +42,6 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.3",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "app-store-link": "^1.0.2",
-    "bootstrap": "^4.5.3",
     "d3": "7.0.4",
     "fontawesome-svelte": "^2.0.1",
     "moment": "^2.29.1",
@@ -54,7 +53,6 @@
     "svelte-forms-lib": "^1.10.7",
     "svelte-meta": "^1.0.2",
     "svelte-navigator": "^3.1.5",
-    "sveltestrap": "^5.9.0",
     "yup": "^0.29.3"
   }
 }

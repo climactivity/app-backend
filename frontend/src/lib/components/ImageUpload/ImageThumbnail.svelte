@@ -1,5 +1,4 @@
 <script lang="ts">
-
   import RewardDisplayer from "../Rewards/RewardDisplayer.svelte";
   import { baseUrl } from "$lib/stores/stores";
   export let image: any;
