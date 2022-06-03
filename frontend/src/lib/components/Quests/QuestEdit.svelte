@@ -9,7 +9,7 @@
   } from "./QuestTypes";
   // import RichTextEditor from "$lib/components/RichTextEditor.svelte";
   import ImagePicker from "$lib/components/ImageUpload/ImagePicker.svelte";
-  import RewardForm from "../Rewards/RewardForm.svelte";
+  import RewardForm from '$lib/components/Rewards/Rewardform.svelte';
 
   export let questModifiedCallback;
   export let quest: QuestDto;
@@ -133,12 +133,12 @@
   };
 </script>
 
-<Card>
-  <CardHeader>Aufgabe bearbeiten</CardHeader>
-  <CardBody class="wrapper">
+<div>
+  <h1>Aufgabe bearbeiten</h1>
+  <div class="wrapper">
     <div id="localization-input">
       <label for="region">Region</label>
-      <Input
+      <select
         id="region"
         name="region"
         type="select"
@@ -147,10 +147,10 @@
       >
         <option value={null}> -- Region -- </option>
         <option>DE</option>
-      </Input>
+      </select>
       <div class="localization">
         <label for="language">Sprache</label>
-        <Input
+        <select
           id="language"
           name="language"
           type="select"
@@ -159,10 +159,10 @@
         >
           <option value={null}> -- Sprache -- </option>
           <option>DE</option>
-        </Input>
+        </select>
 
         <label for="quest-title"> Titel </label>
-        <Input
+        <input
           required
           id="quest-title"
           name="-title"
@@ -189,15 +189,15 @@
                         optionsPromise={aspectsPromise}
                     /> -->
 
-          <Label for={"published"} style="padding: 5px;">
-            <Input
+          <label for={"published"} style="padding: 5px;">
+            <input
               class="checkbox"
               type="checkbox"
               name={"published"}
               bind:checked={quest.triggerTrackingUpdate}
             />
             Tracking abfragen nachdem Aufgabe bearbeit?
-          </Label>
+          </label>
         </div>
       </div>
     </div>
@@ -250,9 +250,9 @@
     Alternatives Icon
     <ImagePicker bind:img={iconImg} />
 
-    <Card id="aspect-filters">
-      <CardHeader>Aspekt Filter</CardHeader>
-      <CardBody>
+    <div id="aspect-filters">
+      <h1>Aspekt Filter</h1>
+      <div>
         {#if !quest.questAspectFilter}
           Noch keine Aspektfilter
         {/if}
@@ -276,9 +276,9 @@
             entfernen
           </button>
         {/each}
-      </CardBody>
+      </div>
       <hr />
-      <CardBody>
+      <div>
         <!-- <AspectAsyncCombobox
                     inputId={"addAspectFilter"}
                     name={"Aspekt-Kriterium"}
@@ -286,7 +286,7 @@
                     optionsPromise={aspectsPromise}
                 /> -->
 
-        <Input
+        <select
           id="region"
           name="region"
           type="select"
@@ -294,9 +294,9 @@
         >
           <option value={FilterType.REQURIED}> REQURIED </option>
           <option value={FilterType.EXCLUDED}> EXCLUDED </option>
-        </Input>
+        </select>
         <div>
-          <Input
+          <select
             id="trackingLevel"
             name="trackingLevel"
             type="range"
@@ -311,9 +311,9 @@
             {option}
           {/await}
         </div>
-      </CardBody>
-      <CardFooter>
-        <Button
+      </div>
+      <div>
+        <button
           on:click={() => {
             if (
               newAspectFilter.aspectId !== undefined &&
@@ -328,13 +328,13 @@
           }}
         >
           Aspektfilter speichern
-        </Button>
-      </CardFooter>
-    </Card>
+        </button>
+      </div>
+    </div>
 
-    <Card id="quest-filters">
-      <CardHeader>Aufgabenfilter</CardHeader>
-      <CardBody>
+    <div id="quest-filters">
+      <h1>Aufgabenfilter</h1>
+      <div>
         {#if !quest.questQuestFilter}
           Noch keine Aufgabenfilter
         {/if}
@@ -353,9 +353,9 @@
             entfernen
           </button>
         {/each}
-      </CardBody>
+      </div>
       <hr />
-      <CardBody>
+      <div>
         <!-- <AspectAsyncCombobox
                     inputId={"addAspectFilter"}
                     name={"Aufgaben-Kriterium"}
@@ -363,7 +363,7 @@
                     optionsPromise={questPromise}
                 /> -->
 
-        <Input
+        <select
           id="region"
           name="region"
           type="select"
@@ -372,10 +372,10 @@
           <option value={FilterType.REQURIED}> REQURIED </option>
           <option value={FilterType.EXCLUDED}> EXCLUDED </option>
           <option value={FilterType.PREFERED}> PREFERED </option>
-        </Input>
-      </CardBody>
-      <CardFooter>
-        <Button
+        </select>
+      </div>
+      <div>
+        <button
           on:click={() => {
             if (newQuestFilter.questId !== undefined) {
               quest.questQuestFilter = [
@@ -387,49 +387,48 @@
           }}
         >
           Aufgabenfilter speichern
-        </Button>
-      </CardFooter>
-    </Card>
+        </button>
+      </div>
+    </div>
 
     <RewardForm reward={quest.reward} />
 
-    <Label for={"userSelectable"} style="padding: 5px;">
-      <Input
+    <label for={"userSelectable"} style="padding: 5px;">
+      <input
         class="checkbox"
         type="checkbox"
         name={"userSelectable"}
         bind:checked={quest.userSelectable}
       />
       Kann ausgewählt werden
-    </Label>
+    </label>
 
-    <Label for={"published"} style="padding: 5px;">
-      <Input
+    <label for={"published"} style="padding: 5px;">
+      <input
         class="checkbox"
         type="checkbox"
         name={"published"}
         bind:checked={quest.published}
       />
       Veröffentlichen
-    </Label>
-  </CardBody>
-  <CardFooter>
-    <Col xs="6">
-      <Button
-        primary
+    </label>
+  </div>
+  <div>
+    <div >
+      <button
+        
         on:click={(e) => {
           save();
-        }}>Speichern</Button
+        }}>Speichern</button
       >
-    </Col>
+    </div>
 
-    <Col xs="6">
-      <Button
-        danger
+    <div >
+      <button
         on:click={(e) => {
           deleteQuest();
-        }}>Löschen</Button
+        }}>Löschen</button
       >
-    </Col>
-  </CardFooter>
-</Card>
+    </div>
+  </div>
+</div>
