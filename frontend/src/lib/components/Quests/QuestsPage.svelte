@@ -4,7 +4,8 @@
   import { QuestDto } from "./QuestTypes";
 
   import { currentInfobit, currentQuestion } from "$lib/stores/stores";
-import NewQuest from "./NewQuest.svelte";
+  import NewQuest from "./NewQuest.svelte";
+  import NewAufgabe from "./newAufgabe.svelte";
 
   let modalOpen: any = false;
   const toggleModal = () => {
@@ -68,18 +69,26 @@ import NewQuest from "./NewQuest.svelte";
 
 <div>
   <div>
+    <a
+      href="/quests/add"
+      class="block py-2 px-4  bg-gradient-to-l from-green-400 to-blue-500 text-white w-full transition ease-in duration-400 text-center text-base font-semibold shadow-xl rounded   hover:to-blue-700"
+      on:click={toggleModal}
+      style="width: 100%"
+    >
+      Aufgabe erstellen
+    </a>
     <button
-      class="py-2 px-4  bg-gradient-to-l from-green-400 to-blue-500 text-white w-full transition ease-in duration-400 text-center text-base font-semibold shadow-xl rounded   hover:to-blue-700"
+      class="py-2 my-3 px-4  bg-gradient-to-l from-green-400 to-blue-500 text-white w-full transition ease-in duration-400 text-center text-base font-semibold shadow-xl rounded   hover:to-blue-700"
       on:click={toggleModal}
       style="width: 100%"
     >
       Aufgabe erstellen
     </button>
-		
+
     {#if modalOpen}
       <div>
         <!-- <QuestEdit {questModifiedCallback} quest={currentQuest} /> -->
-        <NewQuest />
+        <NewAufgabe />
       </div>
     {/if}
 

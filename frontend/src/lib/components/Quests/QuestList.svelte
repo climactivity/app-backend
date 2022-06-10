@@ -29,6 +29,7 @@ import { text } from "svelte/internal";
   let questPromise: Promise<any[]> = fetchQuests();
 
   let term: string = "";
+
 	let questOpen: any = false;
   const toggleModal = () => {
     questOpen = !questOpen;
@@ -37,7 +38,7 @@ import { text } from "svelte/internal";
 
 <div class="">
   <input
-    class="rounded-lg border-transparent flex-1 border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-md text-base focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent my-2  "
+    class="rounded-lg border-transparent flex-1 border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-md text-base focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent my-2 "
     placeholder="Aufgaben suchen.."
     bind:value={term}
   />
