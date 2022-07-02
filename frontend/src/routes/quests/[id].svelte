@@ -120,18 +120,15 @@
 		</div>
 	</div>
 	<div class="border-2 rounded-lg p-2 m-1">
-		<div class="mb-2 border-b border-gray-300">
-			<span class="pr-20">Sprache : {data.language}</span>
-			<span>Region : {data.region}</span>
+		<div  class="mb-2 border-b border-gray-300" >Sprache <span>: {data.language}</span></div>
+		<div  class="mb-2 border-b border-gray-300"  >Region <span> : {data.region}</span>
 		</div>
-		<div class="mb-2 border-b border-gray-300">Beschreibung:</div>
-		<div class="mb-2 border-b border-gray-300">
+		<div  class=" mb-2 border-b border-gray-300">Beschreibung:
 			{data?.text?.doc?.content[0]?.content[0]?.text
 				? data?.text?.doc?.content[0]?.content[0]?.text
 				: ""}
 		</div>
-		<div class="mb-2 border-b border-gray-300">Link nachdem fertig:</div>
-		<div class="mb-2 border-b border-gray-300">
+		<div  class="mb-2 border-b border-gray-300">Link nachdem fertig :
 			{data?.linkToAfter ? data?.linkToAfter : ""}
 		</div>
 		<div class="mb-2 border-b border-gray-300">
@@ -157,3 +154,6 @@
 {:else}
 	<h1>loading..</h1>
 {/if}
+
+<style>
+</style>

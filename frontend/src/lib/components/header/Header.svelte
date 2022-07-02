@@ -9,8 +9,8 @@
 
 <div
   class="{on
-    ? 'side'
-    : 'sidebar'}  h-screen menu bg-white text-white px-4 flex items-center nunito  shadow"
+    ? 'sidebar'
+    : 'side'} h-screen menu bg-white px-4 flex items-center nunito  shadow z-40"
 >
   <ul class="list-reset ">
     <li class="my-2 md:my-0">
@@ -105,20 +105,22 @@
   .sidebar {
     transition: ease-in-out all 0.3s;
     z-index: 9999;
-    width: 130px;
-    opacity: .8;
+    width: 64px;
+    opacity:1;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   }
 
   .sidebar span {
     position: absolute;
     transition: ease-in-out all 0.1s;
-    opacity: 1;
+    opacity: 0;
   }
+
+
   .side {
     transition: ease-in-out all 0.3s;
     z-index: 9999;
-    width: 64px;
+    width: 130px;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 
   }
@@ -126,15 +128,15 @@
   .side span {
     position: absolute;
     transition: ease-in-out all 0.1s;
-    opacity: 0;
+    opacity: 1;
   }
-  .side:hover {
+  /* .side:hover {
     width: 130px;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    opacity: .84;
+    opacity: 1;
   }
 
   .side:hover span {
     opacity: 1;
-  }
+  } */
 </style>

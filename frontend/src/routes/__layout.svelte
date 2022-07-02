@@ -8,11 +8,11 @@ import Footer from "$lib/components/Footer.svelte";
 <!--navigation here-->
 
 <main class=" flex h-screen font-sans">
-  <nav class="fixed">
+  <nav class="fixed ">
     <Header />
   </nav>
-  <div class=" flex-grow  content-start pl-28 pr-3 mt-10">
-    <content class=" pl-40  mt-10">
+  <div class=" flex-grow pl-20 content-start md:pl-32 pr-3 mt-0">
+    <content class="">
       <Searchbar />
       <slot />
     </content>

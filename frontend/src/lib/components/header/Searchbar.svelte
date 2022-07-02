@@ -1,9 +1,10 @@
 <script>
   import favicon from "./favicon.png";
+  
 </script>
 
 <div
-  class=" content-start h-40 lg:h-20 w-full  order-1  flex justify-between items-center  border-b-2 border-gray-300 mb-2"
+  class="searchz content-start h-20 lg:h-20 w-full  order-1  flex justify-between items-center  border-b-2 border-gray-300 mb-2"
  >
   <div class="relative w-full max-w-3xl px-6">
     <div class="absolute h-10 mt-1 left-0 top-0 flex items-center pl-10">
@@ -38,3 +39,9 @@
   </div>
   <!-- / Menu -->
 </div>
+
+<style>
+  .searchz{
+    z-index: 0;
+  }
+</style>
