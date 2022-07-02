@@ -107,10 +107,7 @@
   };
 
   const getTrackingLevel = async (
-    aspectId,
-    trackingLevel,
-    inclueName = false,
-  ) => {
+    aspectId,trackingLevel,inclueName = false,) => {
     let aspect = (await aspectsPromise).find((a) => a._id == aspectId);
 
     if (trackingLevel < 0) {
@@ -182,12 +179,6 @@
             bind:value={quest.linkToAfter}
           />
 
-          <!-- <AspectAsyncCombobox
-                        inputId={"alertTrackedAspectInput"}
-                        name={"Gehört zu Aspekt?"}
-                        bind:value={quest.alertTrackedAspect}
-                        optionsPromise={aspectsPromise}
-                    /> -->
 
           <label for={"published"} style="padding: 5px;">
             <input
@@ -279,12 +270,6 @@
       </div>
       <hr />
       <div>
-        <!-- <AspectAsyncCombobox
-                    inputId={"addAspectFilter"}
-                    name={"Aspekt-Kriterium"}
-                    bind:value={newAspectFilter.aspectId}
-                    optionsPromise={aspectsPromise}
-                /> -->
 
         <select
           id="region"
@@ -356,13 +341,6 @@
       </div>
       <hr />
       <div>
-        <!-- <AspectAsyncCombobox
-                    inputId={"addAspectFilter"}
-                    name={"Aufgaben-Kriterium"}
-                    bind:value={newQuestFilter.questId}
-                    optionsPromise={questPromise}
-                /> -->
-
         <select
           id="region"
           name="region"

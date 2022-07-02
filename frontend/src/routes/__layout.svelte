@@ -11,7 +11,7 @@ import Footer from "$lib/components/Footer.svelte";
   <nav class="fixed">
     <Header />
   </nav>
-  <div class=" flex-grow  content-start pl-40 pr-3 mt-10">
+  <div class=" flex-grow  content-start pl-28 pr-3 mt-10">
     <content class=" pl-40  mt-10">
       <Searchbar />
       <slot />

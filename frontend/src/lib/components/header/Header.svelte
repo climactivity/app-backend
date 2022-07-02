@@ -1,17 +1,19 @@
 <script>
-  let on = false;
+  let on = true;
   const check = () => {
     on = !on;
   };
+
+
 </script>
 
 <div
   class="{on
     ? 'side'
-    : 'sidebar'}   h-screen menu bg-white text-white px-4 flex items-center nunito  shadow"
+    : 'sidebar'}  h-screen menu bg-white text-white px-4 flex items-center nunito  shadow"
 >
   <ul class="list-reset ">
-     <li class="my-2 md:my-0">
+    <li class="my-2 md:my-0">
       <a
         href="/"
         class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400"
@@ -28,6 +30,16 @@
       >
         <i class="fa-solid fa-person-circle-question mr-3 " /><span
           class="w-full inline-block pb-1 md:pb-0 text-sm">Aufgaben</span
+        >
+      </a>
+    </li>
+    <li class="my-2 md:my-0">
+      <a
+        href="/aspects"
+        class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400"
+      >
+        <i class="fa-solid fa-glasses mr-3" /><span
+          class="w-full inline-block pb-1 md:pb-0 text-sm">Aspekte</span
         >
       </a>
     </li>
@@ -48,16 +60,6 @@
       >
         <i class="fa-solid fa-photo-film mr-3" /><span
           class="w-full inline-block pb-1 md:pb-0 text-sm">Median</span
-        >
-      </a>
-    </li>
-    <li class="my-2 md:my-0">
-      <a
-        href="/aspects"
-        class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400"
-      >
-        <i class="fa-solid fa-glasses mr-3" /><span
-          class="w-full inline-block pb-1 md:pb-0 text-sm">Aspekte</span
         >
       </a>
     </li>
@@ -94,6 +96,7 @@
     </li>
   </ul>
 </div>
+
 <style>
   .nunito {
     font-family: "nunito", font-sans;
@@ -102,7 +105,8 @@
   .sidebar {
     transition: ease-in-out all 0.3s;
     z-index: 9999;
-    width: 150px;
+    width: 130px;
+    opacity: .8;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   }
 
@@ -116,6 +120,7 @@
     z-index: 9999;
     width: 64px;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
   }
 
   .side span {
@@ -124,8 +129,9 @@
     opacity: 0;
   }
   .side:hover {
-    width: 150px;
+    width: 130px;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    opacity: .84;
   }
 
   .side:hover span {
