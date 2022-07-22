@@ -1,13 +1,13 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import type { Content, ContentMetadata } from "./editor-types";
-  // import { goto } from "$app/navigation";
-  // import { page } from "$app/stores";
+  import { goto } from "$app/navigation";
+  import { page } from "$app/stores";
   export let ListElementComponent;
   export let fetchContentMetaData: (
     offset: number,
     limit: number,
-    query?: string,
+    query?: string
   ) => Promise<ContentMetadata>;
   export let offset: number, limit: number;
   export let searchTarget = "title";

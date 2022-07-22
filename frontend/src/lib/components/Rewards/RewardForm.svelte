@@ -14,4 +14,3 @@
   <label for="water">water</label>
   <input id="water" placeholder="water" bind:value={reward.water} />
 </div>
-

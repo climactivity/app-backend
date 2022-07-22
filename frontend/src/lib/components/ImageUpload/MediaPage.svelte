@@ -1,6 +1,6 @@
 <script lang="ts">
-  import ImageUpload from "./ImageUpload.svelte";
-  import ImageGallery from "./ImageGallery.svelte";
+  import ImageUpload from "$lib/components/Media/ImageUpload.svelte";
+  import ImageGallery from "$lib/components/ImageUpload/ImageGallery.svelte";
 
   let modalOpen = false;
   const toggleModal = () => {

@@ -3,6 +3,25 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@layer utilities {
+
+    .cta {
+        @apply bg-lime-600 text-white
+    }
+
+    .important {
+        @apply bg-blue-600 text-white
+    }
+
+    .danger {
+        @apply bg-red-600 text-white
+    }
+
+    .button {
+        @apply rounded-md shadow-md p-1
+    }
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 * {
@@ -68,4 +87,5 @@ h1 {
 
 .btn-icon svg {
   margin-right: 5px;
+}
 }
