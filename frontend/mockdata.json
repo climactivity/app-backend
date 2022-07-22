@@ -1,0 +1,36 @@
+{
+	"triggerTrackingUpdate": false,
+	"reward": { "water": null, "coins": 100, "xp": 1000 },
+	"userSelectable": true,
+	"_id": "61407c52c8e640001422fc64",
+	"published": true,
+	"questAspectFilter": [],
+	"questQuestFilter": [],
+	"numRepeat": 0,
+	"repeatAfter": 0,
+	"alertTrackedAspect": "613eea28191273001447d7a9",
+	"text": {
+		"doc": {
+			"type": "doc",
+			"content": [
+				{
+					"type": "paragraph",
+					"content": [
+						{
+							"type": "text",
+							"text": "Ich frage in einer Institution nach der Berücksichtigung von Nachhaltigkeitskriterien bei der Geldanlage"
+						}
+					]
+				}
+			]
+		},
+		"selection": { "type": "text", "anchor": 105, "head": 105 }
+	},
+	"title": " Nachhaltigkeitskriterien bei der Geldanlage (von Institutionen)",
+	"language": "DE",
+	"region": "DE",
+	"maxDuration": 336,
+	"createdAt": "2021-09-14T10:41:22.765Z",
+	"updatedAt": "2021-09-21T14:37:26.303Z",
+	"__v": 0
+}

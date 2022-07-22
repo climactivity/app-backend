@@ -39,6 +39,7 @@
             return;
         }
         return function () {
+             console.log('selojan',window.history, window.location);
             console.log(path);
             activeTab = path;
             window.location.hash = path;
@@ -46,7 +47,6 @@
     }
 
     let isOpen = false;
-
     function handleUpdate(event) {
         isOpen = event.detail.isOpen;
     }
@@ -55,6 +55,8 @@
         console.log("Dashboard mounted!");
         setActiveTab(window.location.hash)();
     });
+
+
 </script>
 
 <main>
@@ -109,7 +111,7 @@
 
 <style>
     :global(:root) {
-        --primary-light: #a6f9d6;
+        --primary-light: #d0f3e5;
         --primary: #5be2a9;
         --primary-dark: #53ce9a;
         --secondary: #1e2145;

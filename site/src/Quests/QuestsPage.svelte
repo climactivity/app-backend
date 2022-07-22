@@ -6,9 +6,10 @@
     import { Toast, ToastBody, ToastHeader } from 'sveltestrap';
 import { currentInfobit, currentQuestion } from '../stores';
 
-let modalOpen = false;
+let modalOpen:any = false || localStorage.getItem('modelOpen');
 const toggleModal = () => {
     modalOpen = !modalOpen;
+    localStorage.setItem('modelOpen', modalOpen);
 }
 
 let questList = null; 
@@ -45,6 +46,7 @@ const flashToast = (duration) => {
         </ToastHeader>
     </Toast>
 </div>
+
 
 
 <Row>

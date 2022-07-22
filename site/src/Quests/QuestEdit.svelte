@@ -21,9 +21,11 @@
     } from "./QuestTypes";
     import RichTextEditor from "../RichTextEditor.svelte";
     import ImagePicker from "../ImageUpload/ImagePicker.svelte";
-import RewardForm from "../Rewards/RewardForm.svelte";
-    export let questModifiedCallback;
+    import RewardForm from "../Rewards/RewardForm.svelte";
 
+    
+    
+    export let questModifiedCallback;
     export let quest: QuestDto;
     let iconImg;
     let newAspectFilter: QuestAspectFilter = new QuestAspectFilter();
