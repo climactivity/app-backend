@@ -19,6 +19,7 @@
     "autoprefixer": "^10.4.4",
     "postcss": "^8.4.12",
     "prosemirror-example-setup": "^1.1.2",
+    "prosemirror-markdown": "^1.5.0",
     "prosemirror-schema-list": "^1.1.4",
     "prosemirror-svelte": "^0.2.3",
     "svelte": "^3.44.0",
@@ -53,7 +54,6 @@
     "svelte-loading-spinners": "^0.1.6",
     "test-jest": "^1.0.1",
     "ts-jest": "^26.4.4"
-
   },
   "type": "module",
   "dependencies": {
@@ -67,7 +67,6 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.3",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "app-store-link": "^1.0.2",
-    "bootstrap": "^4.5.3",
     "d3": "7.0.4",
     "fontawesome-svelte": "^2.0.1",
     "moment": "^2.29.1",

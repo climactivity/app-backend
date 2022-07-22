@@ -1,10 +1,10 @@
 <script lang="ts">
-import type { Aspect } from "$lib/stores/stores";
-export let data: Aspect; 
+  import type { Aspect } from "$lib/stores/stores";
+  export let data: Aspect;
 </script>
 
 {#if data}
-<div class="">
+  <div class="">
     {data.name}
-</div>
+  </div>
 {/if}
