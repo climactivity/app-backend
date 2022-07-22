@@ -58,7 +58,7 @@
     "fontawesome-svelte": "^2.0.1",
     "moment": "^2.29.1",
     "mquery": ">=3.2.3",
-    "node-sass": "^6.0.1",
+    "node-sass": "^7.0.0",
     "prosemirror-example-setup": "^1.1.2",
     "prosemirror-markdown": "^1.5.0",
     "prosemirror-schema-list": "^1.1.4",
